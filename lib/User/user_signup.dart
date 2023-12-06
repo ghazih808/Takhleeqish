@@ -51,7 +51,7 @@ class User_Signup extends StatelessWidget {
                     validator:(value){
                       if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value!))
                       {
-                        return 'Enter correct name';
+                        return 'Enter Name Correctly';
                       }
                       else{
                         controller.Usname.text=value;
