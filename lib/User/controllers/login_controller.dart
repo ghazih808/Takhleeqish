@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' ;
 
 import 'package:get/get.dart';
 import 'package:takhleekish/User/User_Dashboard.dart';
+
+import '../../Admin/adminDashboard/dashboard.dart';
 
 class LoginController extends GetxController {
   final TextEditingController Usemail = TextEditingController();
@@ -20,9 +22,10 @@ class LoginController extends GetxController {
 
   Future<void> login() async {
     try {
-      if (kIsWeb && Usemail.text.trim() == 'admin123@gmail.com' && Uspass.text.trim() == 'admin123') {
+      if (Usemail.text.trim() == 'admin123@gmail.com' && Uspass.text.trim() == 'admin123') {
         // Admin login successful on the web
         onLoginSuccess(); // Call the callback
+        Get.offAll(() => AdminDashboard());
         Get.snackbar(
           'Login Successful',
           'Welcome, Admin!',
