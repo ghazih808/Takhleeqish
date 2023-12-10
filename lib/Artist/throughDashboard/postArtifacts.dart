@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -24,7 +25,14 @@ class PostArtifact extends StatefulWidget{
 class _PostArtifactState extends State<PostArtifact> {
   String imageurl='';
   final formkey=GlobalKey<FormState>();
-
+  List<String> paintingCategories = [
+    'Abstract',
+    'Landscape',
+    'Portrait',
+    'Still Life',
+    'Modern Art',
+    'Contemporary',
+  ];
   final authrepo = Get.put(Artist_Auth());
 
   final artistRepo = Get.put(Artist_repo());
@@ -146,9 +154,9 @@ class _PostArtifactState extends State<PostArtifact> {
                       controller: controller.Artist_id,
                       keyboardType: TextInputType.name,
                       validator: (value) {
-                        if(value!.isEmpty || !RegExp(r'^([0-9]{5})[\-]([0-9]{7})[\-]([0-9]{1})$').hasMatch(value!))
+                        if(value!.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}').hasMatch(value!))
                         {
-                          return 'CNIC No must follow the XXXXX-XXXXXXX-X format!';
+                          return 'Enter correct Email';
                         }
                         else {
                           controller.Artist_id.text = value;
@@ -173,7 +181,7 @@ class _PostArtifactState extends State<PostArtifact> {
                           padding: const EdgeInsets.only(left: 12.0,top: 10.0),
                           child: Container(child: FaIcon(FontAwesomeIcons.idBadge,color: Colors.black,)),
                         ),
-                        labelText: "Enter Artist Cnic",
+                        labelText: "Enter Artist Email",
                       ),
 
                     ),
@@ -183,38 +191,29 @@ class _PostArtifactState extends State<PostArtifact> {
                   ),
                   Container(
                     width: 300,
-                    height: 50,
-                    child: TextFormField(
-                      controller: controller.Artifact_category,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Enter the category';
-                        }
-                        else {
-                          controller.Artifact_category.text = value;
-                        }
-                      },
-                      decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                          borderSide: BorderSide(
-                            width: 2,
-                            color: Color(0xfff77062),
-                          ),
+                    height: 70,
+                    child: DropdownButtonFormField(
+                      decoration: InputDecoration(labelText: 'Painting Category'
+                      , enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                              )
 
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            borderSide: BorderSide(
-                              color: Colors.blue,
-                            )
-                        ),
-                        prefixIcon: Icon(
-                          Icons.category_outlined, color: Colors.black,),
-
-                        labelText: "Enter Category",
-
+                          )
                       ),
+                      value: paintingCategories.first, // Initial value, you can change it accordingly
+                      items: paintingCategories
+                          .map((category) => DropdownMenuItem(
+                        value: category,
+                        child: Text(category),
+                      ))
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          controller.Artifact_category.text = value as String;
+                        });// Handle the painting category change
+                      },
                     ),
                   ),
                   SizedBox(
