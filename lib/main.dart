@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 60.0,bottom: 100.0),
-                      child: Text("Takhleeqish",style: TextStyle(fontSize: 50,fontFamily:'main',fontWeight: FontWeight.w600),),
+                      child: Text("Takhleeqish",style: TextStyle(fontSize: 48,fontFamily:'main',fontWeight: FontWeight.w600),),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 15.0),
@@ -175,3 +175,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+//trying
