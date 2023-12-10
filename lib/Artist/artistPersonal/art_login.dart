@@ -105,7 +105,7 @@ class _Artist_loginState extends State<Artist_login> {
                         height: 45,
                         child: TextFormField(
                           controller: loginController.Arpass,
-                          obscureText:flag,
+                          obscureText:true,
                           decoration: InputDecoration(
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
