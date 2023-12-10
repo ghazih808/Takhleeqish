@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_otp/email_otp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -352,54 +353,64 @@ class User_Signup extends StatelessWidget {
                       height: 40,
                       child: ElevatedButton(onPressed: () async {
 
+                        bool cnicCheck = await isCnicUnique(controller.Uscnic.text);
+                        if(cnicCheck)
+                          {
+                            Get.snackbar("Sorry", "Cnic already exists.",
+                                snackPosition:SnackPosition.BOTTOM,
+                                backgroundColor: Colors.red.withOpacity(0.1),
+                                colorText: Colors.red);
+                            controller.Uscnic.clear();
+                          }else{
+                          if(formkey.currentState!.validate()) {
+                            if(await User_Controller.instance.registerUser(controller.Usemail.text.trim(),controller.Uspass.text.trim(),))
+                            {
+                              User_Controller.instance.registerUser(
+                                controller.Usemail.text.trim(),
+                                controller.Uspass.text.trim(),
+                              );
 
-                        if(formkey.currentState!.validate()) {
-                              if(await User_Controller.instance.registerUser(controller.Usemail.text.trim(),controller.Uspass.text.trim(),))
-                                {
-                                  User_Controller.instance.registerUser(
-                                    controller.Usemail.text.trim(),
-                                    controller.Uspass.text.trim(),
-                                  );
+                              if(await myAuth.verifyOTP(otp:Otp.text) == true){
+                                final user = User_model(
+                                    name: controller.Usname.text.trim(),
+                                    email: controller.Usemail.text.trim(),
+                                    cnic: controller.Uscnic.text.trim(),
+                                    pass: controller.Uspass.text.trim(),
+                                    url: controller.User_url);
+                                User_Controller.instance.createUser(user);
+                                Navigator.push(context, MaterialPageRoute(builder: (
+                                    context) => User_login()),);
 
-                                  if(await myAuth.verifyOTP(otp:Otp.text) == true){
-                                    final user = User_model(
-                                        name: controller.Usname.text.trim(),
-                                        email: controller.Usemail.text.trim(),
-                                        cnic: controller.Uscnic.text.trim(),
-                                        pass: controller.Uspass.text.trim(),
-                                        url: controller.User_url);
-                                    User_Controller.instance.createUser(user);
-                                    Navigator.push(context, MaterialPageRoute(builder: (
-                                        context) => User_login()),);
+                                controller.Usname.clear();
+                                controller.Usemail.clear();
+                                controller.Uscnic.clear();
+                                controller.Uspass.clear();
+                              }
+                              else{
+                                Get.snackbar("Sorry", "Enter the Valid Otp.",
+                                    snackPosition:SnackPosition.BOTTOM,
+                                    backgroundColor: Colors.red.withOpacity(0.1),
+                                    colorText: Colors.red);
 
-                                    controller.Usname.clear();
-                                    controller.Usemail.clear();
-                                    controller.Uscnic.clear();
-                                    controller.Uspass.clear();
-                                  }
-                                  else{
-                                    Get.snackbar("Sorry", "Enter the Valid Otp.",
-                                        snackPosition:SnackPosition.BOTTOM,
-                                        backgroundColor: Colors.red.withOpacity(0.1),
-                                        colorText: Colors.red);
-
-                                  }
-                                  Get.snackbar("Amigo", "Otp Verified.",
-                                      snackPosition:SnackPosition.BOTTOM,
-                                      backgroundColor: Colors.green.withOpacity(0.1),
-                                      colorText: Colors.green);
-                                }else
-                                  {
-                                    Get.snackbar("Sorry", "Email is already registered.",
-                                        snackPosition:SnackPosition.BOTTOM,
-                                        backgroundColor: Colors.red.withOpacity(0.1),
-                                        colorText: Colors.red);
-                                  }
+                              }
+                              Get.snackbar("Amigo", "Otp Verified.",
+                                  snackPosition:SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.green.withOpacity(0.1),
+                                  colorText: Colors.green);
+                            }else
+                            {
+                              Get.snackbar("Sorry", "Email is already registered.",
+                                  snackPosition:SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.red.withOpacity(0.1),
+                                  colorText: Colors.red);
+                            }
 
 
 
 
+                          }
                         }
+
 
                       }, child: Text("Register"),
                         style: ElevatedButton.styleFrom(
@@ -417,4 +428,24 @@ class User_Signup extends StatelessWidget {
       ),
     );
   }
+  Future<bool> isCnicUnique(String? cnic) async {
+    if (cnic == null) {
+      return false;
+    }
+    // Assuming you have a "artists" collection in Firestore
+
+
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .where('Cnic', isEqualTo: cnic)
+          .get();
+
+      return querySnapshot.docs.isNotEmpty;
+    } catch (e) {
+      print('Error checking if user is an artist: $e');
+      return false;
+    }
+  }
+
 }

@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_otp/email_otp.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -191,6 +192,7 @@ class Art_Signup extends StatelessWidget{
                         return 'CNIC No must follow the XXXXX-XXXXXXX-X format!';
                       }
                       else{
+
                         controller.Arcnic.text=value;
                       }
                     },
@@ -350,10 +352,20 @@ class Art_Signup extends StatelessWidget{
                       width: 300,
                       height: 40,
                       child: ElevatedButton(onPressed: () async {
-                        if(formkey.currentState!.validate())  {
-                          if(await Artist_Controller.instance.registerArtist(controller.Aremail.text.trim(), controller.Arpass.text.trim())){
-                            Artist_Controller.instance.registerArtist(controller.Aremail.text.trim(), controller.Arpass.text.trim());
-                            if(await myAuth.verifyOTP(otp:Otp.text) == true)
+                        bool cnicCheck = await isCnicUnique(controller.Arcnic.text);
+                        if(cnicCheck)
+                          {
+                            Get.snackbar("Sorry", "Cnic already exists.",
+                                snackPosition:SnackPosition.BOTTOM,
+                                backgroundColor: Colors.red.withOpacity(0.1),
+                                colorText: Colors.red);
+                            controller.Arcnic.clear();
+
+                          }else{
+                          if(formkey.currentState!.validate())  {
+                            if(await Artist_Controller.instance.registerArtist(controller.Aremail.text.trim(), controller.Arpass.text.trim())){
+                              Artist_Controller.instance.registerArtist(controller.Aremail.text.trim(), controller.Arpass.text.trim());
+                              if(await myAuth.verifyOTP(otp:Otp.text) == true)
                               {
                                 final artist = Artist_model(
                                     name: controller.Arname.text.trim(),
@@ -369,25 +381,27 @@ class Art_Signup extends StatelessWidget{
                                 controller.Aremail.clear();
                                 controller.Arname.clear();
                               }
+                              else{
+                                Get.snackbar("Sorry", "Enter the Valid Otp.",
+                                    snackPosition:SnackPosition.BOTTOM,
+                                    backgroundColor: Colors.red.withOpacity(0.1),
+                                    colorText: Colors.red);
+                              }
+
+                            }
                             else{
-                              Get.snackbar("Sorry", "Enter the Valid Otp.",
+                              Get.snackbar("Sorry", "Email is already registered.",
                                   snackPosition:SnackPosition.BOTTOM,
                                   backgroundColor: Colors.red.withOpacity(0.1),
                                   colorText: Colors.red);
                             }
 
+
+
+
                           }
-                          else{
-                            Get.snackbar("Sorry", "Email is already registered.",
-                                snackPosition:SnackPosition.BOTTOM,
-                                backgroundColor: Colors.red.withOpacity(0.1),
-                                colorText: Colors.red);
-                          }
+                        }
 
-
-
-
-                       }
 
 
                       }, child: Text("Register"),
@@ -406,6 +420,26 @@ class Art_Signup extends StatelessWidget{
       ),
 
     );
+  }
+
+  Future<bool> isCnicUnique(String? cnic) async {
+    if (cnic == null) {
+      return false;
+    }
+    // Assuming you have a "artists" collection in Firestore
+
+
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('Artists')
+          .where('Cnic', isEqualTo: cnic)
+          .get();
+
+      return querySnapshot.docs.isNotEmpty;
+    } catch (e) {
+      print('Error checking if user is an artist: $e');
+      return false;
+    }
   }
 
 }
