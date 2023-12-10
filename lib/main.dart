@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:takhleekish/Admin/adminDashboard/dashboard.dart';
 import 'package:takhleekish/Artist/artistPersonal/art_signup.dart';
 import 'package:takhleekish/Artist/navbar.dart';
 import 'package:takhleekish/Artist/throughDashboard/artistDashboard.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: PostArtifact(),
+      home: AdminDashboard(),
     );
   }
 }
