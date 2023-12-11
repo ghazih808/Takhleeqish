@@ -17,7 +17,7 @@ import 'package:takhleekish/User/user_model.dart';
 import 'package:takhleekish/User/user_repository.dart';
 
 import '../main.dart';
-import 'feedback.dart';
+import 'throughNavBar/feedbackPage/feedback.dart';
 class UserNavbar extends StatelessWidget {
   final FirebaseAuth _auth=FirebaseAuth.instance;
 
