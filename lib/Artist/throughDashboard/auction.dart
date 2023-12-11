@@ -10,39 +10,52 @@ class AuctionPage extends StatefulWidget {
 class _AuctionPageState extends State<AuctionPage> {
   File? _image;
   final TextEditingController startingPriceController = TextEditingController();
+  final TextEditingController endingPriceController = TextEditingController();
+  DateTime? selectedStartDate;
   DateTime? selectedEndDate;
+  TimeOfDay? selectedStartTime;
   TimeOfDay? selectedEndTime;
 
-  Future<void> _selectEndDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2101),
-    );
+  Future<void> _selectDateTime(
+      BuildContext context,
+      bool isStartDate,
+      bool isStartTime,
+      ) async {
+    DateTime? pickedDate;
+    TimeOfDay? pickedTime;
 
-    if (picked != null && picked != selectedEndDate) {
-      setState(() {
-        selectedEndDate = picked;
-      });
+    if (isStartDate || !isStartTime) {
+      pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2101),
+      );
     }
-  }
 
-  Future<void> _selectEndTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-
-    if (picked != null && picked != selectedEndTime) {
-      setState(() {
-        selectedEndTime = picked;
-      });
+    if (!isStartDate || !isStartTime) {
+      pickedTime = await showTimePicker(
+        context: context,
+        initialTime: isStartDate && pickedDate == DateTime.now()
+            ? TimeOfDay.now()
+            : selectedStartTime ?? TimeOfDay.now(),
+      );
     }
+
+    setState(() {
+      if (isStartDate) {
+        selectedStartDate = pickedDate;
+        selectedStartTime = pickedTime;
+      } else {
+        selectedEndDate = pickedDate;
+        selectedEndTime = pickedTime;
+      }
+    });
   }
 
   Future<void> _getImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+    await ImagePicker().pickImage(source: ImageSource.gallery);
 
     setState(() {
       _image = File(pickedFile!.path);
@@ -81,19 +94,25 @@ class _AuctionPageState extends State<AuctionPage> {
               decoration: InputDecoration(labelText: 'Starting Price'),
             ),
             SizedBox(height: 10),
+            TextField(
+              controller: endingPriceController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(labelText: 'Ending Price'),
+            ),
+            SizedBox(height: 10),
             InkWell(
-              onTap: () => _selectEndDate(context),
+              onTap: () => _selectDateTime(context, true, true),
               child: InputDecorator(
                 decoration: InputDecoration(
-                  labelText: 'End Date',
+                  labelText: 'Start Date & Time',
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      selectedEndDate != null
-                          ? '${selectedEndDate!.toLocal()}'.split(' ')[0]
-                          : 'Select End Date',
+                      selectedStartDate != null
+                          ? '${selectedStartDate!.toLocal()} ${selectedStartTime!.format(context)}'
+                          : 'Select Start Date & Time',
                     ),
                     Icon(Icons.calendar_today),
                   ],
@@ -102,20 +121,20 @@ class _AuctionPageState extends State<AuctionPage> {
             ),
             SizedBox(height: 10),
             InkWell(
-              onTap: () => _selectEndTime(context),
+              onTap: () => _selectDateTime(context, false, false),
               child: InputDecorator(
                 decoration: InputDecoration(
-                  labelText: 'End Time',
+                  labelText: 'End Date & Time',
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      selectedEndTime != null
-                          ? selectedEndTime!.format(context)
-                          : 'Select End Time',
+                      selectedEndDate != null
+                          ? '${selectedEndDate!.toLocal()} ${selectedEndTime!.format(context)}'
+                          : 'Select End Date & Time',
                     ),
-                    Icon(Icons.access_time),
+                    Icon(Icons.calendar_today),
                   ],
                 ),
               ),
@@ -124,13 +143,22 @@ class _AuctionPageState extends State<AuctionPage> {
             ElevatedButton(
               onPressed: () {
                 // Add logic to submit auction data
-                if (_image != null && startingPriceController.text.isNotEmpty) {
+                if (_image != null &&
+                    startingPriceController.text.isNotEmpty &&
+                    endingPriceController.text.isNotEmpty &&
+                    selectedStartDate != null &&
+                    selectedEndDate != null &&
+                    selectedStartTime != null &&
+                    selectedEndTime != null) {
                   // Perform actions with the auction data
                   print('Auction submitted:');
                   print('Image: ${_image!.path}');
                   print('Starting Price: ${startingPriceController.text}');
-                  print('End Date: $selectedEndDate');
-                  print('End Time: $selectedEndTime');
+                  print('Ending Price: ${endingPriceController.text}');
+                  print(
+                      'Start Date & Time: ${selectedStartDate!.toLocal()} ${selectedStartTime!.format(context)}');
+                  print(
+                      'End Date & Time: ${selectedEndDate!.toLocal()} ${selectedEndTime!.format(context)}');
                 } else {
                   // Handle validation errors or inform the user
                   print('Please fill in all fields.');
