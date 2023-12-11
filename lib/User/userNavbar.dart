@@ -9,6 +9,8 @@ import 'package:takhleekish/Artist/artistDatabase.dart';
 import 'package:takhleekish/Artist/artistPersonal/artist_model.dart';
 import 'package:takhleekish/Artist/controllers/artist_controller.dart';
 import 'package:takhleekish/User/User_authentication.dart';
+import 'package:takhleekish/User/throughNavBar/auctions/requestAuction.dart';
+import 'package:takhleekish/User/throughNavBar/updatePassword/userUpdatePage.dart';
 import 'package:takhleekish/User/throughNavBar/userExhibition/userExhibitionPage.dart';
 import 'package:takhleekish/User/throughNavBar/userSessions/selectPage.dart';
 import 'package:takhleekish/User/user_model.dart';
@@ -67,8 +69,9 @@ class UserNavbar extends StatelessWidget {
 
                     ListTile(
                       leading: Icon(Icons.update),
-                      title: Text("Update Credentials",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      title: Text("Update Password",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>UserUpdatePage()));
 
                       },
                     ),
@@ -87,6 +90,8 @@ class UserNavbar extends StatelessWidget {
                       leading: Icon(Icons.point_of_sale),
                       title: Text("Auctions",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
+
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>UserRequestAuctionPage()));
 
                       },
                     ),

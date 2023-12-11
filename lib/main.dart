@@ -21,6 +21,9 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'Admin/manageExhibition.dart';
 import 'Artist/throughDashboard/postArtifacts.dart';
+import 'User/throughNavBar/auctions/ApprovedBids/approvedBidPage.dart';
+import 'User/throughNavBar/auctions/requestAuction.dart';
+// import 'User/throughNavBar/auctions/availableBids/userAuctionPage.dart';
 import 'User/throughNavBar/userExhibition/detailExhibationPage.dart';
 import 'User/throughNavBar/userExhibition/userExhibitionPage.dart';
 import 'User/throughNavBar/userSessions/selectPage.dart';
