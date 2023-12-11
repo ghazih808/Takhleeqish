@@ -24,7 +24,7 @@ class _AuctionPageState extends State<AuctionPage> {
     DateTime? pickedDate;
     TimeOfDay? pickedTime;
 
-    if (isStartDate || !isStartTime) {
+    if (isStartDate || isStartDate) {
       pickedDate = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
@@ -74,67 +74,91 @@ class _AuctionPageState extends State<AuctionPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ElevatedButton(
-              onPressed: _getImage,
-              child: Text('Upload Painting Image'),
-            ),
-            SizedBox(height: 10),
-            _image != null
-                ? Image.file(
-              _image!,
-              height: 150,
-              width: 150,
-              fit: BoxFit.cover,
-            )
-                : Container(),
-            SizedBox(height: 10),
-            TextField(
-              controller: startingPriceController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Starting Price'),
-            ),
-            SizedBox(height: 10),
-            TextField(
-              controller: endingPriceController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Ending Price'),
-            ),
-            SizedBox(height: 10),
-            InkWell(
-              onTap: () => _selectDateTime(context, true, true),
-              child: InputDecorator(
-                decoration: InputDecoration(
-                  labelText: 'Start Date & Time',
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      selectedStartDate != null
-                          ? '${selectedStartDate!.toLocal()} ${selectedStartTime!.format(context)}'
-                          : 'Select Start Date & Time',
+            Card(
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: _getImage,
+                      child: Text('Upload Painting Image'),
                     ),
-                    Icon(Icons.calendar_today),
+                    SizedBox(height: 10),
+                    _image != null
+                        ? Image.file(
+                      _image!,
+                      height: 150,
+                      width: 150,
+                      fit: BoxFit.cover,
+                    )
+                        : Container(),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 10),
-            InkWell(
-              onTap: () => _selectDateTime(context, false, false),
-              child: InputDecorator(
-                decoration: InputDecoration(
-                  labelText: 'End Date & Time',
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      selectedEndDate != null
-                          ? '${selectedEndDate!.toLocal()} ${selectedEndTime!.format(context)}'
-                          : 'Select End Date & Time',
+            SizedBox(height: 20),
+            Card(
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    TextField(
+                      controller: startingPriceController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: 'Starting Price',
+                      ),
                     ),
-                    Icon(Icons.calendar_today),
+                    SizedBox(height: 10),
+                    TextField(
+                      controller: endingPriceController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: 'Ending Price',
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    InkWell(
+                      onTap: () => _selectDateTime(context, true, true),
+                      child: InputDecorator(
+                        decoration: InputDecoration(
+                          labelText: 'Start Date & Time',
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              selectedStartDate != null
+                                  ? '${selectedStartDate!.toLocal()} ${selectedStartTime!.format(context)}'
+                                  : 'Select Start Date & Time',
+                            ),
+                            Icon(Icons.calendar_today),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    InkWell(
+                      onTap: () => _selectDateTime(context, false, false),
+                      child: InputDecorator(
+                        decoration: InputDecoration(
+                          labelText: 'End Date & Time',
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              selectedEndDate != null
+                                  ? '${selectedEndDate!.toLocal()} ${selectedEndTime!.format(context)}'
+                                  : 'Select End Date & Time',
+                            ),
+                            Icon(Icons.calendar_today),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -178,5 +202,3 @@ void main() {
     home: AuctionPage(),
   ));
 }
-
-
