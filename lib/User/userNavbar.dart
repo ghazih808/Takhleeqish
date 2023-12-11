@@ -13,6 +13,7 @@ import 'package:takhleekish/User/user_model.dart';
 import 'package:takhleekish/User/user_repository.dart';
 
 import '../main.dart';
+import 'feedback.dart';
 class UserNavbar extends StatelessWidget {
   final FirebaseAuth _auth=FirebaseAuth.instance;
 
@@ -107,7 +108,13 @@ class UserNavbar extends StatelessWidget {
 
 
                     ),
-
+                    ListTile(
+                      leading: Icon(Icons.feedback_outlined),
+                      title: Text("Feedback",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>FeedbackPage()));
+                      },
+                    ),
                     ListTile(
                       leading: Icon(Icons.support_agent),
                       title: Text("Help and Support",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
