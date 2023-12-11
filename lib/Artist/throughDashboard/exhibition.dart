@@ -7,7 +7,6 @@ class ExhibitionAnnouncementPage extends StatefulWidget {
   _ExhibitionAnnouncementPageState createState() =>
       _ExhibitionAnnouncementPageState();
 }
-
 class _ExhibitionAnnouncementPageState
     extends State<ExhibitionAnnouncementPage> {
   final GlobalKey<FormBuilderState> _formKey =
@@ -23,7 +22,6 @@ class _ExhibitionAnnouncementPageState
     'Modern Art',
     'Contemporary',
   ];
-
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
 
@@ -50,7 +48,6 @@ class _ExhibitionAnnouncementPageState
                       subtitle: Text('Venue, Date, Time, etc.'),
                       onTap: () {
                         // Handle tapping on an exhibition
-                        // You can navigate to a detailed page or show more info
                       },
                     ),
                     secondaryActions: [
