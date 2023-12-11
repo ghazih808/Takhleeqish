@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -31,51 +33,93 @@ class User_dashboard extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: (snapshot.data!.length / 2).ceil(), // Calculate the number of rows
                   itemBuilder: (context, rowIndex) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          for (int i = rowIndex * 2; i < (rowIndex * 2) + 2; i++)
-                            if (i < snapshot.data!.length)
-                              Container(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 12.0,left: 12,right: 12),
-                                  child: Container(
-                                    width: 145,
-                                    child: InkWell(
-                                      child: Hero(
-                                        tag: "Detail",
-                                        child: Card(
-                                          color: Colors.white,
-                                          elevation: 7,
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                height: 120,
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(top: 8.0),
-                                                  child: Image.network(snapshot.data![i].url),
-                                                ),
+                    return Container(
+                     decoration: BoxDecoration(
+                       gradient: LinearGradient(
+                         begin: Alignment.topLeft,
+                           end: Alignment.topRight,
+                           colors: [
+                             Color(0xff0F2027),
+                             Color(0xff203A43),
+                             Color(0xff2C5364),
+                       ]
+                       )
+                     ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            for (int i = rowIndex * 2; i < (rowIndex * 2) + 2; i++)
+                              if (i < snapshot.data!.length)
+                                Container(
+
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 12.0,left: 12,right: 12),
+                                    child: Container(
+                                      width: 150,
+                                      child: InkWell(
+                                        child: Hero(
+                                          tag: "Detail",
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(20),
+                                            child: Container(
+                                              height: 200,
+                                              color: Colors.transparent,
+                                              child: Stack(
+                                                children: [
+                                                  BackdropFilter(
+                                                      filter:ImageFilter.blur(
+                                                        sigmaX: 4.0,
+                                                        sigmaY: 4.0
+                                                      ),
+                                                    child: Container(),
+                                                  ),
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      border: Border.all(color:Colors.white.withOpacity(0.13) ),
+                                                      gradient: LinearGradient(
+                                                        begin: Alignment.topLeft,
+                                                        end: Alignment.bottomRight,
+                                                        colors: [
+                                                          Colors.white.withOpacity(0.15),
+                                                          Colors.white.withOpacity(0.05)
+                                                        ],)
+                                                    ),
+                                                  ),
+                                                  Center(
+                                                    child: Column(
+                                                      children: [
+                                                        Container(
+                                                          height: 130,
+                                                          child: Padding(
+                                                            padding: const EdgeInsets.only(top: 8.0),
+                                                            child: Image.network(snapshot.data![i].url,),
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: 2),
+                                                        Text("${snapshot.data![i].name}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: Colors.white)),
+                                                        SizedBox(height: 2),
+                                                        Text("Rs: ${snapshot.data![i].price}", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600,color: Colors.white)),
+                                                        Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600)),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
                                               ),
-                                              SizedBox(height: 2),
-                                              Text("${snapshot.data![i].name}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
-                                              SizedBox(height: 2),
-                                              Text("Rs: ${snapshot.data![i].price}", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
-                                              Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600)),
-                                            ],
+                                            ),
                                           ),
                                         ),
+                                        onTap: (){
+                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailProductPage(snapshot.data![i].url, snapshot.data![i].price, snapshot.data![i].description, snapshot.data![i].name)));
+                                        },
                                       ),
-                                      onTap: (){
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailProductPage(snapshot.data![i].url, snapshot.data![i].price, snapshot.data![i].description, snapshot.data![i].name)));
-                                      },
                                     ),
                                   ),
                                 ),
-                              ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                 

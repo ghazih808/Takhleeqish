@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:takhleekish/Artist/throughDashboard/postArtifacts.dart';
+import 'package:takhleekish/Artist/throughDashboard/session.dart';
 
+import '../../Admin/manageExhibition.dart';
 import '../navbar.dart';
 import 'checkUser/verifyGmail.dart';
 
@@ -102,7 +104,9 @@ class ArtistDashboard extends StatelessWidget{
                                   ),
                                   Container(
                                     width: 200,
-                                    child: ElevatedButton(onPressed: (){}, child: Text("Exhibition",style: TextStyle(color:Colors.white),),
+                                    child: ElevatedButton(onPressed: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ExhibitionAnnouncementPage()));
+                                    }, child: Text("Exhibition",style: TextStyle(color:Colors.white),),
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.white.withOpacity(0.5),
                                           shape: RoundedRectangleBorder(
@@ -176,7 +180,10 @@ class ArtistDashboard extends StatelessWidget{
                                   ),
                                   Container(
                                     width: 200,
-                                    child: ElevatedButton(onPressed: (){}, child: Text("Sessions",style: TextStyle(color:Colors.white),),
+                                    child: ElevatedButton(onPressed: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>PaintingSessionPage()));
+
+                                    }, child: Text("Sessions",style: TextStyle(color:Colors.white),),
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.white.withOpacity(0.5),
                                           shape: RoundedRectangleBorder(
