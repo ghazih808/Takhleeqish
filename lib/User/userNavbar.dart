@@ -9,6 +9,8 @@ import 'package:takhleekish/Artist/artistDatabase.dart';
 import 'package:takhleekish/Artist/artistPersonal/artist_model.dart';
 import 'package:takhleekish/Artist/controllers/artist_controller.dart';
 import 'package:takhleekish/User/User_authentication.dart';
+import 'package:takhleekish/User/throughNavBar/userExhibition/userExhibitionPage.dart';
+import 'package:takhleekish/User/throughNavBar/userSessions/selectPage.dart';
 import 'package:takhleekish/User/user_model.dart';
 import 'package:takhleekish/User/user_repository.dart';
 
@@ -17,7 +19,6 @@ import 'feedback.dart';
 class UserNavbar extends StatelessWidget {
   final FirebaseAuth _auth=FirebaseAuth.instance;
 
-  final controller = Get.put(Artist_Controller());
 
   final authrepo = Get.put(User_Auth());
 
@@ -36,11 +37,9 @@ class UserNavbar extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
-              User_model artistModel = snapshot.data!;
               name=snapshot.data!.name;
               email=snapshot.data!.email;
-              print(artistModel.url);
-              print('aslkjad');
+
               //     Text("$email"),
               // Text("$name"),
 
@@ -65,26 +64,19 @@ class UserNavbar extends StatelessWidget {
                             fit: BoxFit.cover,
                           )
                       ),),
-                    ListTile(
-                      leading: FaIcon(FontAwesomeIcons.userTie),
-                      title: Text("Profile",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500),),
-                      onTap: (){
 
-                      }, ),
                     ListTile(
                       leading: Icon(Icons.update),
                       title: Text("Update Credentials",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
 
                       },
-
-
-
                     ),
                     ListTile(
                       leading: FaIcon(FontAwesomeIcons.calendar),
                       title: Text("Sessions",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>UserSelectPage()));
 
                       },
 
@@ -102,24 +94,14 @@ class UserNavbar extends StatelessWidget {
                       leading: Icon(Icons.art_track),
                       title: Text("Exhibitions",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
-
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>UserExhibitionPage()));
                       },
-
-
-
                     ),
                     ListTile(
                       leading: Icon(Icons.feedback_outlined),
                       title: Text("Feedback",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>FeedbackPage()));
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.support_agent),
-                      title: Text("Help and Support",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
-                      onTap: (){
-
                       },
                     ),
                     ListTile(

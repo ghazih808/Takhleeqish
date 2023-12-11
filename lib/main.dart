@@ -19,7 +19,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:takhleekish/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'Admin/manageExhibition.dart';
 import 'Artist/throughDashboard/postArtifacts.dart';
+import 'User/throughNavBar/userExhibition/detailExhibationPage.dart';
+import 'User/throughNavBar/userExhibition/userExhibitionPage.dart';
+import 'User/throughNavBar/userSessions/selectPage.dart';
 
 
 
