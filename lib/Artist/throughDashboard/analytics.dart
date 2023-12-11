@@ -68,7 +68,7 @@ class ArtistAnalyticsCard extends StatelessWidget {
             Text(
               value,
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
             ),
