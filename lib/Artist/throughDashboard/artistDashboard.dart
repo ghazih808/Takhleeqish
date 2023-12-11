@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:takhleekish/Artist/throughDashboard/exhibition.dart';
 import 'package:takhleekish/Artist/throughDashboard/postArtifacts.dart';
 import 'package:takhleekish/Artist/throughDashboard/session.dart';
-
-import '../../Admin/manageExhibition.dart';
 import '../navbar.dart';
+import 'auction.dart';
 import 'checkUser/verifyGmail.dart';
 
 class ArtistDashboard extends StatelessWidget{
@@ -143,7 +143,9 @@ class ArtistDashboard extends StatelessWidget{
                                   ),
                                   Container(
                                     width: 200,
-                                    child: ElevatedButton(onPressed: (){}, child: Text("Auction",style: TextStyle(color:Colors.white),),
+                                    child: ElevatedButton(onPressed: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>AuctionPage()));
+                                    }, child: Text("Auction",style: TextStyle(color:Colors.white),),
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.white.withOpacity(0.5),
                                           shape: RoundedRectangleBorder(

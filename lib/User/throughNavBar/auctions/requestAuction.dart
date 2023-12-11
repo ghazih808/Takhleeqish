@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../userNavbar.dart';
 import 'ApprovedBids/approvedAuctionPage.dart';
+import 'availableBids/userAuctionPage.dart';
 // import 'availableBids/userAuctionPage.dart';
 
 class UserRequestAuctionPage extends StatelessWidget{
@@ -57,7 +58,7 @@ class UserRequestAuctionPage extends StatelessWidget{
                         Container(
                           width: 200,
                           child: ElevatedButton(onPressed: (){
-                            // Navigator.push(context, MaterialPageRoute(builder: (context)=>UserAuctionPage()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>UserAuctionPage()));
                           }, child: Text("Avialable Bids",style: TextStyle(color:Colors.white,fontSize: 16),),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.white.withOpacity(0.5),

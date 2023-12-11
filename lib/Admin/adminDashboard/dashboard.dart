@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:takhleekish/Admin/navbar/adminNavbar.dart';
 
 import '../../Artist/navbar.dart';
+import '../throughDashboard/adminAuction/auctionPage.dart';
+import '../throughDashboard/adminExhibition/adminExhibitionPage.dart';
 
 class AdminDashboard extends StatelessWidget{
   @override
@@ -51,7 +53,9 @@ class AdminDashboard extends StatelessWidget{
                           ),
                           Container(
                             width: 200,
-                            child: ElevatedButton(onPressed: (){}, child: Text("Exhibition",style: TextStyle(color:Colors.white),),
+                            child: ElevatedButton(onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminExhibitionPage()));
+                            }, child: Text("Exhibition",style: TextStyle(color:Colors.white),),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.white.withOpacity(0.5),
                                   shape: RoundedRectangleBorder(
@@ -88,7 +92,9 @@ class AdminDashboard extends StatelessWidget{
                           ),
                           Container(
                             width: 200,
-                            child: ElevatedButton(onPressed: (){}, child: Text("Auction",style: TextStyle(color:Colors.white),),
+                            child: ElevatedButton(onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminAuctionPage()));
+                            }, child: Text("Auction",style: TextStyle(color:Colors.white),),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.white.withOpacity(0.5),
                                   shape: RoundedRectangleBorder(

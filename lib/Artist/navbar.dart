@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:takhleekish/Artist/throughDashboard/analytics.dart';
 import 'package:takhleekish/Artist/throughDashboard/artistDashboard.dart';
 import 'package:takhleekish/Artist/artistDatabase.dart';
 import 'package:takhleekish/Artist/artistPersonal/artist_model.dart';
@@ -83,7 +84,7 @@ class Navbar extends StatelessWidget {
                       leading: Icon(Icons.query_stats),
                            title: Text("Statistics",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                          onTap: (){
-
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ArtistAnalyticsPage()));
                        },
                     ),
                     ListTile(
