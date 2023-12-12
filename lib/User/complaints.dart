@@ -15,6 +15,7 @@ class _ComplaintsPageState extends State<ComplaintsPage> {
         title: Text('Submit a Complaint'),
         centerTitle: true,
       ),
+
       body: Center(
         child: Container(
           padding: EdgeInsets.all(16.0),
