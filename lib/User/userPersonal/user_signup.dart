@@ -383,7 +383,6 @@ class User_Signup extends StatelessWidget {
                                         name: controller.Usname.text.trim(),
                                         email: controller.Usemail.text.trim(),
                                         cnic: controller.Uscnic.text.trim(),
-                                        pass: controller.Uspass.text.trim(),
                                         url: controller.User_url);
                                     User_Controller.instance.createUser(user);
                                     Navigator.push(context, MaterialPageRoute(builder: (

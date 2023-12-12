@@ -16,130 +16,134 @@ class User_dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: UserNavbar(),
+      backgroundColor:Color(0xff0F2027),
       appBar: AppBar(
         title: const Text("Dashboard", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 30)),
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
-      body: FutureBuilder<List<Artifact_model>>(
-        future: getAllData(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              return SingleChildScrollView(
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: (snapshot.data!.length / 2).ceil(), // Calculate the number of rows
-                  itemBuilder: (context, rowIndex) {
-                    return Container(
-                     decoration: BoxDecoration(
-                       gradient: LinearGradient(
-                         begin: Alignment.topLeft,
-                           end: Alignment.topRight,
-                           colors: [
-                             Color(0xff0F2027),
-                             Color(0xff203A43),
-                             Color(0xff2C5364),
-                       ]
-                       )
-                     ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            for (int i = rowIndex * 2; i < (rowIndex * 2) + 2; i++)
-                              if (i < snapshot.data!.length)
-                                Container(
+      body: Container(
+        // decoration: BoxDecoration(
+        //     gradient: LinearGradient(
+        //         begin: Alignment.topLeft,
+        //         end: Alignment.topRight,
+        //         colors: [
+        //           Color(0xff0F2027),
+        //           Color(0xff203A43),
+        //           Color(0xff2C5364),
+        //         ]
+        //     )
+        // ),
+        child: FutureBuilder<List<Artifact_model>>(
+          future: getAllData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
+                return SingleChildScrollView(
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: (snapshot.data!.length / 2).ceil(), // Calculate the number of rows
+                    itemBuilder: (context, rowIndex) {
+                      return Container(
 
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 12.0,left: 12,right: 12),
-                                    child: Container(
-                                      width: 150,
-                                      child: InkWell(
-                                        child: Hero(
-                                          tag: "Detail",
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(20),
-                                            child: Container(
-                                              height: 200,
-                                              color: Colors.transparent,
-                                              child: Stack(
-                                                children: [
-                                                  BackdropFilter(
-                                                      filter:ImageFilter.blur(
-                                                        sigmaX: 4.0,
-                                                        sigmaY: 4.0
-                                                      ),
-                                                    child: Container(),
-                                                  ),
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(10),
-                                                      border: Border.all(color:Colors.white.withOpacity(0.13) ),
-                                                      gradient: LinearGradient(
-                                                        begin: Alignment.topLeft,
-                                                        end: Alignment.bottomRight,
-                                                        colors: [
-                                                          Colors.white.withOpacity(0.15),
-                                                          Colors.white.withOpacity(0.05)
-                                                        ],)
-                                                    ),
-                                                  ),
-                                                  Center(
-                                                    child: Column(
-                                                      children: [
-                                                        Container(
-                                                          height: 130,
-                                                          child: Padding(
-                                                            padding: const EdgeInsets.only(top: 8.0),
-                                                            child: Image.network(snapshot.data![i].url,),
-                                                          ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              for (int i = rowIndex * 2; i < (rowIndex * 2) + 2; i++)
+                                if (i < snapshot.data!.length)
+                                  Container(
+
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 12.0,left: 12,right: 12),
+                                      child: Container(
+                                        width: 150,
+                                        child: InkWell(
+                                          child: Hero(
+                                            tag: "Detail",
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(20),
+                                              child: Container(
+                                                height: 200,
+                                                color: Colors.transparent,
+                                                child: Stack(
+                                                  children: [
+                                                    BackdropFilter(
+                                                        filter:ImageFilter.blur(
+                                                          sigmaX: 4.0,
+                                                          sigmaY: 4.0
                                                         ),
-                                                        SizedBox(height: 2),
-                                                        Text("${snapshot.data![i].name}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: Colors.white)),
-                                                        SizedBox(height: 2),
-                                                        Text("Rs: ${snapshot.data![i].price}", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600,color: Colors.white)),
-                                                        Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600)),
-                                                      ],
+                                                      child: Container(),
                                                     ),
-                                                  )
-                                                ],
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        border: Border.all(color:Colors.white.withOpacity(0.13) ),
+                                                        gradient: LinearGradient(
+                                                          begin: Alignment.topLeft,
+                                                          end: Alignment.bottomRight,
+                                                          colors: [
+                                                            Colors.white.withOpacity(0.15),
+                                                            Colors.white.withOpacity(0.05)
+                                                          ],)
+                                                      ),
+                                                    ),
+                                                    Center(
+                                                      child: Column(
+                                                        children: [
+                                                          Container(
+                                                            height: 130,
+                                                            child: Padding(
+                                                              padding: const EdgeInsets.only(top: 8.0),
+                                                              child: Image.network(snapshot.data![i].url,),
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: 2),
+                                                          Text("${snapshot.data![i].name}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: Colors.white)),
+                                                          SizedBox(height: 2),
+                                                          Text("Rs: ${snapshot.data![i].price}", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600,color: Colors.white)),
+                                                          Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600)),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
+                                          onTap: (){
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailProductPage(snapshot.data![i].url, snapshot.data![i].price, snapshot.data![i].description, snapshot.data![i].name)));
+                                          },
                                         ),
-                                        onTap: (){
-                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailProductPage(snapshot.data![i].url, snapshot.data![i].price, snapshot.data![i].description, snapshot.data![i].name)));
-                                        },
                                       ),
                                     ),
                                   ),
-                                ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                
-                
-                  },
-                ),
-              );
-            } else if (snapshot.hasError) {
-              print({snapshot.hasError});
-              return Text('Data not found');
+                      );
+
+
+                    },
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                print({snapshot.hasError});
+                return Text('Data not found');
+              } else {
+                return Text('Something went wrong');
+              }
             } else {
-              return Text('Something went wrong');
+              // Return Center widget to display CircularProgressIndicator in the center
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
-          } else {
-            // Return Center widget to display CircularProgressIndicator in the center
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
+          },
+        ),
       ),
     );
   }

@@ -5,7 +5,6 @@ class User_model{
   final String name;
   final String email;
   final String cnic;
-  final String pass;
   final String url;
     const User_model(
     {
@@ -13,7 +12,6 @@ class User_model{
       required this.name,
       required this.email,
       required this.cnic,
-      required this.pass,
       required this.url,
   });
 
@@ -23,7 +21,6 @@ class User_model{
       'Name':name,
     'Cnic':cnic,
     'Email':email,
-    'Password':pass,
       'Dp':url,
     };
   }
@@ -36,7 +33,6 @@ class User_model{
         name: data["Name"],
         email: data["Email"],
         cnic: data["Cnic"],
-        pass: data["Password"],
       url: data["Dp"],
     );
   }
