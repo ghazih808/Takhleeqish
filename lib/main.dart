@@ -50,6 +50,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         useMaterial3: true,
+        // ignore: deprecated_member_use
+        backgroundColor: Color(0xfff77062),
       ),
       home: AdminDashboard(),
     );

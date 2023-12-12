@@ -38,8 +38,8 @@ class _Artist_loginState extends State<Artist_login> {
         Scaffold(
           body:  Center(
             child: Container(
-              width: 320,
-              height: 500,
+              width: double.infinity,
+              height: double.infinity,
 
               decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -59,11 +59,12 @@ class _Artist_loginState extends State<Artist_login> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 45.0,bottom: 74.0),
-                        child: Text("Takhleeqish",style: TextStyle(fontSize: 45,fontFamily:'main',fontWeight: FontWeight.w600),),
+                        padding: const EdgeInsets.only(top: 75.0,bottom: 74.0),
+                        child: Text("Takhleeqish",style: TextStyle(fontSize: 55,fontFamily:'main',fontWeight: FontWeight.w600),),
                       ),
+                      SizedBox(height: 30,),
                       Container(
-                        width: 280,
+                        width: 340,
                         height: 45,
                         child: TextFormField(
                           controller: loginController.Aremail,
@@ -101,7 +102,7 @@ class _Artist_loginState extends State<Artist_login> {
                         height: 20,
                       ),
                       Container(
-                        width: 250,
+                        width: 280,
                         height: 45,
                         child: TextFormField(
                           controller: loginController.Arpass,
@@ -126,13 +127,19 @@ class _Artist_loginState extends State<Artist_login> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 20,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 0.0),
                         child: Container(
                             child: TextButton(onPressed: () {
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>Forgot_Page()));
                             },
-                                child:Text("Forgot Password?",style: TextStyle(color: Colors.blue),))),
+                                child:Text("Forgot Password?",style: TextStyle(color: Colors.blue,fontSize: 18),))),
+                      ),
+                      SizedBox(
+                        height: 20,
                       ),
                       Padding(
                           padding: const EdgeInsets.only(bottom: 4.0),
@@ -172,11 +179,11 @@ class _Artist_loginState extends State<Artist_login> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 30.0),
-                            child: Text("Don't have an account?",style: TextStyle(fontWeight: FontWeight.w400),),
+                            child: Text("Don't have an account?",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18),),
                           ),
                           TextButton(onPressed: (){
                             Get.offAll(()=>Art_Signup());
-                          }, child: Text("Sign Up",style: TextStyle(color: Colors.blue),))
+                          }, child: Text("Sign Up",style: TextStyle(color: Colors.blue,fontSize: 16,fontWeight: FontWeight.bold),))
                         ],
                       )
                     ],
