@@ -4,15 +4,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:takhleekish/Artist/throughDashboard/analytics.dart';
+import 'package:takhleekish/Artist/throughNavbar/AnalyticsPage/analytics.dart';
 import 'package:takhleekish/Artist/throughDashboard/artistDashboard.dart';
 import 'package:takhleekish/Artist/artistDatabase.dart';
 import 'package:takhleekish/Artist/artistPersonal/artist_model.dart';
 import 'package:takhleekish/Artist/controllers/artist_controller.dart';
+import 'package:takhleekish/Artist/throughNavbar/ComplainsPage/artistComplainsPage.dart';
+import 'package:takhleekish/Artist/throughNavbar/updatePassword/artistUpdatePassword.dart';
 import 'package:takhleekish/main.dart';
 
-import 'artistPersonal/artist_authentication.dart';
-import 'artistPersonal/artist_repository.dart';
+import '../artistPersonal/artist_authentication.dart';
+import '../artistPersonal/artist_repository.dart';
 
 class Navbar extends StatelessWidget {
   final controller = Get.put(Artist_Controller());
@@ -64,17 +66,12 @@ class Navbar extends StatelessWidget {
                         fit: BoxFit.cover,
                       )
                     ),),
-                      ListTile(
-                         leading: FaIcon(FontAwesomeIcons.userTie),
-                           title: Text("Profile",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500),),
-                         onTap: (){
 
-                     }, ),
                     ListTile(
                       leading: Icon(Icons.update),
-                      title: Text("Update Credentials",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      title: Text("Update Password",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
-
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ArtistUpdatePassword()));
                       },
 
 
@@ -82,16 +79,16 @@ class Navbar extends StatelessWidget {
                     ),
                     ListTile(
                       leading: Icon(Icons.query_stats),
-                           title: Text("Statistics",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                           title: Text("Analytics",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                          onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>ArtistAnalyticsPage()));
                        },
                     ),
                     ListTile(
                       leading: Icon(Icons.help),
-                      title: Text("Help and Support",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      title: Text("Complains",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
-
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ArtistComplainsPage()));
                       },
                     ),
                     ListTile(

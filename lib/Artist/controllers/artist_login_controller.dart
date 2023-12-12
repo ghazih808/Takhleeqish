@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:takhleekish/Artist/throughDashboard/artistDashboard.dart';
-import 'package:takhleekish/User/User_Dashboard.dart';
+import 'package:takhleekish/User/dashboard/User_Dashboard.dart';
 
 import '../../Admin/adminDashboard/dashboard.dart';
 

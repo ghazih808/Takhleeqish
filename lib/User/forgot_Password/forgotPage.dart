@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:email_auth/email_auth.dart';
 import 'package:get/get.dart';
 import 'package:takhleekish/User/forgot_Password/resetPassword.dart';
-import '../user_login.dart';
+import '../userPersonal/user_login.dart';
 
 class Forgot_Page extends StatefulWidget {
   @override

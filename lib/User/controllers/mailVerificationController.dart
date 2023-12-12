@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:takhleekish/User/User_authentication.dart';
+import 'package:takhleekish/User/credentialsFile/User_authentication.dart';
 
 class UserMailVerifyController extends GetxController{
   @override

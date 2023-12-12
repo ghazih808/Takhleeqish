@@ -2,24 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:takhleekish/Admin/adminDashboard/dashboard.dart';
 import 'package:takhleekish/Artist/artistPersonal/art_signup.dart';
-import 'package:takhleekish/Artist/navbar.dart';
+import 'package:takhleekish/Artist/Navbar/navbar.dart';
 import 'package:takhleekish/Artist/throughDashboard/artistDashboard.dart';
 import 'package:takhleekish/Artist/throughDashboard/checkUser/verifyGmail.dart';
-import 'package:takhleekish/Splash.dart';
-import 'package:takhleekish/User/User_Dashboard.dart';
-import 'package:takhleekish/User/User_authentication.dart';
-import 'package:takhleekish/User/detailProductPage.dart';
+import 'package:takhleekish/splashScreen/Splash.dart';
+import 'package:takhleekish/User/dashboard/User_Dashboard.dart';
+import 'package:takhleekish/User/credentialsFile/User_authentication.dart';
+import 'package:takhleekish/User/dashboard/detailProductPage.dart';
 import 'package:takhleekish/User/forgot_Password/forgotPage.dart';
 import 'package:takhleekish/User/forgot_Password/resetPassword.dart';
-import 'package:takhleekish/User/userNavbar.dart';
-import 'package:takhleekish/User/user_login.dart';
-import 'package:takhleekish/User/user_signup.dart';
+import 'package:takhleekish/User/Navbar/userNavbar.dart';
+import 'package:takhleekish/User/userPersonal/user_login.dart';
+import 'package:takhleekish/User/userPersonal/user_signup.dart';
 import 'package:takhleekish/Artist/artistPersonal/art_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:takhleekish/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'Artist/throughDashboard/analytics.dart';
-import 'Artist/throughDashboard/postArtifacts.dart';
+import 'Artist/throughDashboard/ArtistAuction/auction.dart';
+import 'Artist/throughNavbar/AnalyticsPage/analytics.dart';
+import 'Artist/throughDashboard/postArtifact/postArtifacts.dart';
 import 'User/throughNavBar/auctions/ApprovedBids/approvedBidPage.dart';
 import 'User/throughNavBar/auctions/requestAuction.dart';
 // import 'User/throughNavBar/auctions/availableBids/userAuctionPage.dart';
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
         // ignore: deprecated_member_use
         backgroundColor: Color(0xfff77062),
       ),
-      home: AdminDashboard(),
+      home: SplashScreen(),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:takhleekish/Admin/compainsCheck/complainDashboard.dart';
 
 import '../../main.dart';
 
@@ -35,7 +36,7 @@ class AdminNavbar extends StatelessWidget{
               leading: FaIcon(FontAwesomeIcons.triangleExclamation),
               title: Text("Complaints",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
               onTap: (){
-
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>ComplainDashboardPage()));
               },
 
 

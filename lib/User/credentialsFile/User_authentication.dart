@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
-import 'package:takhleekish/User/User_Dashboard.dart';
+import 'package:takhleekish/User/dashboard/User_Dashboard.dart';
 import 'package:takhleekish/User/userSignUpEmailFailure.dart';
-import 'package:takhleekish/User/user_login.dart';
+import 'package:takhleekish/User/userPersonal/user_login.dart';
 
 class User_Auth extends GetxController{
   static User_Auth get instance=> Get.find();

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../userNavbar.dart';
+import '../../Navbar/userNavbar.dart';
 import 'ApprovedBids/approvedAuctionPage.dart';
 import 'availableBids/userAuctionPage.dart';
 // import 'availableBids/userAuctionPage.dart';

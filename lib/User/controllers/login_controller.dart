@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' ;
 
 import 'package:get/get.dart';
-import 'package:takhleekish/User/User_Dashboard.dart';
+import 'package:takhleekish/User/dashboard/User_Dashboard.dart';
 
 import '../../Admin/adminDashboard/dashboard.dart';
 

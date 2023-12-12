@@ -9,9 +9,9 @@ class PaintingSessionPage extends StatefulWidget {
 
 class _PaintingSessionPageState extends State<PaintingSessionPage> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
-
+TextEditingController title=TextEditingController();
   List<String> sessionTypes = ['Online', 'Physical', 'Hybrid'];
-  List<String> onlinePlatforms = ['Google Meeting', 'Zoom', 'Microsoft Teams'];
+  List<String> onlinePlatforms = ['Google Meet'];
   List<String> venues = ['Venue A', 'Venue B', 'Venue C'];
   List<int> capacityOptions = [100, 200, 300];
   List<String> paintingCategories = [
@@ -31,52 +31,66 @@ class _PaintingSessionPageState extends State<PaintingSessionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Create Painting Session'),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: 5, // Number of painting sessions (fetch from the database)
-                itemBuilder: (context, index) {
-                  return Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.25,
-                    child: ListTile(
-                      title: Text('Session ${index + 1}'),
-                      subtitle: Text('Type, Venue, Date, Time, etc.'),
-                      onTap: () {
-                        // Handle tapping on a painting session
-                        // You can navigate to a detailed page or show more info
-                      },
-                    ),
-                    secondaryActions: [
-                      IconSlideAction(
-                        caption: 'Delete',
-                        color: Colors.red,
-                        icon: Icons.delete,
-                        onTap: () {
-                          // Handle deleting the painting session
-                          // You may prompt the user for confirmation
-                        },
-                      ),
-                    ],
-                  );
-                },
-              ),
+
+      body: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 880,
+            child: Image.asset("assests/images/dbpic2.jpeg"
+              ,fit: BoxFit.fitHeight,),
+            //add background image here
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.separated(
+                    itemCount: 5, // Number of painting sessions (fetch from the database)
+                    itemBuilder: (context, index) {
+                      return Slidable(
+                        actionPane: SlidableDrawerActionPane(),
+                        actionExtentRatio: 0.25,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15.0)
+                          ),
+                          child: ListTile(
+                            title: Text('Session ${index + 1}'),
+                            subtitle: Text('Type, Venue, Date, Time, etc.'),
+                            onTap: () {
+                              // Handle tapping on a painting session
+                              // You can navigate to a detailed page or show more info
+                            },
+                          ),
+                        ),
+                        secondaryActions: [
+                          IconSlideAction(
+                            caption: 'Delete',
+                            color: Colors.red,
+                            icon: Icons.delete,
+                            onTap: () {
+                              // Handle deleting the painting session
+                              // You may prompt the user for confirmation
+                            },
+                          ),
+                        ],
+                      );
+                    }, separatorBuilder: (BuildContext context, int index) { return const Divider(); },
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    _showCreateSessionDialog(context);
+                  },
+                  child: Text('Create Painting Session'),
+                ),
+              ],
             ),
-            ElevatedButton(
-              onPressed: () {
-                _showCreateSessionDialog(context);
-              },
-              child: Text('Create Painting Session'),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -119,6 +133,24 @@ class _PaintingSessionPageState extends State<PaintingSessionPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                TextFormField(
+                  controller: title,
+                  keyboardType: TextInputType.text,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Title is Required';
+                    } else {
+                      title.text = value;
+                    }
+                  },
+                  decoration: InputDecoration(
+                    label: Text("Title"),
+                    hintText:"Enter title",
+                  ),
+                ),
+                SizedBox(
+                  height: 2,
+                ),
                 FormBuilderDropdown(
                   name: 'sessionType',
                   decoration: InputDecoration(labelText: 'Session Type'),

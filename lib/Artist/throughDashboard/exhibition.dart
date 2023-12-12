@@ -28,52 +28,65 @@ class _ExhibitionAnnouncementPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Announce Exhibition'),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: 5, // Number of exhibitions (fetch from the database)
-                itemBuilder: (context, index) {
-                  return Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.25,
-                    child: ListTile(
-                      title: Text('Exhibition ${index + 1}'),
-                      subtitle: Text('Venue, Date, Time, etc.'),
-                      onTap: () {
-                        // Handle tapping on an exhibition
-                      },
-                    ),
-                    secondaryActions: [
-                      IconSlideAction(
-                        caption: 'Delete',
-                        color: Colors.red,
-                        icon: Icons.delete,
-                        onTap: () {
-                          // Handle deleting the exhibition
-                          // You may prompt the user for confirmation
-                        },
+
+      body:Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 880,
+            child: Image.asset("assests/images/dbpic2.jpeg"
+              ,fit: BoxFit.fitHeight,),
+            //add background image here
+          ),
+          Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.separated(
+                  itemCount: 5, // Number of exhibitions (fetch from the database)
+                  itemBuilder: (context, index) {
+                    return Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+                      actionExtentRatio: 0.25,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15.0)
+                        ),
+                        child: ListTile(
+                          title: Text('Exhibition ${index + 1}'),
+                          subtitle: Text('Venue, Date, Time, etc.'),
+                          onTap: () {
+                            // Handle tapping on an exhibition
+                          },
+                        ),
                       ),
-                    ],
-                  );
-                },
+                      secondaryActions: [
+                        IconSlideAction(
+                          caption: 'Delete',
+                          color: Colors.red,
+                          icon: Icons.delete,
+                          onTap: () {
+                            // Handle deleting the exhibition
+                            // You may prompt the user for confirmation
+                          },
+                        ),
+                      ],
+                    );
+                  }, separatorBuilder: (BuildContext context, int index) { return const Divider(); },
+                ),
               ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                _showAddExhibitionDialog(context);
-              },
-              child: Text('Add Exhibition'),
-            ),
-          ],
-        ),
-      ),
+              ElevatedButton(
+                onPressed: () {
+                  _showAddExhibitionDialog(context);
+                },
+                child: Text('Add Exhibition'),
+              ),
+            ],
+          ),
+        ),],
+      )
     );
   }
 

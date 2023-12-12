@@ -1,38 +1,45 @@
+
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_otp/email_otp.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:takhleekish/Artist/artistPersonal/art_login.dart';
-import 'package:takhleekish/Artist/controllers/artist_controller.dart';
-import 'package:takhleekish/Artist/artistPersonal/artist_model.dart';
+import 'package:takhleekish/User/userPersonal/user_login.dart';
+import 'package:takhleekish/User/credentialsFile/user_model.dart';
 
-class Art_Signup extends StatelessWidget{
-  String imageurl='';
-  @override
+import '../controllers/mailVerificationController.dart';
+import '../controllers/user_controller.dart';
+
+
+class User_Signup extends StatelessWidget {
   final formkey=GlobalKey<FormState>();
   TextEditingController Otp=TextEditingController();
   EmailOTP myAuth = EmailOTP();
+  @override
   Widget build(BuildContext context) {
-    final controller=Get.put(Artist_Controller());
     double screenHeight=MediaQuery.of(context).size.height;
+    final controller=Get.put(User_Controller());
+
     return Scaffold(
       body: SingleChildScrollView(
-        child: Stack(children: [
-          Container(
-            width: double.infinity,
-            height: 880,
-            child: Image.asset("assests/images/dbpic2.jpeg"
-              ,fit: BoxFit.fitHeight,),
-            //add background image here
-          ),
-          Center(
-            child: Container(
+        child: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              height: 880,
+              child: Image.asset("assests/images/dbpic2.jpeg"
+                ,fit: BoxFit.fitHeight,),
+              //add background image here
+            ),
+            Center(
+              child: Container(
+        
               child: Form(
                 key: formkey,
                 child: Column(
@@ -48,15 +55,15 @@ class Art_Signup extends StatelessWidget{
                       width: 345,
                       height: 50,
                       child: TextFormField(
-                        controller: controller.Arname,
+                        controller: controller.Usname,
                         keyboardType: TextInputType.name,
                         validator:(value){
                           if(value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value!))
                           {
-                            return 'Enter correct name';
+                            return 'Enter Name Correctly';
                           }
                           else{
-                            controller.Arname.text=value;
+                            controller.Usname.text=value;
                           }
                         },
                         decoration: InputDecoration(
@@ -66,7 +73,7 @@ class Art_Signup extends StatelessWidget{
                                 width: 2,
                                 color: Color(0xfff77062),
                               )
-
+        
                           ),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
@@ -78,9 +85,9 @@ class Art_Signup extends StatelessWidget{
                             padding: const EdgeInsets.only(left: 12.0,top: 7.0),
                             child: Container(child: FaIcon(FontAwesomeIcons.user,color: Colors.black,)),
                           ),
-                          labelText: "Enter Full Name",
+                          labelText: "Enter Name",
                         ),
-
+        
                       ),
                     ),
                     SizedBox(
@@ -90,7 +97,7 @@ class Art_Signup extends StatelessWidget{
                       width: 345,
                       height: 50,
                       child: TextFormField(
-                        controller: controller.Aremail,
+                        controller: controller.Usemail,
                         keyboardType: TextInputType.emailAddress,
                         validator:(value){
                           if(value!.isEmpty || !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}').hasMatch(value!))
@@ -98,7 +105,7 @@ class Art_Signup extends StatelessWidget{
                             return 'Enter correct Email';
                           }
                           else{
-                            controller.Aremail.text=value;
+                            controller.Usemail.text=value;
                           }
                         },
                         decoration: InputDecoration(
@@ -108,7 +115,7 @@ class Art_Signup extends StatelessWidget{
                                   width: 2,
                                   color: Color(0xfff77062),
                                 )
-
+        
                             ),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15.0),
@@ -124,7 +131,7 @@ class Art_Signup extends StatelessWidget{
                                 myAuth.setConfig(
                                     appEmail: "Takhleeqish@gmail.com",
                                     appName: "Email OTP",
-                                    userEmail: controller.Aremail.text,
+                                    userEmail: controller.Usemail.text,
                                     otpLength: 4,
                                     otpType: OTPType.digitsOnly
                                 );
@@ -135,12 +142,12 @@ class Art_Signup extends StatelessWidget{
                                 else{
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(content:Text("OTP Not send"), ));
-
+        
                                 }
                               },
                             )
                         ),
-
+        
                       ),
                     ),
                     SizedBox(
@@ -187,15 +194,14 @@ class Art_Signup extends StatelessWidget{
                       width: 345,
                       height: 50,
                       child: TextFormField(
-                        controller: controller.Arcnic,
+                        controller: controller.Uscnic,
                         validator:(value){
                           if(value!.isEmpty || !RegExp(r'^([0-9]{5})[\-]([0-9]{7})[\-]([0-9]{1})$').hasMatch(value!))
                           {
                             return 'CNIC No must follow the XXXXX-XXXXXXX-X format!';
                           }
                           else{
-
-                            controller.Arcnic.text=value;
+                            controller.Uscnic.text=value;
                           }
                         },
                         decoration: InputDecoration(
@@ -205,7 +211,7 @@ class Art_Signup extends StatelessWidget{
                               width: 2,
                               color: Color(0xfff77062),
                             ),
-
+        
                           ),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
@@ -218,7 +224,7 @@ class Art_Signup extends StatelessWidget{
                             child: Container(child: FaIcon(FontAwesomeIcons.idBadge,color: Colors.black,)),
                           ),
                           labelText: "Enter CNIC",
-
+        
                         ),
                       ),
                     ),
@@ -229,14 +235,14 @@ class Art_Signup extends StatelessWidget{
                       width: 345,
                       height: 50,
                       child: TextFormField(
-                        controller: controller.Arpass,
+                        controller: controller.Uspass,
                         validator:(value){
                           if(value!.isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value!))
                           {
                             return '8 digits,one (upper,lower case,digit,Special character)';
                           }
                           else{
-                            controller.Arpass.text=value;
+                            controller.Uspass.text=value;
                           }
                         },
                         decoration: InputDecoration(
@@ -246,7 +252,7 @@ class Art_Signup extends StatelessWidget{
                               width: 2,
                               color: Color(0xfff77062),
                             ),
-
+        
                           ),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
@@ -255,8 +261,8 @@ class Art_Signup extends StatelessWidget{
                               )
                           ),
                           prefixIcon: Icon(Icons.lock,color: Colors.black,),
-                          labelText: "Enter Password",
-
+                          labelText: "Enter password",
+        
                         ),
                       ),
                     ),
@@ -277,28 +283,28 @@ class Art_Signup extends StatelessWidget{
                                 if(file==null) return null;
                                 String uniqueName=DateTime.now().microsecondsSinceEpoch.toString();
                                 Reference refrenceRoot=FirebaseStorage.instance.ref();
-                                Reference refrenceDirImage=refrenceRoot.child("ArtitsImages");
+                                Reference refrenceDirImage=refrenceRoot.child("UserImages");
                                 Reference refrenceImageToUpload=refrenceDirImage.child(uniqueName);
-
+        
                                 try{SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
                                 await refrenceImageToUpload.putFile(File(file!.path), metadata);
-                                controller.Artist_url =await refrenceImageToUpload.getDownloadURL();
+                                controller.User_url =await refrenceImageToUpload.getDownloadURL();
                                 Get.snackbar("Congratulations", "Image has been added",
                                     snackPosition:SnackPosition.BOTTOM,
                                     backgroundColor: Colors.green.withOpacity(0.1),
                                     colorText: Colors.green);
-
-
+        
+        
                                 }catch(error)
                                 {
-
+        
                                 }
-
-
-
-
-
-
+        
+        
+        
+        
+        
+        
                               },),
                               ListTile(leading:Icon(Icons.insert_photo),title: Text("Gallery"),onTap: () async {
                                 {
@@ -309,28 +315,28 @@ class Art_Signup extends StatelessWidget{
                                   Reference refrenceRoot=FirebaseStorage.instance.ref();
                                   Reference refrenceDirImage=refrenceRoot.child("ArtistImage");
                                   Reference refrenceImageToUpload=refrenceDirImage.child(uniqueName);
-
+        
                                   try{
                                     SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
                                     await refrenceImageToUpload.putFile(File(file!.path), metadata);
-                                    controller.Artist_url =await refrenceImageToUpload.getDownloadURL();
-                                    print('${controller.Artist_url}');
-                                    Navigator.pop(context);
+        
+                                    controller.User_url =await refrenceImageToUpload.getDownloadURL();
+                                    print('${controller.User_url}');
                                     Get.snackbar("Sorry", "Please try again.",
                                         snackPosition:SnackPosition.BOTTOM,
                                         backgroundColor: Colors.red.withOpacity(0.1),
                                         colorText: Colors.red);
-
-
+        
+        
                                   }catch(error)
                                   {
-
+        
                                   }
-
+        
                                 }
-
+        
                               },)
-
+        
                             ],
                           ), onClosing: () {  },));
                       }, child: Row(
@@ -354,58 +360,66 @@ class Art_Signup extends StatelessWidget{
                           width: 300,
                           height: 40,
                           child: ElevatedButton(onPressed: () async {
-                            bool cnicCheck = await isCnicUnique(controller.Arcnic.text);
+        
+                            bool cnicCheck = await isCnicUnique(controller.Uscnic.text);
                             if(cnicCheck)
                             {
                               Get.snackbar("Sorry", "Cnic already exists.",
                                   snackPosition:SnackPosition.BOTTOM,
                                   backgroundColor: Colors.red.withOpacity(0.1),
                                   colorText: Colors.red);
-                              controller.Arcnic.clear();
-
+                              controller.Uscnic.clear();
                             }else{
-                              if(formkey.currentState!.validate())  {
-                                if(await Artist_Controller.instance.registerArtist(controller.Aremail.text.trim(), controller.Arpass.text.trim())){
-                                  Artist_Controller.instance.registerArtist(controller.Aremail.text.trim(), controller.Arpass.text.trim());
-                                  if(await myAuth.verifyOTP(otp:Otp.text) == true)
-                                  {
-                                    final artist = Artist_model(
-                                        name: controller.Arname.text.trim(),
-                                        email: controller.Aremail.text.trim(),
-                                        cnic: controller.Arcnic.text.trim(),
-                                        pass: controller.Arpass.text.trim(),
-                                        url: controller.Artist_url);
-                                    Artist_Controller.instance.createArtist(artist);
+                              if(formkey.currentState!.validate()) {
+                                if(await User_Controller.instance.registerUser(controller.Usemail.text.trim(),controller.Uspass.text.trim(),))
+                                {
+                                  User_Controller.instance.registerUser(
+                                    controller.Usemail.text.trim(),
+                                    controller.Uspass.text.trim(),
+                                  );
+        
+                                  if(await myAuth.verifyOTP(otp:Otp.text) == true){
+                                    final user = User_model(
+                                        name: controller.Usname.text.trim(),
+                                        email: controller.Usemail.text.trim(),
+                                        cnic: controller.Uscnic.text.trim(),
+                                        pass: controller.Uspass.text.trim(),
+                                        url: controller.User_url);
+                                    User_Controller.instance.createUser(user);
                                     Navigator.push(context, MaterialPageRoute(builder: (
-                                        context) => Artist_login()),);
-                                    controller.Arcnic.clear();
-                                    controller.Arpass.clear();
-                                    controller.Aremail.clear();
-                                    controller.Arname.clear();
+                                        context) => User_login()),);
+        
+                                    controller.Usname.clear();
+                                    controller.Usemail.clear();
+                                    controller.Uscnic.clear();
+                                    controller.Uspass.clear();
                                   }
                                   else{
                                     Get.snackbar("Sorry", "Enter the Valid Otp.",
                                         snackPosition:SnackPosition.BOTTOM,
                                         backgroundColor: Colors.red.withOpacity(0.1),
                                         colorText: Colors.red);
+        
                                   }
-
-                                }
-                                else{
+                                  Get.snackbar("Amigo", "Otp Verified.",
+                                      snackPosition:SnackPosition.BOTTOM,
+                                      backgroundColor: Colors.green.withOpacity(0.1),
+                                      colorText: Colors.green);
+                                }else
+                                {
                                   Get.snackbar("Sorry", "Email is already registered.",
                                       snackPosition:SnackPosition.BOTTOM,
                                       backgroundColor: Colors.red.withOpacity(0.1),
                                       colorText: Colors.red);
                                 }
-
-
-
-
+        
+        
+        
+        
                               }
                             }
-
-
-
+        
+        
                           }, child: Text("Register"),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blue.withOpacity(0.5),
@@ -418,14 +432,12 @@ class Art_Signup extends StatelessWidget{
                   ],
                 ),
               ),
-            ),
-          )
-        ],),
-      ),
-
+                      ),
+            ),],
+        ),
+      )
     );
   }
-
   Future<bool> isCnicUnique(String? cnic) async {
     if (cnic == null) {
       return false;
@@ -435,7 +447,7 @@ class Art_Signup extends StatelessWidget{
 
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('Artists')
+          .collection('Users')
           .where('Cnic', isEqualTo: cnic)
           .get();
 

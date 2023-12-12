@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:takhleekish/Admin/navbar/adminNavbar.dart';
 
-import '../../Artist/navbar.dart';
+import '../../Artist/Navbar/navbar.dart';
 import '../throughDashboard/adminAnalytics/allArtistsAnalytics.dart';
 import '../throughDashboard/adminAuction/auctionPage.dart';
 import '../throughDashboard/adminExhibition/adminExhibitionPage.dart';

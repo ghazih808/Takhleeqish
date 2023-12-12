@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:takhleekish/User/user_model.dart';
+import 'package:takhleekish/User/credentialsFile/user_model.dart';
 
 class User_repo extends GetxController
 {

@@ -5,9 +5,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:takhleekish/Artist/artifacts/artifactModel.dart';
 import 'package:takhleekish/Artist/artifacts/artifactRepository.dart';
-import 'package:takhleekish/Artist/navbar.dart';
-import 'package:takhleekish/User/detailProductPage.dart';
-import 'package:takhleekish/User/userNavbar.dart';
+import 'package:takhleekish/Artist/Navbar/navbar.dart';
+import 'package:takhleekish/User/dashboard/detailProductPage.dart';
+import 'package:takhleekish/User/Navbar/userNavbar.dart';
 
 class User_dashboard extends StatelessWidget {
   final artifactRepo = Get.put(Artifact_repo());

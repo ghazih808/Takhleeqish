@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:takhleekish/User/user_model.dart';
-import 'package:takhleekish/User/user_repository.dart';
+import 'package:takhleekish/User/credentialsFile/user_model.dart';
+import 'package:takhleekish/User/credentialsFile/user_repository.dart';
 
-import '../../User_authentication.dart';
+import '../../credentialsFile/User_authentication.dart';
 
 
 class UserUpdatePage extends StatelessWidget{

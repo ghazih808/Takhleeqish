@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:takhleekish/Artist/throughDashboard/exhibition.dart';
-import 'package:takhleekish/Artist/throughDashboard/postArtifacts.dart';
+import 'package:takhleekish/Artist/throughDashboard/postArtifact/postArtifacts.dart';
 import 'package:takhleekish/Artist/throughDashboard/session.dart';
-import '../navbar.dart';
-import 'auction.dart';
+import '../Navbar/navbar.dart';
+import 'ArtistAuction/auction.dart';
 import 'checkUser/verifyGmail.dart';
 
 class ArtistDashboard extends StatelessWidget{

@@ -8,16 +8,17 @@ import 'package:takhleekish/Artist/throughDashboard/artistDashboard.dart';
 import 'package:takhleekish/Artist/artistDatabase.dart';
 import 'package:takhleekish/Artist/artistPersonal/artist_model.dart';
 import 'package:takhleekish/Artist/controllers/artist_controller.dart';
-import 'package:takhleekish/User/User_authentication.dart';
+import 'package:takhleekish/User/credentialsFile/User_authentication.dart';
+import 'package:takhleekish/User/throughNavBar/complainsPage/complaints.dart';
 import 'package:takhleekish/User/throughNavBar/auctions/requestAuction.dart';
 import 'package:takhleekish/User/throughNavBar/updatePassword/userUpdatePage.dart';
 import 'package:takhleekish/User/throughNavBar/userExhibition/userExhibitionPage.dart';
 import 'package:takhleekish/User/throughNavBar/userSessions/selectPage.dart';
-import 'package:takhleekish/User/user_model.dart';
-import 'package:takhleekish/User/user_repository.dart';
+import 'package:takhleekish/User/credentialsFile/user_model.dart';
+import 'package:takhleekish/User/credentialsFile/user_repository.dart';
 
-import '../main.dart';
-import 'throughNavBar/feedbackPage/feedback.dart';
+import '../../main.dart';
+import '../throughNavBar/feedbackPage/feedback.dart';
 class UserNavbar extends StatelessWidget {
   final FirebaseAuth _auth=FirebaseAuth.instance;
 
@@ -107,6 +108,13 @@ class UserNavbar extends StatelessWidget {
                       title: Text("Feedback",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>FeedbackPage()));
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.error),
+                      title: Text("Complains",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ComplaintsPage()));
                       },
                     ),
                     ListTile(
