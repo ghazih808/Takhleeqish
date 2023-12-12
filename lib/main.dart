@@ -18,6 +18,7 @@ import 'package:takhleekish/Artist/artistPersonal/art_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:takhleekish/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'Artist/throughDashboard/analytics.dart';
 import 'Artist/throughDashboard/postArtifacts.dart';
 import 'User/throughNavBar/auctions/ApprovedBids/approvedBidPage.dart';
 import 'User/throughNavBar/auctions/requestAuction.dart';

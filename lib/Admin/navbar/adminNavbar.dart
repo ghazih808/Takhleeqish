@@ -41,13 +41,7 @@ class AdminNavbar extends StatelessWidget{
 
 
             ),
-            ListTile(
-              leading: Icon(Icons.query_stats),
-              title: Text("Artits Analytics",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
-              onTap: (){
 
-              },
-            ),
             ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text("Exit",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),

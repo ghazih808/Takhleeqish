@@ -1,10 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ArtistAnalyticsPage extends StatelessWidget {
+class IndiviualAnalyticsPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Stack(
         children: [
           Container(
@@ -33,39 +33,41 @@ class ArtistAnalyticsPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 16),
-                ArtistAnalyticsCard(
+                ArtistAnalyticsCards(
                   title: 'Total Sales',
                   value: '215',
                 ),
                 SizedBox(height: 16),
-                ArtistAnalyticsCard(
+                ArtistAnalyticsCards(
                   title: 'Views on Art',
                   value: '3,500',
                 ),
                 SizedBox(height: 16),
-                ArtistAnalyticsCard(
+                ArtistAnalyticsCards(
                   title: 'Total Revenue',
                   value: '\$12,500',
                 ),
                 SizedBox(height: 16),
-                ArtistAnalyticsCard(
+                ArtistAnalyticsCards(
                   title: 'Feedback',
                   value: 'Positive: 85%\nNeutral: 10%\nNegative: 5%',
                 ),
               ],
             ),
-          )
+          ),
         ],
-      ),
+      )
     );
   }
+
+
 }
 
-class ArtistAnalyticsCard extends StatelessWidget {
+class ArtistAnalyticsCards extends StatelessWidget {
   final String title;
   final String value;
 
-  const ArtistAnalyticsCard({
+  const ArtistAnalyticsCards({
     required this.title,
     required this.value,
   });
@@ -99,10 +101,10 @@ class ArtistAnalyticsCard extends StatelessWidget {
       ),
     );
   }
-}
 
-void main() {
-  runApp(MaterialApp(
-    home: ArtistAnalyticsPage(),
-  ));
+  void main() {
+    runApp(MaterialApp(
+      home: IndiviualAnalyticsPage(),
+    ));
+  }
 }

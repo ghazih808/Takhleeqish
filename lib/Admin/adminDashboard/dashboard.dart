@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:takhleekish/Admin/navbar/adminNavbar.dart';
 
 import '../../Artist/navbar.dart';
+import '../throughDashboard/adminAnalytics/allArtistsAnalytics.dart';
 import '../throughDashboard/adminAuction/auctionPage.dart';
 import '../throughDashboard/adminExhibition/adminExhibitionPage.dart';
 
@@ -55,7 +56,7 @@ class AdminDashboard extends StatelessWidget{
                             width: 200,
                             child: ElevatedButton(onPressed: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminExhibitionPage()));
-                            }, child: Text("Exhibition",style: TextStyle(color:Colors.white),),
+                            }, child: Text("Exhibition",style: TextStyle(color:Colors.white,fontSize: 16),),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.white.withOpacity(0.5),
                                   shape: RoundedRectangleBorder(
@@ -94,7 +95,7 @@ class AdminDashboard extends StatelessWidget{
                             width: 200,
                             child: ElevatedButton(onPressed: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminAuctionPage()));
-                            }, child: Text("Auction",style: TextStyle(color:Colors.white),),
+                            }, child: Text("Auction",style: TextStyle(color:Colors.white,fontSize: 16),),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.white.withOpacity(0.5),
                                   shape: RoundedRectangleBorder(
@@ -126,12 +127,14 @@ class AdminDashboard extends StatelessWidget{
                           Container(
                             width: 230,
                             height: 140,
-                            child: Image.asset("assests/images/sessions.jpg",fit: BoxFit.fitWidth),
+                            child: Image.asset("assests/images/adminAnalytics.jpg",fit: BoxFit.fitWidth),
 
                           ),
                           Container(
                             width: 200,
-                            child: ElevatedButton(onPressed: (){}, child: Text("Sessions",style: TextStyle(color:Colors.white),),
+                            child: ElevatedButton(onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AllArtistsAnalytics()));
+                            }, child: Text("Analytics",style: TextStyle(color:Colors.white,fontSize: 16),),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.white.withOpacity(0.5),
                                   shape: RoundedRectangleBorder(
