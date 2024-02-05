@@ -24,7 +24,7 @@ class ArtitstLoginController extends GetxController {
 
   Future<void> login() async {
     try {
-      if ( Aremail.text.trim() == 'admin123@gmail.com' && Arpass.text.trim() == 'Admin@123') {
+      if ( Aremail.text.trim() == 'admin123@gmail.com' && Arpass.text.trim() == 'admin@123') {
         // Admin login successful on the web
         onLoginSuccess(); // Call the callback
         Get.offAll(() => AdminDashboard());

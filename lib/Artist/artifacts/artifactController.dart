@@ -18,13 +18,10 @@ class Artifact_Controller extends GetxController{
   final Artifact_desc=TextEditingController();
   final  Artist_id=TextEditingController();
   late final String Artifact_url;
-
   final artifactRepo = Get.put(Artifact_repo());
-
   void setArtistId(String artistId) {
     Artist_id.text = artistId;
   }
-
   Future<void> createArtifactt(Artifact_model artifact_model)
   async {
     await artifactRepo.createArtifact(artifact_model);
