@@ -335,9 +335,9 @@ class _AuctionPageState extends State<AuctionPage> {
                               Row(
                                 children: [
                                   SizedBox(width: 25,),
-                                  Text("${controller.Art_startingDate!.day}/${controller.Art_startingDate!.month}/${controller.Art_startingDate!.year}"),
+                                  Text("${controller.Art_startingDate?.day??''}/${controller.Art_startingDate?.month??''}/${controller.Art_startingDate?.year??''}"),
                                   SizedBox(width: 85,),
-                                  Text("${controller.Art_startingTime!.hourOfPeriod}:${controller.Art_startingTime!.minute} ${controller.Art_startingTime!.period == DayPeriod.am ? 'AM' : 'PM'}"),
+                                  Text("${controller.Art_startingTime?.hourOfPeriod??''}:${controller.Art_startingTime?.minute??''} ${controller.Art_startingTime?.period == DayPeriod.am ? 'AM' : 'PM'}"),
                                 ],
                               ),
                               SizedBox(height: 10),
@@ -409,9 +409,9 @@ class _AuctionPageState extends State<AuctionPage> {
                               Row(
                                 children: [
                                   SizedBox(width: 25,),
-                                  Text("${controller.Art_endingDate!.day}/${controller.Art_endingDate!.month}/${controller.Art_endingDate!.year}"),
+                                  Text("${controller.Art_endingDate?.day??''}/${controller.Art_endingDate?.month??''}/${controller.Art_endingDate?.year??''}"),
                                   SizedBox(width: 85,),
-                                  Text("${controller.Art_endingTime!.hourOfPeriod}:${controller.Art_endingTime!.minute} ${controller.Art_endingTime!.period == DayPeriod.am ? 'AM' : 'PM'}"),
+                                  Text("${controller.Art_endingTime?.hourOfPeriod??''}:${controller.Art_endingTime?.minute??''} ${controller.Art_endingTime?.period == DayPeriod.am ? 'AM' : 'PM'}"),
                                 ],
                               ),
                             ],
@@ -426,43 +426,51 @@ class _AuctionPageState extends State<AuctionPage> {
                             // Convert starting and ending time to TimeOfDay objects
                             TimeOfDay startingTime = controller.Art_startingTime!;
                             TimeOfDay endingTime = controller.Art_endingTime!;
-
-                            // Convert starting and ending time to DateTime objects for comparison
-                            DateTime startingDateTime = DateTime(1, 1, 1, startingTime.hour, startingTime.minute);
-                            DateTime endingDateTime = DateTime(1, 1, 1, endingTime.hour, endingTime.minute);
-                            // Compare starting and ending times
-                            if (startingDateTime.isBefore(endingDateTime)) {
-                              // Starting time is before ending time
-                              print('Starting time is before ending time');
-                              final auction = Auction_model(
-
-                                  artName: controller.Art_name.text.trim(),
-                                  ArtistId: controller.Artist_id.text.trim(),
-                                  bid: controller.Art_bid.text.trim(),
-                                  startingTime: controller.Art_startingTime
-                                      .toString().trim(),
-                                  endingTime: controller.Art_endingTime
-                                      .toString().trim(),
-                                  startingDate: controller.Art_startingDate
-                                      .toString().trim(),
-                                  endingDate: controller.Art_endingDate
-                                      .toString().trim(),
-                                  url: imageurl,
-                                  flag: false);
-                              Auction_Controller.instance.createAuction(
-                                  auction);
-                              Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => ArtistDashboard()),);
-                              controller.Artist_id.clear();
-                              controller.Art_bid.clear();
-                              controller.Art_name.clear();
+                            if(startingTime!=null && endingTime!=null)
+                              {
+                                // Convert starting and ending time to DateTime objects for comparison
+                                DateTime startingDateTime = DateTime(1, 1, 1, startingTime.hour, startingTime.minute);
+                                DateTime endingDateTime = DateTime(1, 1, 1, endingTime.hour, endingTime.minute);
+                                // Compare starting and ending times
+                                if (startingDateTime.isBefore(endingDateTime)) {
+                                  // Starting time is before ending time
+                                  print('Starting time is before ending time');
+                                  final auction = Auction_model(
+                                      artName: controller.Art_name.text.trim(),
+                                      ArtistId: controller.Artist_id.text.trim(),
+                                      bid: controller.Art_bid.text.trim(),
+                                      startingTime: controller.Art_startingTime
+                                          .toString().trim(),
+                                      endingTime: controller.Art_endingTime
+                                          .toString().trim(),
+                                      startingDate: controller.Art_startingDate
+                                          .toString().trim(),
+                                      endingDate: controller.Art_endingDate
+                                          .toString().trim(),
+                                      url: imageurl,
+                                      flag: false);
+                                  Auction_Controller.instance.createAuction(
+                                      auction);
+                                  Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) => ArtistDashboard()),);
+                                  controller.Artist_id.clear();
+                                  controller.Art_bid.clear();
+                                  controller.Art_name.clear();
+                                }
+                                else{
+                                  Get.snackbar("OOpS", "Starting time must comes before ending time",
+                                      snackPosition:SnackPosition.BOTTOM,
+                                      backgroundColor: Colors.red.withOpacity(0.1),
+                                      colorText: Colors.red);
+                                }
+                              }else {
+                              // Handle the case where startingTime or endingTime is null
+                              print('Starting time or ending time is null');
+                              // You can show a message or take appropriate action here
                             }
-                            else{
-                              Get.snackbar("OOpS", "Starting time must comes before ending time",
-                                  snackPosition:SnackPosition.BOTTOM,
-                                  backgroundColor: Colors.red.withOpacity(0.1),
-                                  colorText: Colors.red);
-                            }
+
+
+
                           }
                           else{
                             Get.snackbar("OOpS", "Auction request has not been send",
