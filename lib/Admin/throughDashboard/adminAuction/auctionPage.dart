@@ -1,58 +1,179 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:takhleekish/Admin/throughDashboard/adminAuction/approveOrRejectAuction.dart';
 
-import 'approveOrRejectAuction.dart';
+import '../../../Artist/artistPersonal/artist_authentication.dart';
+import '../../../Artist/artistPersonal/artist_repository.dart';
+import '../../../Artist/auction/auctionController.dart';
+import '../../../Artist/auction/auctionModel.dart';
+import '../../../Artist/auction/auctionRepository.dart';
+import '../../../Artist/controllers/artist_controller.dart';
 
 class AdminAuctionPage extends StatelessWidget{
+  final controller = Get.put(Artist_Controller());
+  final auctionController=Get.put(Auction_Controller());
+
+  final authrepo = Get.put(Artist_Auth());
+
+  final artistRepo = Get.put(Artist_repo());
+  final auctionRepo=Get.put(Auction_Repo());
+  late final String stime;
+  late final String etime;
+  final FirebaseAuth _auth=FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            height: 880,
-            child: Image.asset("assests/images/dbpic2.jpeg"
-              ,fit: BoxFit.fitHeight,),
-            //add background image here
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView.separated(
-                    itemCount: 5, // Number of exhibitions (fetch from the database)
-                    itemBuilder: (context, index) {
-                      return Slidable(
-                        actionPane: SlidableDrawerActionPane(),
-                        actionExtentRatio: 0.25,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15.0)
-                          ),
-                          child: ListTile(
-                            leading: ClipOval(child: Image.asset("assests/images/userExhibitionDemo.jpg")),
-                            title: Text('Auction ${index + 1}'),
-                            subtitle: Text('Name'),
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>ApproveOrRejectAuction()));
-                            },
+      body: FutureBuilder(
+        future: getAllData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasData) {
+              return Stack(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 880,
+                    child: Image.asset("assests/images/dbpic2.jpeg"
+                      ,fit: BoxFit.fitHeight,),
+                    //add background image here
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ListView.separated(
+                            itemCount: snapshot.data!.length, // Number of exhibitions (fetch from the database)
+                            itemBuilder: (context, index) {
+                              return Slidable(
+                                actionPane: SlidableDrawerActionPane(),
+                                actionExtentRatio: 0.25,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(15.0)
+                                  ),
+                                  child: Material(
+                                    child: ListTile(
+                                      leading: ClipOval(child: Image.network(snapshot.data![index].url)),
+                                      title: Text('Painting Name: ${snapshot.data![index].artName}'),
+                                      subtitle: Column(
+                                        children: [
+                                          SizedBox(height: 10,),
+                                          Row(children: [
+                                            Container(
+                                            width: 70,
+                                            height: 25,
+                                            child: Center(
+                                              child: ElevatedButton(onPressed:()  {
+                                                snapshot.data![index].status="approved";
+                                                print(snapshot.data![index].status);
+
+                                              }, child:Center(child: Center(child: FaIcon(FontAwesomeIcons.check,color: Colors.white,))),
+                                                style: ElevatedButton.styleFrom(
+                                                    backgroundColor: Colors.green,
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(15.0)
+                                                    )
+                                                ),
+                                              ),
+                                            ),
+                                          ),SizedBox(width: 10,),
+                                            Container(
+                                              width: 70,
+                                              height: 23,
+                                              child: Center(
+                                                child: ElevatedButton(onPressed:()  {
+                                                  String prev=snapshot.data![index].status;
+                                                  Auction_model auction=Auction_model(artName: snapshot.data![index].artName,
+                                                      ArtistId: snapshot.data![index].ArtistId, bid: snapshot.data![index].bid,
+                                                      startingTime: snapshot.data![index].startingTime,
+                                                      endingTime: snapshot.data![index].endingTime, startingDate: snapshot.data![index].startingDate,
+                                                      endingDate: snapshot.data![index].endingDate, url: snapshot.data![index].url, status: prev);
+
+                                                }, child:Center(child: Center(child: FaIcon(FontAwesomeIcons.x,color: Colors.white,))),
+
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor: Colors.red,
+                                                      shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(15.0)
+                                                      )
+                                                  ),
+                                                ),
+                                              ),
+                                            ),],),
+                                        ],
+                                      ),
+                                      trailing: Text("Check Details"),
+                                      onTap: () {
+
+                                        DateTime date=DateTime.parse(snapshot.data![index].startingDate);
+                                        print(date);
+
+                                        String startingTimeString = snapshot.data![index].startingTime;
+                                        String sttimeSubstring = startingTimeString.substring(startingTimeString.indexOf("(") + 1, startingTimeString.indexOf(")"));
+                                        List<String> sttimeParts = sttimeSubstring.split(':');
+
+                                        String endingTimeString = snapshot.data![index].endingTime;
+                                        // Extract the substring containing the time (e.g., "14:10")
+                                        String endtimeSubstring = endingTimeString.substring(endingTimeString.indexOf("(") + 1, endingTimeString.indexOf(")"));
+
+                                        List<String> endtimeParts = endtimeSubstring.split(':');
+                                        if (endtimeParts.length == 2 && sttimeParts.length==2 ) {
+                                          // Parse the hours and minutes into integers
+                                          int endhours = int.tryParse(endtimeParts[0]) ?? 0; // Use 0 as default if parsing fails
+                                          int endminutes = int.tryParse(endtimeParts[1]) ?? 0; // Use 0 as default if parsing fails
+                                          // Create a TimeOfDay object
+                                          TimeOfDay endingTime = TimeOfDay(hour: endhours, minute: endminutes);
+                                          // Parse the hours and minutes into integers
+                                          int sthours = int.tryParse(sttimeParts[0]) ?? 0; // Use 0 as default if parsing fails
+                                          int stminutes = int.tryParse(sttimeParts[1]) ?? 0; // Use 0 as default if parsing fails
+                                          TimeOfDay startingTime = TimeOfDay(hour: sthours, minute: stminutes);
+
+                                          print(startingTime);
+                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>ApproveOrRejectAuction(snapshot.data![index].url,snapshot.data![index].bid,endingTime,startingTime,date)));
+
+                                        } else {
+                                          // Handle the case where the time string is not in the expected format
+                                          print('Invalid time format');
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }, separatorBuilder: (BuildContext context, int index) { return const Divider(); },
                           ),
                         ),
-                      );
-                    }, separatorBuilder: (BuildContext context, int index) { return const Divider(); },
-                  ),
-                ),
 
-              ],
-            ),
-          ) ,
-        ],
+                      ],
+                    ),
+                  ) ,
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return Text('User not found');
+            } else {
+              return Text('Something went wrong');
+            }
+          }
+          else {
+            // Return Center widget to display CircularProgressIndicator in the center
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
+
     );
   }
-
+  Future<List<Auction_model>> getAllData() async {
+    return await auctionRepo.getAllAuctionDetail();
+  }
 }

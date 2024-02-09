@@ -12,8 +12,8 @@ class Auction_model{
   final String endingTime;
   final String endingDate;
   final String url;
-  final bool flag;
-  const Auction_model(
+  late String status;
+   Auction_model(
       {
         this.id,
         required this.artName,
@@ -24,7 +24,7 @@ class Auction_model{
         required this.startingDate,
         required this.endingDate,
         required this.url,
-        required this.flag,
+        required this.status,
       });
   toJson(){
     return{
@@ -36,7 +36,7 @@ class Auction_model{
       'Ending_Date':endingDate,
       'Artist_ID':ArtistId,
       'Url':url,
-      'Flag':flag
+      'Status':status
     };}
 
   factory Auction_model.fromSnapshot(DocumentSnapshot<Map<String,dynamic>> documentSnapshot)
@@ -44,8 +44,11 @@ class Auction_model{
     final data=documentSnapshot.data()!;
     return Auction_model(
       id: documentSnapshot.id,
-      artName: data["Name"], startingTime: data["Starting_Time"], bid: data["Bid"], endingTime: data["Ending_Time"], ArtistId: data["Artist_ID"], url: data['Url'], startingDate: data["Starting_Date"], endingDate: data["Ending_Date"], flag: data["Flag"],);
+      artName: data["Name"], startingTime: data["Starting_Time"], bid: data["Bid"], endingTime: data["Ending_Time"], ArtistId: data["Artist_ID"], url: data['Url'], startingDate: data["Starting_Date"], endingDate: data["Ending_Date"], status: data["Status"],);
   }
-
+  void updateStatus(String newStatus) {
+    // Update the status field
+    status = newStatus;
+  }
 
 }

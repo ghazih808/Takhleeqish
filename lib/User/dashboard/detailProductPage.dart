@@ -8,6 +8,7 @@ class DetailProductPage extends StatefulWidget {
   final String price;
   final String name;
 
+
   DetailProductPage(this.url, this.price, this.description, this.name);
 
   @override
@@ -16,7 +17,6 @@ class DetailProductPage extends StatefulWidget {
 
 class _DetailProductPageState extends State<DetailProductPage> {
   bool isFavorited = false;
-
   @override
   Widget build(BuildContext context) {
     double pageWidth = MediaQuery.of(context).size.width;

@@ -15,6 +15,7 @@ import 'package:takhleekish/main.dart';
 
 import '../artistPersonal/artist_authentication.dart';
 import '../artistPersonal/artist_repository.dart';
+import '../throughDashboard/ArtistAuction/auctionStatus.dart';
 
 class Navbar extends StatelessWidget {
   final controller = Get.put(Artist_Controller());
@@ -85,6 +86,13 @@ class Navbar extends StatelessWidget {
                        },
                     ),
                     ListTile(
+                      leading: Icon(Icons.update),
+                      title: Text("Auction Status",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>AuctionStatus()));
+                      },
+                    ),
+                    ListTile(
                       leading: Icon(Icons.help),
                       title: Text("Complains",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
@@ -108,7 +116,8 @@ class Navbar extends StatelessWidget {
             } else {
               return Text('Something went wrong');
             }
-          } else {
+          }
+          else {
             // Return Center widget to display CircularProgressIndicator in the center
             return Center(
               child: CircularProgressIndicator(),

@@ -448,7 +448,7 @@ class _AuctionPageState extends State<AuctionPage> {
                                       endingDate: controller.Art_endingDate
                                           .toString().trim(),
                                       url: imageurl,
-                                      flag: false);
+                                      status: "none");
                                   Auction_Controller.instance.createAuction(
                                       auction);
                                   Navigator.push(context, MaterialPageRoute(
@@ -456,6 +456,7 @@ class _AuctionPageState extends State<AuctionPage> {
                                   controller.Artist_id.clear();
                                   controller.Art_bid.clear();
                                   controller.Art_name.clear();
+
                                 }
                                 else{
                                   Get.snackbar("OOpS", "Starting time must comes before ending time",

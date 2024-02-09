@@ -28,127 +28,129 @@ class AdminDashboard extends StatelessWidget{
                 ,fit: BoxFit.fitHeight,),
               //add background image here
             ),
-            Column(
-              children: [
-                SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: Container(
-                    width: 230,
-                    height: 200,
-                    child: Card(
-                      color: Colors.black,
-                      elevation: 7,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0)
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: Container(
+                      width: 230,
+                      height: 200,
+                      child: Card(
+                        color: Colors.black,
+                        elevation: 7,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0)
+                        ),
+                        child: Column(
+                          children: [
+              
+                            Container(
+                              width: 230,
+                              height: 140,
+                              child: Image.asset("assests/images/gallery.jpg",fit: BoxFit.fitWidth),
+              
+                            ),
+                            Container(
+                              width: 200,
+                              child: ElevatedButton(onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminExhibitionPage()));
+                              }, child: Text("Exhibition",style: TextStyle(color:Colors.white,fontSize: 16),),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white.withOpacity(0.5),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15)
+                                    ),)),
+                            )
+                          ],
+                        ),
+              
                       ),
-                      child: Column(
-                        children: [
-
-                          Container(
-                            width: 230,
-                            height: 140,
-                            child: Image.asset("assests/images/gallery.jpg",fit: BoxFit.fitWidth),
-
-                          ),
-                          Container(
-                            width: 200,
-                            child: ElevatedButton(onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminExhibitionPage()));
-                            }, child: Text("Exhibition",style: TextStyle(color:Colors.white,fontSize: 16),),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white.withOpacity(0.5),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)
-                                  ),)),
-                          )
-                        ],
-                      ),
-
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: Container(
-                    width: 230,
-                    height: 200,
-                    child: Card(
-                      color: Colors.black,
-                      elevation: 7,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0)
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: Container(
+                      width: 230,
+                      height: 200,
+                      child: Card(
+                        color: Colors.black,
+                        elevation: 7,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0)
+                        ),
+                        child: Column(
+                          children: [
+              
+                            Container(
+                              width: 230,
+                              height: 140,
+                              child: Image.asset("assests/images/auction.jpg",fit: BoxFit.fitWidth),
+              
+                            ),
+                            Container(
+                              width: 200,
+                              child: ElevatedButton(onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminAuctionPage()));
+                              }, child: Text("Auction",style: TextStyle(color:Colors.white,fontSize: 16),),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white.withOpacity(0.5),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15)
+                                    ),)),
+                            )
+                          ],
+                        ),
+              
                       ),
-                      child: Column(
-                        children: [
-
-                          Container(
-                            width: 230,
-                            height: 140,
-                            child: Image.asset("assests/images/auction.jpg",fit: BoxFit.fitWidth),
-
-                          ),
-                          Container(
-                            width: 200,
-                            child: ElevatedButton(onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminAuctionPage()));
-                            }, child: Text("Auction",style: TextStyle(color:Colors.white,fontSize: 16),),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white.withOpacity(0.5),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)
-                                  ),)),
-                          )
-                        ],
-                      ),
-
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: Container(
-                    width: 230,
-                    height: 200,
-                    child: Card(
-                      color: Colors.black,
-                      elevation: 7,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0)
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: Container(
+                      width: 230,
+                      height: 200,
+                      child: Card(
+                        color: Colors.black,
+                        elevation: 7,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0)
+                        ),
+                        child: Column(
+                          children: [
+              
+                            Container(
+                              width: 230,
+                              height: 140,
+                              child: Image.asset("assests/images/adminAnalytics.jpg",fit: BoxFit.fitWidth),
+              
+                            ),
+                            Container(
+                              width: 200,
+                              child: ElevatedButton(onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>AllArtistsAnalytics()));
+                              }, child: Text("Analytics",style: TextStyle(color:Colors.white,fontSize: 16),),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white.withOpacity(0.5),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15)
+                                    ),)),
+                            )
+                          ],
+                        ),
+              
                       ),
-                      child: Column(
-                        children: [
-
-                          Container(
-                            width: 230,
-                            height: 140,
-                            child: Image.asset("assests/images/adminAnalytics.jpg",fit: BoxFit.fitWidth),
-
-                          ),
-                          Container(
-                            width: 200,
-                            child: ElevatedButton(onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AllArtistsAnalytics()));
-                            }, child: Text("Analytics",style: TextStyle(color:Colors.white,fontSize: 16),),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white.withOpacity(0.5),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)
-                                  ),)),
-                          )
-                        ],
-                      ),
-
                     ),
                   ),
-                ),
-
-              ],
+              
+                ],
+              ),
             )
           ],
 

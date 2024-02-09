@@ -8,7 +8,7 @@ class Auction_Controller extends GetxController{
   static Auction_Controller get instance => Get.find();
   final Art_name=TextEditingController();
   final Art_bid=TextEditingController();
-  late final bool flag;
+  late final String status;
   DateTime? Art_startingDate;
   TimeOfDay? Art_startingTime;
   DateTime? Art_endingDate;

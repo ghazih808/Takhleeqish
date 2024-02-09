@@ -1,8 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:takhleekish/Artist/artifacts/artifactModel.dart';
 
-class ApproveOrRejectAuction extends StatelessWidget{
+class ApproveOrRejectAuction extends StatefulWidget{
+  final String url;
+  final String baseBid;
+  final TimeOfDay enTime;
+  final DateTime date;
+  final TimeOfDay stTime;
+
+
+
+  ApproveOrRejectAuction(
+      this.url, this.baseBid,this.enTime,this.stTime,this.date);
+
+  @override
+  State<ApproveOrRejectAuction> createState() => _ApproveOrRejectAuctionState();
+}
+
+class _ApproveOrRejectAuctionState extends State<ApproveOrRejectAuction> {
   @override
   Widget build(BuildContext context) {
     double screenHeight=MediaQuery.of(context).size.height;
@@ -26,86 +43,62 @@ class ApproveOrRejectAuction extends StatelessWidget{
                     child: Container(
                       width: 300,
                       height: 300,
-                      child: Image.asset("assests/images/userExhibitionDemo.jpg"),
+                      child: Image.network(widget.url),
                     ),
                   ),
                   SizedBox(
                     height:screenHeight*0.04,
                   ),
                   Text("Base Bid",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                  Text("RS 1000",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
-        
+                  Text("RS ${widget.baseBid}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
+
                   SizedBox(
                     height:screenHeight*0.02,
                   ),
-                  Text("Artist",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                  Text("Hassan",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
-        
+                  Text("Date",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  Text("${widget.date.month}/${widget.date.day}/${widget.date.year}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
+
                   SizedBox(
                     height:screenHeight*0.02,
                   ),
                   Text("Starting time",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                  Text("10:15 AM",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
-                  SizedBox(
+                  Text("${_formatTime(widget.stTime)}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),),                    SizedBox(
                     height:screenHeight*0.02,
                   ),
                   Text("Ending Time",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                  Text("11:15 AM",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
-                  SizedBox(
-                    height:screenHeight*0.04,
-                  ),
-                  Container(
-                    width: 200,
-                    height: 50,
-                    child: ElevatedButton(onPressed:()  {
-                      //add Maps here
-                    }, child:Row(
-                      children: [
-                        FaIcon(FontAwesomeIcons.check,color: Colors.white,),
-                        SizedBox(width: 25,),
-                        Text("Approved",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 20),),
-                      ],
-                    ),
-        
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0)
-                          )
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height:screenHeight*0.02,
-                  ),
-                  Container(
-                    width: 200,
-                    height: 50,
-                    child: ElevatedButton(onPressed:()  {
-                      //add Maps here
-                    }, child:Row(
-                      children: [
-                        FaIcon(FontAwesomeIcons.x,color: Colors.white,),
-                        SizedBox(width: 25,),
-                        Text("Reject",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 20),),
-                      ],
-                    ),
-        
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0)
-                          )
-                      ),
-                    ),
-                  )
+                  Text("${_formatTime(widget.enTime)}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),),
+
                 ],
               ),
-            ),
+            )
           ],
         ),
       ),
     );
   }
+  String _formatTime(TimeOfDay timeOfDay) {
+    // Convert 24-hour format to 12-hour format
+    int hour = timeOfDay.hourOfPeriod;
+    int minute = timeOfDay.minute;
+    String period = timeOfDay.period == DayPeriod.am ? 'AM' : 'PM';
 
+    // Format the time as HH:MM AM/PM
+    return '${_formatHour(hour)}:${_formatMinute(minute)} $period';
+  }
+
+  String _formatHour(int hour) {
+    // Ensure hour is in 12-hour format
+    if (hour == 0) {
+      return '12'; // 0 is 12 AM in 12-hour format
+    } else if (hour > 12) {
+      return '${hour - 12}';
+    } else {
+      return '$hour';
+    }
+  }
+
+  String _formatMinute(int minute) {
+    // Add leading zero if minute is less than 10
+    return minute < 10 ? '0$minute' : '$minute';
+  }
 }
