@@ -268,21 +268,20 @@ class _AuctionPageState extends State<AuctionPage> {
                                 ),
                               ),
                               SizedBox(height: 10),
-                              Text("Starting Date & Time",style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold),),
+                              Text("Auction Date",style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold),),
                               SizedBox(height: 10,),
-                              Row(
+                              Column(
                                 children: [
-                                  SizedBox(width: 15,),
                                   ElevatedButton(onPressed: ()async{
                                     final startDate=await pickDate();
                                     if(startDate==null) {
-                                      Get.snackbar("Oops", "Starting Date is required",
+                                      Get.snackbar("Oops", "Auction Date is required",
                                           snackPosition:SnackPosition.BOTTOM,
                                           backgroundColor: Colors.red.withOpacity(0.1),
                                           colorText: Colors.red);
                                   }
                                   setState(() {
-                                      controller.Art_startingDate=startDate;
+                                      controller.auctDate=startDate;
                                     });
                                   }, child:
                                   Row(
@@ -291,7 +290,7 @@ class _AuctionPageState extends State<AuctionPage> {
                              SizedBox(
                                width:5,
                              ),
-                             Text("Date",style: TextStyle(color: Colors.white,fontSize: 20),),
+                             Text("                Date",style: TextStyle(color: Colors.white,fontSize: 20),),
                            ],
                          ),
                                     style: ElevatedButton.styleFrom(
@@ -301,6 +300,26 @@ class _AuctionPageState extends State<AuctionPage> {
                                       ),),
                                   ),
                                   SizedBox(width: 30,),
+                                ],
+                              ),
+                              SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  SizedBox(width: 25,),
+                                  Text("${controller.auctDate?.day??''}/${controller.auctDate?.month??''}/${controller.auctDate?.year??''}"),
+                                  SizedBox(width: 85,),
+                                ],
+                              ),
+                              SizedBox(height: 15),
+                              Row(children: [
+                                Text("Starting Time",style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold),),
+                                SizedBox(width: 45),
+                                Text("Ending Time",style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold),),
+
+                              ],),
+                              SizedBox(height: 10),
+                              Row(
+                                children: [
                                   ElevatedButton(onPressed: ()async{
                                     final startTime=await pickTime();
                                     if(startTime==null) {
@@ -328,92 +347,48 @@ class _AuctionPageState extends State<AuctionPage> {
                                           borderRadius: BorderRadius.circular(15)
                                       ),),
                                   ),
+                                  SizedBox(width:12,),
+                                  Row(
+                                    children: [
+                                      SizedBox(width: 30,),
+                                      ElevatedButton(onPressed: ()async{
+                                        final endTime=await pickTime();
+                                        if(endTime==null) {
+                                          Get.snackbar("Oops", "Ending time is required",
+                                              snackPosition:SnackPosition.BOTTOM,
+                                              backgroundColor: Colors.red.withOpacity(0.1),
+                                              colorText: Colors.red);
+                                        }
+                                        setState(() {
+                                          controller.Art_endingTime=endTime;
+                                        });
+                                      }, child:
+                                      Row(
+                                        children: [
+                                          Icon(Icons.calendar_month,color: Colors.white,),
+                                          SizedBox(
+                                            width:5,
+                                          ),
+                                          Text("Time",style: TextStyle(color: Colors.white,fontSize: 20),),
+                                        ],
+                                      ),
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.blue.withOpacity(0.5),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(15)
+                                          ),),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Row(children: [
+                                SizedBox(width:5),
+                                Text("${controller.Art_startingTime?.hourOfPeriod??''}:${controller.Art_startingTime?.minute??''} ${controller.Art_startingTime?.period == DayPeriod.am ? 'AM' : 'PM'}"),
+                                SizedBox(width:140),
+                                Text("${controller.Art_endingTime?.hourOfPeriod??''}:${controller.Art_endingTime?.minute??''} ${controller.Art_endingTime?.period == DayPeriod.am ? 'AM' : 'PM'}"),
+                              ],)
 
-                                ],
-                              ),
-                              SizedBox(height: 5),
-                              Row(
-                                children: [
-                                  SizedBox(width: 25,),
-                                  Text("${controller.Art_startingDate?.day??''}/${controller.Art_startingDate?.month??''}/${controller.Art_startingDate?.year??''}"),
-                                  SizedBox(width: 85,),
-                                  Text("${controller.Art_startingTime?.hourOfPeriod??''}:${controller.Art_startingTime?.minute??''} ${controller.Art_startingTime?.period == DayPeriod.am ? 'AM' : 'PM'}"),
-                                ],
-                              ),
-                              SizedBox(height: 10),
-                              Text("Ending Date & Time",style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold),),
-                              SizedBox(height: 10),
-                              Row(
-                                children: [
-                                  SizedBox(width: 15,),
-                                  ElevatedButton(onPressed: ()async{
-                                    final endDate=await pickDate();
-                                    if(endDate==null)
-                                      {
-                                        Get.snackbar("Oops", "Ending Date is required",
-                                            snackPosition:SnackPosition.BOTTOM,
-                                            backgroundColor: Colors.red.withOpacity(0.1),
-                                            colorText: Colors.red);
-                                      }
-                                    setState(() {
-                                      controller.Art_endingDate=endDate;
-                                      print(endDate);
-                                    });
-                                  }, child:
-                                  Row(
-                                    children: [
-                                      Icon(Icons.calendar_month,color: Colors.white,),
-                                      SizedBox(
-                                        width:5,
-                                      ),
-                                      Text("Date",style: TextStyle(color: Colors.white,fontSize: 20),),
-                                    ],
-                                  ),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.blue.withOpacity(0.5),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15)
-                                      ),),
-                                  ),
-                                  SizedBox(width: 30,),
-                                  ElevatedButton(onPressed: ()async{
-                                    final endTime=await pickTime();
-                                    if(endTime==null) {
-                                      Get.snackbar("Oops", "Ending time is required",
-                                          snackPosition:SnackPosition.BOTTOM,
-                                          backgroundColor: Colors.red.withOpacity(0.1),
-                                          colorText: Colors.red);
-                                    }
-                                    setState(() {
-                                      controller.Art_endingTime=endTime;
-                                    });
-                                  }, child:
-                                  Row(
-                                    children: [
-                                      Icon(Icons.calendar_month,color: Colors.white,),
-                                      SizedBox(
-                                        width:5,
-                                      ),
-                                      Text("Time",style: TextStyle(color: Colors.white,fontSize: 20),),
-                                    ],
-                                  ),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.blue.withOpacity(0.5),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15)
-                                      ),),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 5),
-                              Row(
-                                children: [
-                                  SizedBox(width: 25,),
-                                  Text("${controller.Art_endingDate?.day??''}/${controller.Art_endingDate?.month??''}/${controller.Art_endingDate?.year??''}"),
-                                  SizedBox(width: 85,),
-                                  Text("${controller.Art_endingTime?.hourOfPeriod??''}:${controller.Art_endingTime?.minute??''} ${controller.Art_endingTime?.period == DayPeriod.am ? 'AM' : 'PM'}"),
-                                ],
-                              ),
                             ],
                           ),
                         ),
@@ -443,12 +418,10 @@ class _AuctionPageState extends State<AuctionPage> {
                                           .toString().trim(),
                                       endingTime: controller.Art_endingTime
                                           .toString().trim(),
-                                      startingDate: controller.Art_startingDate
-                                          .toString().trim(),
-                                      endingDate: controller.Art_endingDate
+                                      auctionDate: controller.auctDate
                                           .toString().trim(),
                                       url: imageurl,
-                                      status: "none");
+                                      status: "none", checkAuc: "false");
                                   Auction_Controller.instance.createAuction(
                                       auction);
                                   Navigator.push(context, MaterialPageRoute(

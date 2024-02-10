@@ -8,12 +8,12 @@ class Auction_model{
   final String artName;
   final String bid;
   final String startingTime;
-  final String startingDate;
+  final String auctionDate;
   final String endingTime;
-  final String endingDate;
   final String url;
-  late String status;
-   Auction_model(
+  final String status;
+  final String checkAuc;
+  const Auction_model(
       {
         this.id,
         required this.artName,
@@ -21,22 +21,22 @@ class Auction_model{
         required this.bid,
         required this.startingTime,
         required this.endingTime,
-        required this.startingDate,
-        required this.endingDate,
+        required this.auctionDate,
         required this.url,
+        required this.checkAuc,
         required this.status,
       });
   toJson(){
     return{
       'Name':artName,
       'Starting_Time':startingTime,
-      'Starting_Date':startingDate,
+      'Auction_Date':auctionDate,
       'Bid':bid,
       'Ending_Time':endingTime,
-      'Ending_Date':endingDate,
       'Artist_ID':ArtistId,
       'Url':url,
-      'Status':status
+      'Status':status,
+      'Check':checkAuc,
     };}
 
   factory Auction_model.fromSnapshot(DocumentSnapshot<Map<String,dynamic>> documentSnapshot)
@@ -44,11 +44,8 @@ class Auction_model{
     final data=documentSnapshot.data()!;
     return Auction_model(
       id: documentSnapshot.id,
-      artName: data["Name"], startingTime: data["Starting_Time"], bid: data["Bid"], endingTime: data["Ending_Time"], ArtistId: data["Artist_ID"], url: data['Url'], startingDate: data["Starting_Date"], endingDate: data["Ending_Date"], status: data["Status"],);
+      artName: data["Name"], startingTime: data["Starting_Time"], bid: data["Bid"], endingTime: data["Ending_Time"], ArtistId: data["Artist_ID"], url: data['Url'], auctionDate: data["Auction_Date"],  status: data["Status"], checkAuc: data["Check"],);
   }
-  void updateStatus(String newStatus) {
-    // Update the status field
-    status = newStatus;
-  }
+
 
 }

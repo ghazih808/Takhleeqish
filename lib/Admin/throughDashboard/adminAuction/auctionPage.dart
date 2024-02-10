@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,103 +51,135 @@ class AdminAuctionPage extends StatelessWidget{
                           child: ListView.separated(
                             itemCount: snapshot.data!.length, // Number of exhibitions (fetch from the database)
                             itemBuilder: (context, index) {
-                              return Slidable(
-                                actionPane: SlidableDrawerActionPane(),
-                                actionExtentRatio: 0.25,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(15.0)
-                                  ),
-                                  child: Material(
-                                    child: ListTile(
-                                      leading: ClipOval(child: Image.network(snapshot.data![index].url)),
-                                      title: Text('Painting Name: ${snapshot.data![index].artName}'),
-                                      subtitle: Column(
-                                        children: [
-                                          SizedBox(height: 10,),
-                                          Row(children: [
-                                            Container(
-                                            width: 70,
-                                            height: 25,
-                                            child: Center(
-                                              child: ElevatedButton(onPressed:()  {
-                                                snapshot.data![index].status="approved";
-                                                print(snapshot.data![index].status);
-
-                                              }, child:Center(child: Center(child: FaIcon(FontAwesomeIcons.check,color: Colors.white,))),
-                                                style: ElevatedButton.styleFrom(
-                                                    backgroundColor: Colors.green,
-                                                    shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(15.0)
-                                                    )
-                                                ),
-                                              ),
-                                            ),
-                                          ),SizedBox(width: 10,),
-                                            Container(
-                                              width: 70,
-                                              height: 23,
-                                              child: Center(
-                                                child: ElevatedButton(onPressed:()  {
-                                                  String prev=snapshot.data![index].status;
-                                                  Auction_model auction=Auction_model(artName: snapshot.data![index].artName,
-                                                      ArtistId: snapshot.data![index].ArtistId, bid: snapshot.data![index].bid,
-                                                      startingTime: snapshot.data![index].startingTime,
-                                                      endingTime: snapshot.data![index].endingTime, startingDate: snapshot.data![index].startingDate,
-                                                      endingDate: snapshot.data![index].endingDate, url: snapshot.data![index].url, status: prev);
-
-                                                }, child:Center(child: Center(child: FaIcon(FontAwesomeIcons.x,color: Colors.white,))),
-
-                                                  style: ElevatedButton.styleFrom(
-                                                      backgroundColor: Colors.red,
-                                                      shape: RoundedRectangleBorder(
-                                                          borderRadius: BorderRadius.circular(15.0)
-                                                      )
-                                                  ),
-                                                ),
-                                              ),
-                                            ),],),
-                                        ],
+                              if(snapshot.data![index].checkAuc=="false")
+                                {
+                                  return Slidable(
+                                    actionPane: SlidableDrawerActionPane(),
+                                    actionExtentRatio: 0.25,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(15.0)
                                       ),
-                                      trailing: Text("Check Details"),
-                                      onTap: () {
+                                      child: Material(
+                                        child: ListTile(
+                                          leading: ClipOval(child: Image.network(snapshot.data![index].url)),
+                                          title: Text('Painting: ${snapshot.data![index].artName}'),
+                                          subtitle: Column(
+                                            children: [
+                                              SizedBox(height: 10,),
+                                              Row(children: [
+                                                Container(
+                                                  width: 70,
+                                                  height: 25,
+                                                  child: Center(
+                                                    child: ElevatedButton(onPressed:()  async {
+                                                      var docid=snapshot.data![index].id;
+                                                      await FirebaseFirestore.instance.collection("Auction").doc(docid)
+                                                          .update(
+                                                          {
+                                                            'Status':"approved",
+                                                            'Check':"true"
+                                                          }
+                                                      ).whenComplete(() =>  Get.snackbar("Congratulations", "Auction request has been approved.",
+                                                          snackPosition:SnackPosition.BOTTOM,
+                                                          backgroundColor: Colors.green.withOpacity(0.1),
+                                                          colorText: Colors.white),
+                                                      ).catchError((error,stackTrace){
+                                                        Get.snackbar("Error", "Something went wrong. Try again",
+                                                            snackPosition:SnackPosition.BOTTOM,
+                                                            backgroundColor: Colors.redAccent.withOpacity(0.1),
+                                                            colorText: Colors.red);
+                                                        print(error.toString());});
 
-                                        DateTime date=DateTime.parse(snapshot.data![index].startingDate);
-                                        print(date);
+                                                    }, child:Center(child: Center(child: FaIcon(FontAwesomeIcons.check,color: Colors.white,))),
+                                                      style: ElevatedButton.styleFrom(
+                                                          backgroundColor: Colors.green,
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.circular(15.0)
+                                                          )
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),SizedBox(width: 10,),
+                                                Container(
+                                                  width: 70,
+                                                  height: 23,
+                                                  child: Center(
+                                                    child: ElevatedButton(onPressed:()  async {
+                                                      var docid=snapshot.data![index].id;
+                                                      await FirebaseFirestore.instance.collection("Auction").doc(docid)
+                                                          .update(
+                                                          {
+                                                            'Status':"rejected",
+                                                            'Check':"true"
+                                                          }
+                                                      ).whenComplete(() =>  Get.snackbar("Congratulations", "Auction request has been rejected.",
+                                                          snackPosition:SnackPosition.BOTTOM,
+                                                          backgroundColor: Colors.green.withOpacity(0.1),
+                                                          colorText: Colors.white),
+                                                      ).catchError((error,stackTrace){
+                                                        Get.snackbar("Error", "Something went wrong. Try again",
+                                                            snackPosition:SnackPosition.BOTTOM,
+                                                            backgroundColor: Colors.redAccent.withOpacity(0.1),
+                                                            colorText: Colors.red);
+                                                        print(error.toString());});
+                                                    }, child:Center(child: Center(child: FaIcon(FontAwesomeIcons.x,color: Colors.white,))),
 
-                                        String startingTimeString = snapshot.data![index].startingTime;
-                                        String sttimeSubstring = startingTimeString.substring(startingTimeString.indexOf("(") + 1, startingTimeString.indexOf(")"));
-                                        List<String> sttimeParts = sttimeSubstring.split(':');
+                                                      style: ElevatedButton.styleFrom(
+                                                          backgroundColor: Colors.red,
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.circular(15.0)
+                                                          )
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),],),
+                                            ],
+                                          ),
+                                          trailing: Text("Check Details"),
+                                          onTap: () {
 
-                                        String endingTimeString = snapshot.data![index].endingTime;
-                                        // Extract the substring containing the time (e.g., "14:10")
-                                        String endtimeSubstring = endingTimeString.substring(endingTimeString.indexOf("(") + 1, endingTimeString.indexOf(")"));
+                                            DateTime date=DateTime.parse(snapshot.data![index].auctionDate);
+                                            print(date);
 
-                                        List<String> endtimeParts = endtimeSubstring.split(':');
-                                        if (endtimeParts.length == 2 && sttimeParts.length==2 ) {
-                                          // Parse the hours and minutes into integers
-                                          int endhours = int.tryParse(endtimeParts[0]) ?? 0; // Use 0 as default if parsing fails
-                                          int endminutes = int.tryParse(endtimeParts[1]) ?? 0; // Use 0 as default if parsing fails
-                                          // Create a TimeOfDay object
-                                          TimeOfDay endingTime = TimeOfDay(hour: endhours, minute: endminutes);
-                                          // Parse the hours and minutes into integers
-                                          int sthours = int.tryParse(sttimeParts[0]) ?? 0; // Use 0 as default if parsing fails
-                                          int stminutes = int.tryParse(sttimeParts[1]) ?? 0; // Use 0 as default if parsing fails
-                                          TimeOfDay startingTime = TimeOfDay(hour: sthours, minute: stminutes);
+                                            String startingTimeString = snapshot.data![index].startingTime;
+                                            String sttimeSubstring = startingTimeString.substring(startingTimeString.indexOf("(") + 1, startingTimeString.indexOf(")"));
+                                            List<String> sttimeParts = sttimeSubstring.split(':');
 
-                                          print(startingTime);
-                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>ApproveOrRejectAuction(snapshot.data![index].url,snapshot.data![index].bid,endingTime,startingTime,date)));
+                                            String endingTimeString = snapshot.data![index].endingTime;
+                                            // Extract the substring containing the time (e.g., "14:10")
+                                            String endtimeSubstring = endingTimeString.substring(endingTimeString.indexOf("(") + 1, endingTimeString.indexOf(")"));
 
-                                        } else {
-                                          // Handle the case where the time string is not in the expected format
-                                          print('Invalid time format');
-                                        }
-                                      },
+                                            List<String> endtimeParts = endtimeSubstring.split(':');
+                                            if (endtimeParts.length == 2 && sttimeParts.length==2 ) {
+                                              // Parse the hours and minutes into integers
+                                              int endhours = int.tryParse(endtimeParts[0]) ?? 0; // Use 0 as default if parsing fails
+                                              int endminutes = int.tryParse(endtimeParts[1]) ?? 0; // Use 0 as default if parsing fails
+                                              // Create a TimeOfDay object
+                                              TimeOfDay endingTime = TimeOfDay(hour: endhours, minute: endminutes);
+                                              // Parse the hours and minutes into integers
+                                              int sthours = int.tryParse(sttimeParts[0]) ?? 0; // Use 0 as default if parsing fails
+                                              int stminutes = int.tryParse(sttimeParts[1]) ?? 0; // Use 0 as default if parsing fails
+                                              TimeOfDay startingTime = TimeOfDay(hour: sthours, minute: stminutes);
+
+                                              print(startingTime);
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                                  ApproveOrRejectAuction(snapshot.data![index].url,snapshot.data![index].bid,
+                                                      endingTime,startingTime,date,
+                                                      snapshot.data![index].ArtistId)));
+
+                                            } else {
+                                              // Handle the case where the time string is not in the expected format
+                                              print('Invalid time format');
+                                            }
+                                          },
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              );
+                                  );
+                                }
+
                             }, separatorBuilder: (BuildContext context, int index) { return const Divider(); },
                           ),
                         ),

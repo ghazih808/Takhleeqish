@@ -9,12 +9,12 @@ class Auction_Controller extends GetxController{
   final Art_name=TextEditingController();
   final Art_bid=TextEditingController();
   late final String status;
-  DateTime? Art_startingDate;
+  DateTime? auctDate;
   TimeOfDay? Art_startingTime;
-  DateTime? Art_endingDate;
   TimeOfDay? Art_endingTime;
   final  Artist_id=TextEditingController();
   late final String img_url;
+  late final String check;
   final auctionRepo = Get.put(Auction_Repo());
   void setArtistId(String artistId) {
     Artist_id.text = artistId;
@@ -22,6 +22,11 @@ class Auction_Controller extends GetxController{
   Future<void> createAuction(Auction_model auction_model)
   async {
     await auctionRepo.createAuction(auction_model);
+  }
+
+  updateRecord(Auction_model auction_model) async
+  {
+    await auctionRepo.updateAuctionStatus(auction_model);
   }
 
 }

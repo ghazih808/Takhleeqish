@@ -7,13 +7,14 @@ class ApproveOrRejectAuction extends StatefulWidget{
   final String url;
   final String baseBid;
   final TimeOfDay enTime;
+  final String email;
   final DateTime date;
   final TimeOfDay stTime;
 
 
 
   ApproveOrRejectAuction(
-      this.url, this.baseBid,this.enTime,this.stTime,this.date);
+      this.url, this.baseBid,this.enTime,this.stTime,this.date, this.email);
 
   @override
   State<ApproveOrRejectAuction> createState() => _ApproveOrRejectAuctionState();
@@ -51,6 +52,11 @@ class _ApproveOrRejectAuctionState extends State<ApproveOrRejectAuction> {
                   ),
                   Text("Base Bid",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                   Text("RS ${widget.baseBid}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
+                  SizedBox(
+                    height:screenHeight*0.02,
+                  ),
+                  Text("Artist Email",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  Text(" ${widget.email}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
 
                   SizedBox(
                     height:screenHeight*0.02,
