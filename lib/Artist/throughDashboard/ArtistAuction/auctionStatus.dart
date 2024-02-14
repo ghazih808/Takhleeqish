@@ -136,7 +136,7 @@ class AuctionStatus extends StatelessWidget{
     return null; // Handle the case where email is null
   }
   Future<List<Auction_model>> getAllData() async {
-    return await auctionRepo.getPesronsalAuctionStatus(email);
+    return await auctionRepo.getAllAuctionDetail();
   }
   }
 

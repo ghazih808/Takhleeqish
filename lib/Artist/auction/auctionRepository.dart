@@ -34,10 +34,10 @@ class Auction_Repo extends GetxController{
           colorText: Colors.red);
       print(error.toString());});
   }
-  Future<List<Auction_model>>getPesronsalAuctionStatus(String ArtistId) async
+  Future<Auction_model>getPesronsalAuctionStatus(String artName) async
   {
-    final snapshot=await auction_db.collection("Auction").where("Artist_ID",isEqualTo: ArtistId).get();
-    final auctionStatus=snapshot.docs.map((e) => Auction_model.fromSnapshot(e)).toList();
+    final snapshot=await auction_db.collection("Auction").where("Name",isEqualTo: artName).get();
+    final auctionStatus=snapshot.docs.map((e) => Auction_model.fromSnapshot(e)).single;
     return auctionStatus;
   }
   Future<List<Auction_model>> getAllAuctionDetail() async

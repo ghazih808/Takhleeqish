@@ -114,7 +114,8 @@ class AdminAuctionPage extends StatelessWidget{
                                                             'Status':"rejected",
                                                             'Check':"true"
                                                           }
-                                                      ).whenComplete(() =>  Get.snackbar("Congratulations", "Auction request has been rejected.",
+                                                      ).whenComplete(() =>
+                                                          Get.snackbar("Congratulations", "Auction request has been rejected.",
                                                           snackPosition:SnackPosition.BOTTOM,
                                                           backgroundColor: Colors.green.withOpacity(0.1),
                                                           colorText: Colors.white),

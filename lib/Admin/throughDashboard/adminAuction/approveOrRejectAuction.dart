@@ -24,7 +24,6 @@ class _ApproveOrRejectAuctionState extends State<ApproveOrRejectAuction> {
   @override
   Widget build(BuildContext context) {
     double screenHeight=MediaQuery.of(context).size.height;
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(

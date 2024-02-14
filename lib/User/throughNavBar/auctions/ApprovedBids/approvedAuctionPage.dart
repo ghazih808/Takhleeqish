@@ -29,7 +29,7 @@ class ApprovedAuctionPage extends StatelessWidget{
     return Scaffold(
       drawer: UserNavbar(),
       appBar: AppBar(
-        title: const Text("Auction Status", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 30)),
+        title: const Text("Auction Page", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 30)),
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
@@ -69,16 +69,71 @@ class ApprovedAuctionPage extends StatelessWidget{
                                         title: Text('Auction ${index + 1}'),
                                         subtitle: Text("Painting Name:  ${snapshot.data![index].artName}"),
                                         trailing: Text(
-                                          snapshot.data![index].status == 'none'
-                                              ? 'Pending'
-                                              : snapshot.data![index].status == 'approved'
-                                              ? 'Approved'
-                                              : snapshot.data![index].status == 'rejected'
-                                              ? 'Rejected'
-                                              : 'Unknown', // Handle any other status here
+                                         "Details"
                                         ),
                                         onTap: () {
-                                        },
+                                          DateTime date = DateTime.parse(
+                                              snapshot.data![index]
+                                                  .auctionDate);
+                                          print(date);
+
+                                          String startingTimeString = snapshot
+                                              .data![index].startingTime;
+                                          String sttimeSubstring = startingTimeString
+                                              .substring(
+                                              startingTimeString.indexOf("(") +
+                                                  1,
+                                              startingTimeString.indexOf(")"));
+                                          List<
+                                              String> sttimeParts = sttimeSubstring
+                                              .split(':');
+
+                                          String endingTimeString = snapshot
+                                              .data![index].endingTime;
+                                          // Extract the substring containing the time (e.g., "14:10")
+                                          String endtimeSubstring = endingTimeString
+                                              .substring(
+                                              endingTimeString.indexOf("(") + 1,
+                                              endingTimeString.indexOf(")"));
+
+                                          List<
+                                              String> endtimeParts = endtimeSubstring
+                                              .split(':');
+                                          if (endtimeParts.length == 2 &&
+                                              sttimeParts.length ==
+                                                  2) { // Parse the hours and minutes into integers
+                                            int endhours = int.tryParse(
+                                                endtimeParts[0]) ??
+                                                0; // Use 0 as default if parsing fails
+                                            int endminutes = int.tryParse(
+                                                endtimeParts[1]) ??
+                                                0; // Use 0 as default if parsing fails
+                                            // Create a TimeOfDay object
+                                            TimeOfDay endingTime = TimeOfDay(
+                                                hour: endhours,
+                                                minute: endminutes);
+                                            // Parse the hours and minutes into integers
+                                            int sthours = int.tryParse(
+                                                sttimeParts[0]) ??
+                                                0; // Use 0 as default if parsing fails
+                                            int stminutes = int.tryParse(
+                                                sttimeParts[1]) ??
+                                                0; // Use 0 as default if parsing fails
+                                            TimeOfDay startingTime = TimeOfDay(
+                                                hour: sthours,
+                                                minute: stminutes);
+
+                                            print(startingTime);
+
+
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ApprovedBidPage(snapshot.data![index].url,snapshot.data![index].bid,
+                                                            endingTime,startingTime,date,
+                                                            snapshot.data![index].ArtistId,snapshot.data![index].artName)));
+                                          }
+                                        }
                                       ),
                                     ),
                                   );
