@@ -19,15 +19,15 @@ class ApprovedBidPage extends StatefulWidget{
   final String url;
   final String baseBid;
   final String name;
+  final String docid;
   final TimeOfDay enTime;
   final String email;
   final DateTime date;
   final TimeOfDay stTime;
 
 
-
   ApprovedBidPage(
-      this.url, this.baseBid,this.enTime,this.stTime,this.date, this.email, this.name);
+      this.url, this.baseBid,this.enTime,this.stTime,this.date, this.email, this.name,{required this.docid});
   @override
   State<ApprovedBidPage> createState() => _ApprovedBidPageState();
 }
@@ -40,169 +40,193 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
   final FirebaseAuth _auth=FirebaseAuth.instance;
   final formkey=GlobalKey<FormState>();
   final controller=Get.put(Auction_Controller());
-
+  TextEditingController bidController=TextEditingController();
+   String bidAmount= "";
   @override
   Widget build(BuildContext context) {
     double screenHeight=MediaQuery.of(context).size.height;
-
+    setState(() {
+      currentBid().then((value) {
+        setState(() {
+          bidAmount = value;
+        });
+      }).catchError((error) {
+        print('Error occurred: $error');
+      });
+    });
     return Scaffold(
-      body: FutureBuilder(
-        future: getData(),
-        builder: (context, snapshot) {
-
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              String bidAmount=snapshot.data!.bid;
-              return SingleChildScrollView(
-                child: Stack(
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              height: screenHeight,
+              child: Image.asset("assests/images/dbpic2.jpeg"
+                ,fit: BoxFit.fitHeight,),
+              //add background image here
+            ),
+            Form(
+              key: formkey,
+              child: Container(
+                child: Column(
                   children: [
-                    Container(
-                      width: double.infinity,
-                      height: 880,
-                      child: Image.asset("assests/images/dbpic2.jpeg"
-                        ,fit: BoxFit.fitHeight,),
-                      //add background image here
+                    SizedBox(height: screenHeight*0.1,),
+                    Center(
+                      child: Container(
+                        width: 300,
+                        height: 300,
+                        child: Image.network(widget.url),
+                      ),
+                    ),
+                    SizedBox(
+                      height:screenHeight*0.04,
+                    ),
+                    Text("Current Bid",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                    Text("RS ${bidAmount}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
+                    SizedBox(
+                      height:screenHeight*0.01,
+                    ),
+                    Text("Art Name",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                    Text(" ${widget.name}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
+
+                    SizedBox(
+                      height:screenHeight*0.01,
+                    ),
+                    Text("Date",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                    Text("${widget.date.month}/${widget.date.day}/${widget.date.year}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
+
+                    SizedBox(
+                      height:screenHeight*0.01,
+                    ),
+
+                    Text("Ending Time",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                    Text("${_formatTime(widget.enTime)}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),),
+
+                    SizedBox(
+                      height:screenHeight*0.01,
                     ),
                     Container(
-                      child: Column(
-                        children: [
-                          SizedBox(height: screenHeight*0.1,),
-                          Center(
+                      width: 300,
+                      height: 50,
+                      child: TextFormField(
+                        controller: bidController,
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if(value!.isEmpty)
+                          {
+                            return 'Enter amount';
+                          }
+                          else {
+                            int result=value!.compareTo(bidAmount);
+                            if( result>0)
+                            {
+                              bidController.text = value;
+
+                            }
+                            else{
+
+                              Get.snackbar("Attention", "Bid amount amount should be higher then the current amount.",
+                                  snackPosition:SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.red.withOpacity(0.1),
+                                  colorText: Colors.black);
+                              return '';
+                            }
+
+                          }
+                        },
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide: BorderSide(
+                                width: 2,
+                                color: Color(0xfff77062),
+                              )
+
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                              )
+                          ),
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.only(bottom: 10.0,top: 3),
                             child: Container(
-                              width: 300,
-                              height: 300,
-                              child: Image.network(widget.url),
-                            ),
+                                height: 16,
+                                child: Image.asset("assests/images/bidAuct.png")),
                           ),
-                          SizedBox(
-                            height:screenHeight*0.04,
-                          ),
-                          Text("Base Bid",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                          Text("RS ${widget.baseBid}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
-                          SizedBox(
-                            height:screenHeight*0.02,
-                          ),
-                          Text("Art Name",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                          Text(" ${widget.name}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
+                          label:Padding(
+                            padding: const EdgeInsets.only(left: 6.0),
+                            child: Text("Enter bid amount"),
+                          ) ,
+                        ),
 
-                          SizedBox(
-                            height:screenHeight*0.02,
-                          ),
-                          Text("Date",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                          Text("${widget.date.month}/${widget.date.day}/${widget.date.year}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
-
-                          SizedBox(
-                            height:screenHeight*0.02,
-                          ),
-                          Text("Starting time",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                          Text("${_formatTime(widget.stTime)}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),),                    SizedBox(
-                            height:screenHeight*0.02,
-                          ),
-                          Text("Ending Time",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                          Text("${_formatTime(widget.enTime)}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),),
-
-                          SizedBox(
+                      ),
+                    ),
+                    SizedBox(
                       height:screenHeight*0.02,
                     ),
-                          Container(
-                            width: 300,
-                            height: 50,
-                            child: TextFormField(
-                              controller: controller.Art_bid,
-                              keyboardType: TextInputType.number,
-                              validator: (value) {
-                                if(value!.isEmpty)
-                                {
-                                  return 'Enter correct Email';
-                                }
-                                else {
-                                  int result=value!.compareTo(bidAmount);
-                                  if( result<0)
-                                    {
-                                      controller.Art_bid.text = value;
-                                    }
-                                  else{
-                                    Get.snackbar("Attention", "Bid amount amount should be higher then the current amount.",
-                                        snackPosition:SnackPosition.BOTTOM,
-                                        backgroundColor: Colors.red.withOpacity(0.1),
-                                        colorText: Colors.black);
-                                  }
+                    Container(
+                      width: 180,
+                      height: 45,
+                      child: ElevatedButton(onPressed:()  async {
 
-                                }
-                              },
-                              decoration: InputDecoration(
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    borderSide: BorderSide(
-                                      width: 2,
-                                      color: Color(0xfff77062),
-                                    )
+                        if(formkey.currentState!.validate()){
+                            print(widget.docid);
+                            print(bidController);
+                          await FirebaseFirestore.instance.collection("Auction").doc(widget.docid)
+                              .update(
+                              {
+                                'Bid':bidController.text,
 
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    borderSide: BorderSide(
-                                      color: Colors.blue,
-                                    )
-                                ),
-                                prefixIcon: Padding(
-                                  padding: const EdgeInsets.only(left: 12.0,top: 10.0),
-                                  child: Container(child: FaIcon(FontAwesomeIcons.idBadge,color: Colors.black,)),
-                                ),
-                                label:Text("Enter Artist Email") ,
-                              ),
+                              }
+                          ).whenComplete(() {
+                            Get.snackbar("Congratulations", "Bid has been Placed",
+                                snackPosition:SnackPosition.BOTTOM,
+                                backgroundColor: Colors.green.withOpacity(0.1),
+                                colorText: Colors.white);
+                            bidController.clear();
+                          }
+                          ).catchError((error,stackTrace){
+                            Get.snackbar("Error", "Something went wrong. Try again",
+                                snackPosition:SnackPosition.BOTTOM,
+                                backgroundColor: Colors.redAccent.withOpacity(0.1),
+                                colorText: Colors.red);
+                            print(error.toString());});
 
-                            ),
-                          ),
-                          SizedBox(
-                            height:screenHeight*0.02,
-                          ),
-                          Container(
-                            width: 200,
-                            height: 50,
-                            child: ElevatedButton(onPressed:()  {
-                              //add Maps here
-                            }, child:Row(
-                              children: [
-                                FaIcon(FontAwesomeIcons.check,color: Colors.white,),
-                                SizedBox(width: 35,),
-                                Text("Enter",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 20),),
-                              ],
-                            ),
 
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0)
-                                  )
-                              ),
-                            ),
-                          )
+                        }
+                      }, child:Row(
+                        children: [
+                          FaIcon(FontAwesomeIcons.check,color: Colors.white,),
+                          SizedBox(width: 35,),
+                          Text("Bid",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 20),),
                         ],
                       ),
-                    )
+
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0)
+                            )
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height:screenHeight*0.02,
+                    ),
                   ],
                 ),
-              );
-            } else if (snapshot.hasError) {
-              return Text('User not found');
-            } else {
-              return Text('Something went wrong');
-            }
-          }
-          else {
-            // Return Center widget to display CircularProgressIndicator in the center
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
+              ),
+            )
+          ],
+        ),
       ),
 
     );
   }
   Future<Auction_model> getData() async {
-    return await auctionRepo.getPesronsalAuctionStatus(widget.name);
+    return await auctionRepo.getPesronsalAuction(widget.name);
   }
   String _formatTime(TimeOfDay timeOfDay) {
     // Convert 24-hour format to 12-hour format
@@ -229,4 +253,34 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
     // Add leading zero if minute is less than 10
     return minute < 10 ? '0$minute' : '$minute';
   }
+  void fetchBidAmount(String bidAmount) async {
+    bidAmount = await currentBid();
+
+  }
+  Future<String> currentBid() async {
+    var doc = widget.docid;
+    print(doc);
+    late DocumentSnapshot documentSnapshot;
+
+    try {
+      // Await the result of the Firestore operation directly
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection("Auction").doc(doc).get();
+
+      // Assign the result to documentSnapshot
+      documentSnapshot = snapshot;
+
+      // Extract the bid amount
+      String amount = documentSnapshot['Bid'];
+      print(amount);
+
+      // Return the bid amount
+      return amount;
+    } catch (error) {
+      // Handle any errors that occur during the Firestore operation
+      print("Error fetching bid: $error");
+      return ''; // Return an empty string or handle error as appropriate
+    }
+  }
+
+
 }

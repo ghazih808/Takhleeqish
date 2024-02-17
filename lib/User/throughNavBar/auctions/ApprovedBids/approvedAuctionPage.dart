@@ -38,6 +38,7 @@ class ApprovedAuctionPage extends StatelessWidget{
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
+
               return Scaffold(
                   body:Stack(
                     children: [
@@ -56,6 +57,25 @@ class ApprovedAuctionPage extends StatelessWidget{
                               child: ListView.separated(
                                 itemCount: snapshot.data!.length, // Number of auction (fetch from the database)
                                 itemBuilder: (context, index) {
+                                  String startingTimeString = snapshot
+                                      .data![index].startingTime;
+                                  String sttimeSubstring = startingTimeString
+                                      .substring(
+                                      startingTimeString.indexOf("(") +
+                                          1,
+                                      startingTimeString.indexOf(")"));
+                                  List<
+                                      String> sttimeParts = sttimeSubstring
+                                      .split(':');
+                                  int sthours = int.tryParse(
+                                      sttimeParts[0]) ??
+                                      0; // Use 0 as default if parsing fails
+                                  int stminutes = int.tryParse(
+                                      sttimeParts[1]) ??
+                                      0; // Use 0 as default if parsing fails
+                                  TimeOfDay startingTime = TimeOfDay(
+                                      hour: sthours,
+                                      minute: stminutes);
                                   return Slidable(
                                     actionPane: SlidableDrawerActionPane(),
                                     actionExtentRatio: 0.25,
@@ -67,7 +87,7 @@ class ApprovedAuctionPage extends StatelessWidget{
                                       child: ListTile(
                                         leading: ClipOval(child:Image.network(snapshot.data![index].url)),
                                         title: Text('Auction ${index + 1}'),
-                                        subtitle: Text("Painting Name:  ${snapshot.data![index].artName}"),
+                                        subtitle: Text("Starting Time: ${_formatTime(startingTime)}"),
                                         trailing: Text(
                                          "Details"
                                         ),
@@ -77,16 +97,7 @@ class ApprovedAuctionPage extends StatelessWidget{
                                                   .auctionDate);
                                           print(date);
 
-                                          String startingTimeString = snapshot
-                                              .data![index].startingTime;
-                                          String sttimeSubstring = startingTimeString
-                                              .substring(
-                                              startingTimeString.indexOf("(") +
-                                                  1,
-                                              startingTimeString.indexOf(")"));
-                                          List<
-                                              String> sttimeParts = sttimeSubstring
-                                              .split(':');
+
 
                                           String endingTimeString = snapshot
                                               .data![index].endingTime;
@@ -113,25 +124,17 @@ class ApprovedAuctionPage extends StatelessWidget{
                                                 hour: endhours,
                                                 minute: endminutes);
                                             // Parse the hours and minutes into integers
-                                            int sthours = int.tryParse(
-                                                sttimeParts[0]) ??
-                                                0; // Use 0 as default if parsing fails
-                                            int stminutes = int.tryParse(
-                                                sttimeParts[1]) ??
-                                                0; // Use 0 as default if parsing fails
-                                            TimeOfDay startingTime = TimeOfDay(
-                                                hour: sthours,
-                                                minute: stminutes);
+
 
                                             print(startingTime);
-
+                                            String docid=snapshot.data![index].id?? "No id";
 
                                             Navigator.push(context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         ApprovedBidPage(snapshot.data![index].url,snapshot.data![index].bid,
                                                             endingTime,startingTime,date,
-                                                            snapshot.data![index].ArtistId,snapshot.data![index].artName)));
+                                                            snapshot.data![index].ArtistId,snapshot.data![index].artName, docid: docid)));
                                           }
                                         }
                                       ),
@@ -167,5 +170,30 @@ class ApprovedAuctionPage extends StatelessWidget{
   Future<List<Auction_model>> getAllData() async {
     return await auctionRepo.getAllAuctionDetail();
   }
+  String _formatTime(TimeOfDay timeOfDay) {
+    // Convert 24-hour format to 12-hour format
+    int hour = timeOfDay.hourOfPeriod;
+    int minute = timeOfDay.minute;
+    String period = timeOfDay.period == DayPeriod.am ? 'AM' : 'PM';
 
+    // Format the time as HH:MM AM/PM
+    return '${_formatHour(hour)}:${_formatMinute(minute)} $period';
+  }
+
+  String _formatHour(int hour) {
+    // Ensure hour is in 12-hour format
+    if (hour == 0) {
+      return '12'; // 0 is 12 AM in 12-hour format
+    } else if (hour > 12) {
+      return '${hour - 12}';
+    } else {
+      return '$hour';
+    }
+  }
+
+  String _formatMinute(int minute) {
+    // Add leading zero if minute is less than 10
+    return minute < 10 ? '0$minute' : '$minute';
+  }
 }
+
