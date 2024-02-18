@@ -34,18 +34,81 @@ class ApprovedBidPage extends StatefulWidget{
 
 class _ApprovedBidPageState extends State<ApprovedBidPage> {
   TextEditingController bid=TextEditingController();
+  bool isTimeValid=false;
+  bool isBiddingDone=false;
 
   final auctionRepo=Get.put(Auction_Repo());
 
   final FirebaseAuth _auth=FirebaseAuth.instance;
   final formkey=GlobalKey<FormState>();
   final controller=Get.put(Auction_Controller());
-  TextEditingController bidController=TextEditingController();
+  late TextEditingController bidController;
    String bidAmount= "";
+
+
+  @override
+  void initState() {
+    super.initState();
+    bidController = TextEditingController();
+
+  }
+
+
+  void checkTimeValidity() {
+    final now = DateTime.now();
+    final currentTime = TimeOfDay(hour: now.hour, minute: now.minute);
+
+    // Convert the widget date to a DateTime object
+    final widgetDate = DateTime(
+        widget.date.year,
+        widget.date.month,
+        widget.date.day,
+        widget.stTime.hour,
+        widget.stTime.minute
+    );
+
+    final widgetEndDate = DateTime(
+        widget.date.year,
+        widget.date.month,
+        widget.date.day,
+        widget.enTime.hour,
+        widget.enTime.minute
+    );
+
+    // Check if the current date is within the range of the bidding period
+    if (now.isAfter(widgetDate) && now.isBefore(widgetEndDate)) {
+      // Check if the current time is within the bidding hours
+      if (currentTime.hour >= widget.stTime.hour &&
+          currentTime.hour < widget.enTime.hour) {
+        setState(() {
+          isTimeValid = true;
+          isBiddingDone=true;
+        });
+      } else if (currentTime.hour == widget.enTime.hour &&
+          currentTime.minute <= widget.enTime.minute) {
+        setState(() {
+          isTimeValid = true;
+          isBiddingDone=true;
+        });
+      } else {
+        setState(() {
+          isTimeValid = false;
+        });
+      }
+    } else {
+      setState(() {
+        isTimeValid = false;
+      });
+    }
+    print(isTimeValid);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     double screenHeight=MediaQuery.of(context).size.height;
     setState(() {
+      checkTimeValidity();
       currentBid().then((value) {
         setState(() {
           bidAmount = value;
@@ -54,6 +117,8 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
         print('Error occurred: $error');
       });
     });
+
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -105,6 +170,7 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
                     SizedBox(
                       height:screenHeight*0.01,
                     ),
+                    if(isTimeValid)
                     Container(
                       width: 300,
                       height: 50,
@@ -117,11 +183,10 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
                             return 'Enter amount';
                           }
                           else {
-                            int result=value!.compareTo(bidAmount);
-                            if( result>0)
-                            {
+                            int? newValue = int.tryParse(value);
+                            int currentBidAmount = int.tryParse(bidAmount) ?? 0; // Convert bidAmount to integer or use 0 if it's not parseable
+                            if (newValue != null && newValue > currentBidAmount) {
                               bidController.text = value;
-
                             }
                             else{
 
@@ -170,32 +235,52 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
                       width: 180,
                       height: 45,
                       child: ElevatedButton(onPressed:()  async {
-
-                        if(formkey.currentState!.validate()){
+                        if(isTimeValid){
+                          if(formkey.currentState!.validate()){
                             print(widget.docid);
                             print(bidController);
-                          await FirebaseFirestore.instance.collection("Auction").doc(widget.docid)
-                              .update(
-                              {
-                                'Bid':bidController.text,
+                            await FirebaseFirestore.instance.collection("Auction").doc(widget.docid)
+                                .update(
+                                {
+                                  'Bid':bidController.text,
 
-                              }
-                          ).whenComplete(() {
-                            Get.snackbar("Congratulations", "Bid has been Placed",
-                                snackPosition:SnackPosition.BOTTOM,
-                                backgroundColor: Colors.green.withOpacity(0.1),
-                                colorText: Colors.white);
-                            bidController.clear();
+                                }
+                            ).whenComplete(() {
+                              Get.snackbar("Congratulations", "Bid has been Placed",
+                                  snackPosition:SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.green.withOpacity(0.1),
+                                  colorText: Colors.white);
+                              bidController.clear();
+                            }
+                            ).catchError((error,stackTrace){
+                              Get.snackbar("Error", "Something went wrong. Try again",
+                                  snackPosition:SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.redAccent.withOpacity(0.1),
+                                  colorText: Colors.red);
+                              print(error.toString());});
+
+
                           }
-                          ).catchError((error,stackTrace){
-                            Get.snackbar("Error", "Something went wrong. Try again",
-                                snackPosition:SnackPosition.BOTTOM,
-                                backgroundColor: Colors.redAccent.withOpacity(0.1),
-                                colorText: Colors.red);
-                            print(error.toString());});
-
-
                         }
+                        else
+                          {
+                            if(isBiddingDone)
+                              {
+                                Get.snackbar("Sorry", "Bidding has been ended",
+                                    snackPosition:SnackPosition.BOTTOM,
+                                    backgroundColor: Colors.red.withOpacity(0.3),
+                                    colorText: Colors.white);
+                              }
+                            else
+                              {
+                                Get.snackbar("Sorry", "Bidding has not started yet",
+                                    snackPosition:SnackPosition.BOTTOM,
+                                    backgroundColor: Colors.red.withOpacity(0.3),
+                                    colorText: Colors.white);
+                              }
+
+                          }
+
                       }, child:Row(
                         children: [
                           FaIcon(FontAwesomeIcons.check,color: Colors.white,),
@@ -225,9 +310,13 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
 
     );
   }
+
+
   Future<Auction_model> getData() async {
     return await auctionRepo.getPesronsalAuction(widget.name);
   }
+
+
   String _formatTime(TimeOfDay timeOfDay) {
     // Convert 24-hour format to 12-hour format
     int hour = timeOfDay.hourOfPeriod;
@@ -237,6 +326,7 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
     // Format the time as HH:MM AM/PM
     return '${_formatHour(hour)}:${_formatMinute(minute)} $period';
   }
+
 
   String _formatHour(int hour) {
     // Ensure hour is in 12-hour format
@@ -249,14 +339,19 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
     }
   }
 
+
   String _formatMinute(int minute) {
     // Add leading zero if minute is less than 10
     return minute < 10 ? '0$minute' : '$minute';
   }
+
+
   void fetchBidAmount(String bidAmount) async {
     bidAmount = await currentBid();
 
   }
+
+
   Future<String> currentBid() async {
     var doc = widget.docid;
     print(doc);
@@ -281,6 +376,31 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
       return ''; // Return an empty string or handle error as appropriate
     }
   }
+  Future<String> currentEndTime() async {
+    var doc = widget.docid;
+    print(doc);
+    late DocumentSnapshot documentSnapshot;
+
+    try {
+      // Await the result of the Firestore operation directly
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection("Auction").doc(doc).get();
+
+      // Assign the result to documentSnapshot
+      documentSnapshot = snapshot;
+
+      // Extract the bid amount
+      String endTime = documentSnapshot['Ending_Time'];
+      print(endTime);
+
+      // Return the bid amount
+      return endTime;
+    } catch (error) {
+      // Handle any errors that occur during the Firestore operation
+      print("Error fetching Time: $error");
+      return ''; // Return an empty string or handle error as appropriate
+    }
+  }
+
 
 
 }
