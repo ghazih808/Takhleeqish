@@ -61,6 +61,7 @@ class AuctionStatus extends StatelessWidget{
                             child: ListView.separated(
                               itemCount: snapshot.data!.length, // Number of auction (fetch from the database)
                               itemBuilder: (context, index) {
+                                print(index);
                                 return Slidable(
                                   actionPane: SlidableDrawerActionPane(),
                                   actionExtentRatio: 0.25,

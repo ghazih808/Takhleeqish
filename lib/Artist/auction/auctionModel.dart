@@ -13,6 +13,7 @@ class Auction_model{
   final String url;
   final String status;
   final String checkAuc;
+  final String checkBidStatus;
   const Auction_model(
       {
         this.id,
@@ -25,6 +26,7 @@ class Auction_model{
         required this.url,
         required this.checkAuc,
         required this.status,
+        required this.checkBidStatus,
       });
   toJson(){
     return{
@@ -37,6 +39,7 @@ class Auction_model{
       'Url':url,
       'Status':status,
       'Check':checkAuc,
+      'BidStatus':checkBidStatus,
     };}
 
   factory Auction_model.fromSnapshot(DocumentSnapshot<Map<String,dynamic>> documentSnapshot)
@@ -44,7 +47,11 @@ class Auction_model{
     final data=documentSnapshot.data()!;
     return Auction_model(
       id: documentSnapshot.id,
-      artName: data["Name"], startingTime: data["Starting_Time"], bid: data["Bid"], endingTime: data["Ending_Time"], ArtistId: data["Artist_ID"], url: data['Url'], auctionDate: data["Auction_Date"],  status: data["Status"], checkAuc: data["Check"],);
+      artName: data["Name"], startingTime: data["Starting_Time"],
+      bid: data["Bid"], endingTime: data["Ending_Time"],
+      ArtistId: data["Artist_ID"], url: data['Url'],
+      auctionDate: data["Auction_Date"],  status: data["Status"],
+      checkAuc: data["Check"], checkBidStatus: 'BidStatus',);
   }
 
 

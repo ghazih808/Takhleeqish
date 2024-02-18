@@ -6,6 +6,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:takhleekish/Admin/adminDashboard/dashboard.dart';
 import 'package:takhleekish/Admin/throughDashboard/adminAuction/approveOrRejectAuction.dart';
 
 import '../../../Artist/artistPersonal/artist_authentication.dart';
@@ -34,6 +35,7 @@ class AdminAuctionPage extends StatelessWidget{
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
+              print(snapshot.data!.length);
               return Stack(
                 children: [
                   Container(
@@ -51,6 +53,8 @@ class AdminAuctionPage extends StatelessWidget{
                           child: ListView.separated(
                             itemCount: snapshot.data!.length, // Number of exhibitions (fetch from the database)
                             itemBuilder: (context, index) {
+                              print(snapshot.data![index].checkAuc);
+                              print(index);
                               if(snapshot.data![index].checkAuc=="false")
                                 {
                                   return Slidable(
@@ -81,10 +85,14 @@ class AdminAuctionPage extends StatelessWidget{
                                                             'Status':"approved",
                                                             'Check':"true"
                                                           }
-                                                      ).whenComplete(() =>  Get.snackbar("Congratulations", "Auction request has been approved.",
-                                                          snackPosition:SnackPosition.BOTTOM,
-                                                          backgroundColor: Colors.green.withOpacity(0.1),
-                                                          colorText: Colors.white),
+                                                      ).whenComplete(() {
+                                                        Get.snackbar("Congratulations", "Auction request has been approved.",
+                                                            snackPosition:SnackPosition.BOTTOM,
+                                                            backgroundColor: Colors.green.withOpacity(0.1),
+                                                            colorText: Colors.white);
+                                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminDashboard()));
+
+                                                      }
                                                       ).catchError((error,stackTrace){
                                                         Get.snackbar("Error", "Something went wrong. Try again",
                                                             snackPosition:SnackPosition.BOTTOM,
@@ -114,11 +122,15 @@ class AdminAuctionPage extends StatelessWidget{
                                                             'Status':"rejected",
                                                             'Check':"true"
                                                           }
-                                                      ).whenComplete(() =>
-                                                          Get.snackbar("Congratulations", "Auction request has been rejected.",
-                                                          snackPosition:SnackPosition.BOTTOM,
-                                                          backgroundColor: Colors.green.withOpacity(0.1),
-                                                          colorText: Colors.white),
+                                                      ).whenComplete(() {
+                                                        Get.snackbar("Congratulations", "Auction request has been rejected.",
+                                                            snackPosition:SnackPosition.BOTTOM,
+                                                            backgroundColor: Colors.green.withOpacity(0.1),
+                                                            colorText: Colors.white);
+                                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminDashboard()));
+
+                                                      }
+
                                                       ).catchError((error,stackTrace){
                                                         Get.snackbar("Error", "Something went wrong. Try again",
                                                             snackPosition:SnackPosition.BOTTOM,
@@ -180,8 +192,13 @@ class AdminAuctionPage extends StatelessWidget{
                                     ),
                                   );
                                 }
+                              else{
+                                return Container();
+                              }
 
-                            }, separatorBuilder: (BuildContext context, int index) { return const Divider(); },
+                            }, separatorBuilder: (BuildContext context, int index) {
+
+                              return const Divider(); },
                           ),
                         ),
 

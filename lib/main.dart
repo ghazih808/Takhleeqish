@@ -22,7 +22,6 @@ import 'Artist/throughDashboard/ArtistAuction/auction.dart';
 import 'Artist/throughNavbar/AnalyticsPage/analytics.dart';
 import 'Artist/throughDashboard/postArtifact/postArtifacts.dart';
 import 'User/throughNavBar/auctions/ApprovedBids/approvedBidPage.dart';
-import 'User/throughNavBar/auctions/requestAuction.dart';
 // import 'User/throughNavBar/auctions/availableBids/userAuctionPage.dart';
 import 'User/throughNavBar/feedbackPage/feedback.dart';
 import 'User/throughNavBar/userExhibition/detailExhibationPage.dart';
@@ -92,89 +91,68 @@ class _MyHomePageState extends State<MyHomePage> {
             //add background image here
           ),
           Center(
-            child: Card(
-              elevation: 7,
-              shadowColor:Color(0xfff77062) ,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0)
-              ),
-              child: Container(
-                width: 300,
-                height: 500,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    gradient: LinearGradient(
-                        colors: [
-                          Color(0xfff794a4),
-                          Color(0xfffdd6bd)
+              child:Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5.0,bottom: 20.0),
+                    child: Container(
+                        width: 320,
+                        height: 320,
+                        child: Image.asset("assests/images/homeScreenPic.png")),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15.0),
+                    child: Container(
+                      width: 180,
+                      height: 180,
+                      child: ElevatedButton(onPressed:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>User_login()),);
+
+                      }, child:Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right:15.0,left: 15.0,top: 17),
+                            child: Image.asset("assests/images/avatar.png"),
+                          ),
+                          Text("User",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,fontSize: 18),),
                         ],
-                        begin: FractionalOffset(1.0,0.0),
-                        end: FractionalOffset(0.0,1.0)
-
-                    )
-
-                ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 60.0,bottom: 100.0),
-                      child: Text("Takhleeqish",style: TextStyle(fontSize: 48,fontFamily:'main',fontWeight: FontWeight.w600),),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 15.0),
-                      child: Container(
-                        width: 250,
-                        height: 50,
-                        child: ElevatedButton(onPressed:(){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>User_login()),);
-
-                        }, child:Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right:15.0),
-                              child: FaIcon(FontAwesomeIcons.user,color: Colors.black,),
-                            ),
-                            Text("User",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,fontSize: 18),),
-                          ],
-                        ),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0)
-                              )
-                          ),
+                      ),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0)
+                            )
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Container(
-                        width: 250,
-                        height: 50,
-                        child: ElevatedButton(onPressed:(){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Artist_login()),);
-                        }, child:Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right:15.0),
-                              child: FaIcon(FontAwesomeIcons.paintbrush,color: Colors.black,),
-                            ),
-                            Text("Artist",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,fontSize: 18),),
-                          ],
-                        ),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0)
-                              )
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15,bottom: 18),
+                    child: Container(
+                      width: 180,
+                      height: 180,
+                      child: ElevatedButton(onPressed:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Artist_login()),);
+                      }, child:Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right:15.0,left: 15.0,top: 17),
+                            child: Image.asset("assests/images/artist.png"),
                           ),
+                          Text("Artist",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,fontSize: 18),),
+                        ],
+                      ),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0)
+                            )
                         ),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
-            ),
 
           ),
         ],

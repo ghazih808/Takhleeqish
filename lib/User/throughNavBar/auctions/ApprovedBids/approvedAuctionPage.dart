@@ -57,89 +57,98 @@ class ApprovedAuctionPage extends StatelessWidget{
                               child: ListView.separated(
                                 itemCount: snapshot.data!.length, // Number of auction (fetch from the database)
                                 itemBuilder: (context, index) {
-                                  String startingTimeString = snapshot
-                                      .data![index].startingTime;
-                                  String sttimeSubstring = startingTimeString
-                                      .substring(
-                                      startingTimeString.indexOf("(") +
-                                          1,
-                                      startingTimeString.indexOf(")"));
-                                  List<
-                                      String> sttimeParts = sttimeSubstring
-                                      .split(':');
-                                  int sthours = int.tryParse(
-                                      sttimeParts[0]) ??
-                                      0; // Use 0 as default if parsing fails
-                                  int stminutes = int.tryParse(
-                                      sttimeParts[1]) ??
-                                      0; // Use 0 as default if parsing fails
-                                  TimeOfDay startingTime = TimeOfDay(
-                                      hour: sthours,
-                                      minute: stminutes);
-                                  return Slidable(
-                                    actionPane: SlidableDrawerActionPane(),
-                                    actionExtentRatio: 0.25,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(15.0)
-                                      ),
-                                      child: ListTile(
-                                        leading: ClipOval(child:Image.network(snapshot.data![index].url)),
-                                        title: Text('Auction ${index + 1}'),
-                                        subtitle: Text("Starting Time: ${_formatTime(startingTime)}"),
-                                        trailing: Text(
-                                         "Details"
+
+                                  if(snapshot.data![index].checkAuc=='true')
+                                    {
+                                      String startingTimeString = snapshot
+
+                                          .data![index].startingTime;
+                                      String sttimeSubstring = startingTimeString
+                                          .substring(
+                                          startingTimeString.indexOf("(") +
+                                              1,
+                                          startingTimeString.indexOf(")"));
+                                      List<
+                                          String> sttimeParts = sttimeSubstring
+                                          .split(':');
+                                      int sthours = int.tryParse(
+                                          sttimeParts[0]) ??
+                                          0; // Use 0 as default if parsing fails
+                                      int stminutes = int.tryParse(
+                                          sttimeParts[1]) ??
+                                          0; // Use 0 as default if parsing fails
+                                      TimeOfDay startingTime = TimeOfDay(
+                                          hour: sthours,
+                                          minute: stminutes);
+                                      return Slidable(
+                                        actionPane: SlidableDrawerActionPane(),
+                                        actionExtentRatio: 0.25,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(15.0)
+                                          ),
+                                          child: ListTile(
+                                              leading: ClipOval(child:Image.network(snapshot.data![index].url)),
+                                              title: Text('Auction ${index + 1}'),
+                                              subtitle: Text("Starting Time: ${_formatTime(startingTime)}"),
+                                              trailing: Text(
+                                                  "Details"
+                                              ),
+                                              onTap: () {
+                                                DateTime date = DateTime.parse(
+                                                    snapshot.data![index]
+                                                        .auctionDate);
+                                                print(date);
+
+
+
+                                                String endingTimeString = snapshot
+                                                    .data![index].endingTime;
+                                                // Extract the substring containing the time (e.g., "14:10")
+                                                String endtimeSubstring = endingTimeString
+                                                    .substring(
+                                                    endingTimeString.indexOf("(") + 1,
+                                                    endingTimeString.indexOf(")"));
+
+                                                List<
+                                                    String> endtimeParts = endtimeSubstring
+                                                    .split(':');
+                                                if (endtimeParts.length == 2 &&
+                                                    sttimeParts.length ==
+                                                        2) { // Parse the hours and minutes into integers
+                                                  int endhours = int.tryParse(
+                                                      endtimeParts[0]) ??
+                                                      0; // Use 0 as default if parsing fails
+                                                  int endminutes = int.tryParse(
+                                                      endtimeParts[1]) ??
+                                                      0; // Use 0 as default if parsing fails
+                                                  // Create a TimeOfDay object
+                                                  TimeOfDay endingTime = TimeOfDay(
+                                                      hour: endhours,
+                                                      minute: endminutes);
+                                                  // Parse the hours and minutes into integers
+
+
+                                                  print(startingTime);
+                                                  String docid=snapshot.data![index].id?? "No id";
+
+                                                  print(snapshot.data![index].checkBidStatus);
+
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ApprovedBidPage(snapshot.data![index].url,snapshot.data![index].bid,
+                                                                  endingTime,startingTime,date,
+                                                                  snapshot.data![index].ArtistId,snapshot.data![index].artName, snapshot.data![index].checkBidStatus ,docid: docid,)));
+                                                }
+                                              }
+                                          ),
                                         ),
-                                        onTap: () {
-                                          DateTime date = DateTime.parse(
-                                              snapshot.data![index]
-                                                  .auctionDate);
-                                          print(date);
+                                      );
+                                    }
 
 
-
-                                          String endingTimeString = snapshot
-                                              .data![index].endingTime;
-                                          // Extract the substring containing the time (e.g., "14:10")
-                                          String endtimeSubstring = endingTimeString
-                                              .substring(
-                                              endingTimeString.indexOf("(") + 1,
-                                              endingTimeString.indexOf(")"));
-
-                                          List<
-                                              String> endtimeParts = endtimeSubstring
-                                              .split(':');
-                                          if (endtimeParts.length == 2 &&
-                                              sttimeParts.length ==
-                                                  2) { // Parse the hours and minutes into integers
-                                            int endhours = int.tryParse(
-                                                endtimeParts[0]) ??
-                                                0; // Use 0 as default if parsing fails
-                                            int endminutes = int.tryParse(
-                                                endtimeParts[1]) ??
-                                                0; // Use 0 as default if parsing fails
-                                            // Create a TimeOfDay object
-                                            TimeOfDay endingTime = TimeOfDay(
-                                                hour: endhours,
-                                                minute: endminutes);
-                                            // Parse the hours and minutes into integers
-
-
-                                            print(startingTime);
-                                            String docid=snapshot.data![index].id?? "No id";
-
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ApprovedBidPage(snapshot.data![index].url,snapshot.data![index].bid,
-                                                            endingTime,startingTime,date,
-                                                            snapshot.data![index].ArtistId,snapshot.data![index].artName, docid: docid)));
-                                          }
-                                        }
-                                      ),
-                                    ),
-                                  );
                                 }, separatorBuilder: (BuildContext context, int index) { return const Divider(); },
                               ),
                             ),

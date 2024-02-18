@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,12 +24,13 @@ class ApprovedBidPage extends StatefulWidget{
   final String docid;
   final TimeOfDay enTime;
   final String email;
+  final String bidStatus;
   final DateTime date;
   final TimeOfDay stTime;
 
 
   ApprovedBidPage(
-      this.url, this.baseBid,this.enTime,this.stTime,this.date, this.email, this.name,{required this.docid});
+      this.url, this.baseBid,this.enTime,this.stTime,this.date, this.email, this.name,this.bidStatus,{required this.docid});
   @override
   State<ApprovedBidPage> createState() => _ApprovedBidPageState();
 }
@@ -35,7 +38,8 @@ class ApprovedBidPage extends StatefulWidget{
 class _ApprovedBidPageState extends State<ApprovedBidPage> {
   TextEditingController bid=TextEditingController();
   bool isTimeValid=false;
-  bool isBiddingDone=false;
+  late bool isBiddingDone;
+
 
   final auctionRepo=Get.put(Auction_Repo());
 
@@ -93,11 +97,13 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
       } else {
         setState(() {
           isTimeValid = false;
+
         });
       }
     } else {
       setState(() {
         isTimeValid = false;
+
       });
     }
     print(isTimeValid);
@@ -107,6 +113,18 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
   @override
   Widget build(BuildContext context) {
     double screenHeight=MediaQuery.of(context).size.height;
+print('${widget.bidStatus}');
+print("Ghazi");
+if({widget.bidStatus}=='false')
+    {
+      isBiddingDone=false;
+    }
+    else
+      {
+        isBiddingDone=true;
+      }
+
+    print(isBiddingDone);
     setState(() {
       checkTimeValidity();
       currentBid().then((value) {
@@ -243,6 +261,7 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
                                 .update(
                                 {
                                   'Bid':bidController.text,
+                                  'BidStatus':"true"
 
                                 }
                             ).whenComplete(() {
@@ -264,16 +283,17 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
                         }
                         else
                           {
+                            print(isBiddingDone);
                             if(isBiddingDone)
                               {
-                                Get.snackbar("Sorry", "Bidding has been ended",
+                                Get.snackbar("Sorry", "Currently this is not the bidding period",
                                     snackPosition:SnackPosition.BOTTOM,
                                     backgroundColor: Colors.red.withOpacity(0.3),
                                     colorText: Colors.white);
                               }
                             else
                               {
-                                Get.snackbar("Sorry", "Bidding has not started yet",
+                                Get.snackbar("Sorry", "Currently this is not the bidding period",
                                     snackPosition:SnackPosition.BOTTOM,
                                     backgroundColor: Colors.red.withOpacity(0.3),
                                     colorText: Colors.white);
