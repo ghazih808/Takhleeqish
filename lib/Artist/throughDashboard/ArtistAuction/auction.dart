@@ -398,6 +398,10 @@ class _AuctionPageState extends State<AuctionPage> {
                         onPressed: () {
                           if (formkey.currentState!.validate()){
                             print('${controller.Art_name}');
+
+
+
+
                             // Convert starting and ending time to TimeOfDay objects
                             TimeOfDay startingTime = controller.Art_startingTime!;
                             TimeOfDay endingTime = controller.Art_endingTime!;
@@ -429,7 +433,10 @@ class _AuctionPageState extends State<AuctionPage> {
                                   controller.Artist_id.clear();
                                   controller.Art_bid.clear();
                                   controller.Art_name.clear();
-
+                                  controller.auctDate = null;
+                                  controller.Art_startingTime = null;
+                                  controller.Art_endingTime = null;
+                                  imageurl = '';
                                 }
                                 else{
                                   Get.snackbar("OOpS", "Starting time must comes before ending time",
@@ -474,8 +481,8 @@ class _AuctionPageState extends State<AuctionPage> {
   Future pickImageFromGallery()async{
     final returnImage= await ImagePicker().pickImage(source: ImageSource.gallery);
   }
-  Future<DateTime?> pickDate()=>showDatePicker(context: context, firstDate: DateTime(2024), lastDate: DateTime(2100));
- Future<TimeOfDay?> pickTime()=>showTimePicker(context: context, initialTime: TimeOfDay(hour: 0, minute: 0));
+  Future<DateTime?> pickDate()=>showDatePicker(context: context, firstDate: DateTime.now(),initialDate: DateTime.now(), lastDate: DateTime(2100));
+ Future<TimeOfDay?> pickTime()=>showTimePicker(context: context, initialTime: TimeOfDay.now());
 }
 
 void main() {
