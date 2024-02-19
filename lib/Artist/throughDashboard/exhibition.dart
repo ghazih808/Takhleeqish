@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ExhibitionAnnouncementPage extends StatefulWidget {
@@ -7,115 +7,102 @@ class ExhibitionAnnouncementPage extends StatefulWidget {
   _ExhibitionAnnouncementPageState createState() =>
       _ExhibitionAnnouncementPageState();
 }
+
 class _ExhibitionAnnouncementPageState
     extends State<ExhibitionAnnouncementPage> {
-  final GlobalKey<FormBuilderState> _formKey =
-  GlobalKey<FormBuilderState>();
-
-  List<String> venues = ['Venue A', 'Venue B', 'Venue C'];
-  List<int> capacityOptions = [100, 200, 300];
-  List<String> paintingCategories = [
-    'Abstract',
-    'Landscape',
-    'Portrait',
-    'Still Life',
-    'Modern Art',
-    'Contemporary',
-  ];
-  DateTime? selectedDate;
-  TimeOfDay? selectedTime;
+  final venueController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      body:Stack(
+      body: Stack(
         children: [
           Container(
             width: double.infinity,
             height: 880,
-            child: Image.asset("assests/images/dbpic2.jpeg"
-              ,fit: BoxFit.fitHeight,),
+            child: Image.asset(
+              "assests/images/dbpic2.jpeg",
+              fit: BoxFit.fitHeight,
+            ),
             //add background image here
           ),
           Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView.separated(
-                  itemCount: 5, // Number of exhibitions (fetch from the database)
-                  itemBuilder: (context, index) {
-                    return Slidable(
-                      actionPane: SlidableDrawerActionPane(),
-                      actionExtentRatio: 0.25,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15.0)
-                        ),
-                        child: ListTile(
-                          title: Text('Exhibition ${index + 1}'),
-                          subtitle: Text('Venue, Date, Time, etc.'),
-                          onTap: () {
-                            // Handle tapping on an exhibition
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('exhibition')
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final exhibitions =
+                        snapshot.data!.docs.reversed.toList();
+                        return ListView.separated(
+                          itemCount: exhibitions.length,
+                          itemBuilder: (context, index) {
+                            DocumentSnapshot exhibition =
+                            exhibitions[index];
+                            final venue = exhibition['venue'];
+                            return Slidable(
+                              actionPane: SlidableDrawerActionPane(),
+                              actionExtentRatio: 0.25,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                child: ListTile(
+                                  title: Text('Exhibition ${index + 1}'),
+                                  subtitle: Text('$venue'),
+                                  onTap: () {
+                                    // Handle tapping on an exhibition
+                                  },
+                                ),
+                              ),
+                              secondaryActions: [
+                                IconSlideAction(
+                                  caption: 'Delete',
+                                  color: Colors.red,
+                                  icon: Icons.delete,
+                                  onTap: () {
+                                    // Handle deleting the exhibition
+                                    // You may prompt the user for confirmation
+                                  },
+                                ),
+                              ],
+                            );
                           },
-                        ),
-                      ),
-                      secondaryActions: [
-                        IconSlideAction(
-                          caption: 'Delete',
-                          color: Colors.red,
-                          icon: Icons.delete,
-                          onTap: () {
-                            // Handle deleting the exhibition
-                            // You may prompt the user for confirmation
+                          separatorBuilder:
+                              (BuildContext context, int index) {
+                            return const Divider();
                           },
-                        ),
-                      ],
-                    );
-                  }, separatorBuilder: (BuildContext context, int index) { return const Divider(); },
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text('Error: ${snapshot.error}'),
+                        );
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  ),
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  _showAddExhibitionDialog(context);
-                },
-                child: Text('Add Exhibition'),
-              ),
-            ],
+                ElevatedButton(
+                  onPressed: () {
+                    _showAddExhibitionDialog(context);
+                  },
+                  child: Text('Add Exhibition'),
+                ),
+              ],
+            ),
           ),
-        ),],
-      )
+        ],
+      ),
     );
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2101),
-    );
-
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = picked;
-      });
-    }
-  }
-
-  Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-
-    if (picked != null && picked != selectedTime) {
-      setState(() {
-        selectedTime = picked;
-      });
-    }
   }
 
   void _showAddExhibitionDialog(BuildContext context) {
@@ -123,112 +110,28 @@ class _ExhibitionAnnouncementPageState
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          content: FormBuilder(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                DropdownButtonFormField(
-                  decoration: InputDecoration(labelText: 'Select Venue'),
-                  value: venues.first, // Initial value, you can change it accordingly
-                  items: venues
-                      .map((venue) => DropdownMenuItem(
-                    value: venue,
-                    child: Text(venue),
-                  ))
-                      .toList(),
-                  onChanged: (value) {
-                    // Handle the venue change
-                  },
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: venueController,
+                decoration: InputDecoration(
+                  hintText: 'Venue',
                 ),
-                SizedBox(height: 10),
-                InkWell(
-                  onTap: () => _selectDate(context),
-                  child: InputDecorator(
-                    decoration: InputDecoration(
-                      labelText: 'Date',
-                      errorText:
-                      _formKey.currentState?.fields['date']?.errorText,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          selectedDate != null
-                              ? '${selectedDate!.toLocal()}'.split(' ')[0]
-                              : 'Select Date',
-                        ),
-                        Icon(Icons.calendar_today),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                InkWell(
-                  onTap: () => _selectTime(context),
-                  child: InputDecorator(
-                    decoration: InputDecoration(
-                      labelText: 'Time',
-                      errorText:
-                      _formKey.currentState?.fields['time']?.errorText,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          selectedTime != null
-                              ? selectedTime!.format(context)
-                              : 'Select Time',
-                        ),
-                        Icon(Icons.access_time),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                DropdownButtonFormField(
-                  decoration: InputDecoration(labelText: 'People\'s Capacity'),
-                  value: capacityOptions.first, // Initial value, you can change it accordingly
-                  items: capacityOptions
-                      .map((option) => DropdownMenuItem(
-                    value: option,
-                    child: Text('$option people'),
-                  ))
-                      .toList(),
-                  onChanged: (value) {
-                    // Handle the capacity change
-                  },
-                ),
-                SizedBox(height: 10),
-                DropdownButtonFormField(
-                  decoration: InputDecoration(labelText: 'Painting Category'),
-                  value: paintingCategories.first, // Initial value, you can change it accordingly
-                  items: paintingCategories
-                      .map((category) => DropdownMenuItem(
-                    value: category,
-                    child: Text(category),
-                  ))
-                      .toList(),
-                  onChanged: (value) {
-                    // Handle the painting category change
-                  },
-                ),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState?.saveAndValidate() ?? false) {
-                      // Save and validate successful, perform necessary actions
-                      Map<String, dynamic> formData =
-                          _formKey.currentState!.value;
-                      // Add the exhibition to the database or handle as needed
-                      print('Exhibition added: $formData');
-                      Navigator.of(context).pop(); // Close the dialog
-                    }
-                  },
-                  child: Text('Add Exhibition'),
-                ),
-              ],
-            ),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  CollectionReference collRef = FirebaseFirestore.instance.collection('exhibition');
+                  collRef.add({
+                    'venue': venueController.text,
+                  });
+                  venueController.clear();
+                  Navigator.of(context).pop();
+                },
+                child: Text('Add Exhibition'),
+              ),
+            ],
           ),
         );
       },
