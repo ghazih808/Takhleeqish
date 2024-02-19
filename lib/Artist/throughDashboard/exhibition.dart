@@ -63,6 +63,7 @@ class _ExhibitionAnnouncementPageState
                               ),
                               secondaryActions: [
                                 IconSlideAction(
+
                                   caption: 'Delete',
                                   color: Colors.red,
                                   icon: Icons.delete,
