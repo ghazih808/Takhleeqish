@@ -20,20 +20,8 @@ class Auction_Repo extends GetxController{
           colorText: Colors.red);
       print(error.toString());
     });
-  }
-  Future<void> updateAuctionStatus(Auction_model auction_model) async
-  {
-    await auction_db.collection("Auction").doc(auction_model.id).update(auction_model.toJson()).whenComplete(() => Get.snackbar("Congratulations", "Auction request has been rejected.",
-        snackPosition:SnackPosition.BOTTOM,
-        backgroundColor: Colors.green.withOpacity(0.1),
-        colorText: Colors.white),
-    ).catchError((error,stackTrace){
-      Get.snackbar("Error", "Something went wrong. Try again",
-          snackPosition:SnackPosition.BOTTOM,
-          backgroundColor: Colors.redAccent.withOpacity(0.1),
-          colorText: Colors.red);
-      print(error.toString());});
-  }
+    }
+
   Future<List<Auction_model>>getPesronsalAuctionStatus(String artName) async
   {
     final snapshot=await auction_db.collection("Auction").where("Name",isEqualTo: artName).get();

@@ -24,9 +24,6 @@ class Auction_Controller extends GetxController{
     await auctionRepo.createAuction(auction_model);
   }
 
-  updateRecord(Auction_model auction_model) async
-  {
-    await auctionRepo.updateAuctionStatus(auction_model);
-  }
+
 
 }
