@@ -1,20 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
+import 'package:takhleekish/Artist/throughDashboard/artistDashboard.dart';
+import 'package:takhleekish/Artist/throughDashboard/userSessionRequests/userRequestPage.dart';
 
-class DetailScheduledSessionPage extends StatefulWidget{
+class ReqSessionDetailPage extends StatefulWidget{
   final String UserEmail;
   final String title;
+  final String id;
   final DateTime date;
   final TimeOfDay sessionTime;
-  DetailScheduledSessionPage(
-      this.UserEmail,this.title,this.sessionTime,this.date);
+  ReqSessionDetailPage(
+      this.UserEmail,this.title,this.sessionTime,this.date,{required this.id});
 
   @override
-  State<DetailScheduledSessionPage> createState() => _DetailScheduledSessionPageState();
+  State<ReqSessionDetailPage> createState() => _ReqSessionDetailPageState();
 }
 
-class _DetailScheduledSessionPageState extends State<DetailScheduledSessionPage> {
+class _ReqSessionDetailPageState extends State<ReqSessionDetailPage> {
   @override
   Widget build(BuildContext context) {
     double screenHeight=MediaQuery.of(context).size.height;
@@ -50,7 +57,7 @@ class _DetailScheduledSessionPageState extends State<DetailScheduledSessionPage>
                     SizedBox(
                       height:screenHeight*0.02,
                     ),
-                    Text("Artist Email",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                    Text("User Email",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                     Text(" ${widget.UserEmail}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
 
                     SizedBox(
@@ -75,7 +82,27 @@ class _DetailScheduledSessionPageState extends State<DetailScheduledSessionPage>
                       child: Center(
                         child: ElevatedButton(onPressed:()  async {
 
+                          await FirebaseFirestore.instance.collection("user_Session").doc(widget.id)
+                              .update(
+                              {
+                                'Status':"approved",
+                                'CheckReqStatus':"true"
+                              }
+                          ).whenComplete(() {
+                            Get.snackbar("Congratulations", "Session request has been Approved.",
+                                snackPosition:SnackPosition.BOTTOM,
+                                backgroundColor: Colors.green.withOpacity(0.1),
+                                colorText: Colors.white);
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>UserRequestPage()));
 
+                          }
+
+                          ).catchError((error,stackTrace){
+                            Get.snackbar("Error", "Something went wrong. Try again",
+                                snackPosition:SnackPosition.BOTTOM,
+                                backgroundColor: Colors.redAccent.withOpacity(0.1),
+                                colorText: Colors.red);
+                            print(error.toString());});
                         }, child:Center(child: Center(child: FaIcon(FontAwesomeIcons.check,color: Colors.white,))),
 
                           style: ElevatedButton.styleFrom(
@@ -87,7 +114,47 @@ class _DetailScheduledSessionPageState extends State<DetailScheduledSessionPage>
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height:screenHeight*0.02,
+                    ),
+                    Container(
+                      width: screenWidth*0.3,
+                      height: screenHeight*0.05,
+                      child: Center(
+                        child: ElevatedButton(onPressed:()  async {
 
+                          await FirebaseFirestore.instance.collection("user_Session").doc(widget.id)
+                              .update(
+                              {
+                                'Status':"rejected",
+                                'CheckReqStatus':"true"
+                              }
+                          ).whenComplete(() {
+                            Get.snackbar("Congratulations", "Session request has been rejected.",
+                                snackPosition:SnackPosition.BOTTOM,
+                                backgroundColor: Colors.green.withOpacity(0.1),
+                                colorText: Colors.white);
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>UserRequestPage()));
+
+                          }
+
+                          ).catchError((error,stackTrace){
+                            Get.snackbar("Error", "Something went wrong. Try again",
+                                snackPosition:SnackPosition.BOTTOM,
+                                backgroundColor: Colors.redAccent.withOpacity(0.1),
+                                colorText: Colors.red);
+                            print(error.toString());});
+                        }, child:Center(child: Center(child: FaIcon(FontAwesomeIcons.x,color: Colors.white,))),
+
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0)
+                              )
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

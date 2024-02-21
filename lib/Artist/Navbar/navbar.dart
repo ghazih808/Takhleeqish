@@ -16,6 +16,7 @@ import 'package:takhleekish/main.dart';
 import '../artistPersonal/artist_authentication.dart';
 import '../artistPersonal/artist_repository.dart';
 import '../throughDashboard/ArtistAuction/auctionStatus.dart';
+import '../throughDashboard/userSessionRequests/userRequestPage.dart';
 
 class Navbar extends StatelessWidget {
   final controller = Get.put(Artist_Controller());
@@ -90,6 +91,13 @@ class Navbar extends StatelessWidget {
                       title: Text("Auction Status",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>AuctionStatus()));
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.request_page_outlined),
+                      title: Text("Session Requests",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>UserRequestPage()));
                       },
                     ),
                     ListTile(

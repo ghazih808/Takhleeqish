@@ -235,7 +235,7 @@ class _UserRequestSessionState extends State<UserRequestSession> {
                               SizedBox(width: screenWidhth*0.05,),
                               Text("Time",style: TextStyle(color: Colors.black,fontSize: 20,fontWeight: FontWeight.bold),),
 
-                              SizedBox(width: screenWidhth*0.3,),
+                              SizedBox(width: screenWidhth*0.285,),
 
                               ElevatedButton(onPressed: ()async{
                                 final startTime=await pickTime();
@@ -251,7 +251,7 @@ class _UserRequestSessionState extends State<UserRequestSession> {
                               }, child:
                               Row(
                                 children: [
-                                  Icon(Icons.calendar_month,color: Colors.white,),
+                                  Icon(Icons.access_time,color: Colors.white,),
                                   SizedBox(
                                     width:5,
                                   ),
@@ -286,7 +286,7 @@ class _UserRequestSessionState extends State<UserRequestSession> {
                                 artistEmail: controller.artistMail.text.trim(),
                                 userEmail: controller.userMail.text.trim(),
                                 startingTime: controller.session_startingTime.toString().trim(),
-                                sessionDate: controller.sessionDate.toString().trim()
+                                sessionDate: controller.sessionDate.toString().trim(), checkReqStatus: 'false', Status: 'pending'
                                 );
 
 

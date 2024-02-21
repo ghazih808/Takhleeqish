@@ -1,40 +1,54 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:takhleekish/Artist/throughDashboard/userSessionRequests/reqSessionDetails.dart';
+import 'package:takhleekish/User/UserSessionDatabase/sessionController.dart';
 import 'package:takhleekish/User/UserSessionDatabase/sessionModel.dart';
 import 'package:takhleekish/User/UserSessionDatabase/sessionRepository.dart';
-import 'package:takhleekish/User/credentialsFile/user_model.dart';
-import 'package:takhleekish/User/credentialsFile/user_repository.dart';
-import 'package:takhleekish/User/throughNavBar/userSessions/scheduled/detailSceduledSessionPage.dart';
 
-import '../../../../Artist/Navbar/navbar.dart';
-import '../../../../Artist/artistPersonal/artist_authentication.dart';
-import '../../../../Artist/artistPersonal/artist_model.dart';
-import '../../../../Artist/artistPersonal/artist_repository.dart';
-import '../../../../Artist/auction/auctionModel.dart';
-import '../../../../Artist/auction/auctionRepository.dart';
-import '../../../../Artist/controllers/artist_controller.dart';
+import '../../../Admin/adminDashboard/dashboard.dart';
+import '../../Navbar/navbar.dart';
+import '../../artistPersonal/artist_authentication.dart';
+import '../../artistPersonal/artist_model.dart';
+import '../../artistPersonal/artist_repository.dart';
+import '../../auction/auctionController.dart';
+import '../../auction/auctionModel.dart';
+import '../../auction/auctionRepository.dart';
+import '../../controllers/artist_controller.dart';
 
-class UserScheduledSessions extends StatelessWidget{
+class UserRequestPage extends StatelessWidget{
   final controller = Get.put(Artist_Controller());
 
   final authrepo = Get.put(Artist_Auth());
 
-  final userRepo = Get.put(User_repo());
-  final SessionRepo=Get.put(Session_UserRepo());
+  final artistRepo = Get.put(Artist_repo());
+  final auctionRepo=Get.put(Auction_Repo());
+  final sessionRepo=Get.put(Session_UserRepo());
+  final FirebaseAuth _auth=FirebaseAuth.instance;
   var email;
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
+      drawer: Navbar(),
+      appBar: AppBar(
+        title: const Text("Session Requests", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 30)),
+        centerTitle: true,
+        backgroundColor: Colors.black,
+      ),
       body: FutureBuilder(
         future: getData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
+              Artist_model artistModel = snapshot.data!;
               email=snapshot.data!.email;
+              print(email);
               return FutureBuilder(
                 future: getAllData(email),
                 builder: (context, snapshot) {
@@ -58,8 +72,7 @@ class UserScheduledSessions extends StatelessWidget{
                                       child: ListView.separated(
                                         itemCount: snapshot.data!.length, // Number of auction (fetch from the database)
                                         itemBuilder: (context, index) {
-
-                                          if(snapshot.data![index].checkReqStatus=="true")
+                                          if(snapshot.data![index].checkReqStatus=="false")
                                             {
                                               print(index);
                                               return Slidable(
@@ -73,7 +86,8 @@ class UserScheduledSessions extends StatelessWidget{
                                                   child: ListTile(
                                                     title: Text('Session ${index + 1}'),
                                                     subtitle: Text("Session Title:  ${snapshot.data![index].Title}"),
-                                                    trailing: Text("Check Details"),
+                                                    trailing: Text("Check Details"
+                                                    ),
                                                     onTap: () {
                                                       DateTime date = DateTime
                                                           .parse(snapshot
@@ -113,9 +127,18 @@ class UserScheduledSessions extends StatelessWidget{
                                                         Navigator.push(context,
                                                           MaterialPageRoute(
                                                               builder: (
-                                                                  context) =>DetailScheduledSessionPage(snapshot.data![index].artistEmail,
-                                                                  snapshot.data![index].Title, startingTime, date)),);
+                                                                  context) =>
+                                                                  ReqSessionDetailPage(
+                                                                      snapshot
+                                                                          .data![index]
+                                                                          .userEmail,
+                                                                      snapshot
+                                                                          .data![index]
+                                                                          .Title,
+                                                                      startingTime,
+                                                                      date, id: docid,
 
+                                                                  )),);
                                                       }
 
                                                       else {
@@ -123,8 +146,7 @@ class UserScheduledSessions extends StatelessWidget{
                                                         print(
                                                             'Invalid time format');
                                                       }
-                                                    },
-                                                  ),
+                                                    }),
                                                 ),
                                               );
                                             }
@@ -174,14 +196,19 @@ class UserScheduledSessions extends StatelessWidget{
       ),
     );
   }
-  Future<User_model?> getData() async {
+
+
+  Future<Artist_model?> getData() async {
     final email = authrepo.firebaseUser.value?.email;
     if (email != null) {
-      return await userRepo.getUserDetail(email);
+      return await artistRepo.getArtistDetail(email);
     }
     return null; // Handle the case where email is null
   }
+
   Future<List<Session_User_Model>> getAllData(String email) async {
-    return await SessionRepo.getApprovedUserSessions(email);
+    return await sessionRepo.getPesronsalSessionReq(email);
   }
+
+
 }

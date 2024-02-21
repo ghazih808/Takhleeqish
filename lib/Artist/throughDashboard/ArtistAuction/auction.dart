@@ -334,7 +334,7 @@ class _AuctionPageState extends State<AuctionPage> {
                                   }, child:
                                   Row(
                                     children: [
-                                      Icon(Icons.calendar_month,color: Colors.white,),
+                                      Icon(Icons.access_time,color: Colors.white,),
                                       SizedBox(
                                         width:5,
                                       ),
@@ -365,7 +365,7 @@ class _AuctionPageState extends State<AuctionPage> {
                                       }, child:
                                       Row(
                                         children: [
-                                          Icon(Icons.calendar_month,color: Colors.white,),
+                                          Icon(Icons.access_time,color: Colors.white,),
                                           SizedBox(
                                             width:5,
                                           ),

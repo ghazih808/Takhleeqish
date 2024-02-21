@@ -29,23 +29,27 @@ class Session_UserRepo extends GetxController
     });
   }
 
-  Future<List<Session_User_Model>>getPesronsalAuctionStatus(String artName) async
+  Future<List<Session_User_Model>> getUserReqDetails() async
   {
-    final snapshot=await session_db.collection("user_Session").where("Title",isEqualTo: artName).get();
+    final snapshot = await session_db.collection("user_Session").get();
+
+      final sessionData = snapshot.docs.map((e) => Session_User_Model.fromSnapshot(e)).toList();
+      print(sessionData);
+
+      return sessionData;
+    }
+
+  Future<List<Session_User_Model>>getPesronsalSessionReq(String artEmail) async
+  {
+    final snapshot=await session_db.collection("user_Session").where("Artist_Email",isEqualTo: artEmail).get();
     final auctionStatus=snapshot.docs.map((e) => Session_User_Model.fromSnapshot(e)).toList();
     return auctionStatus;
   }
-  Future<Session_User_Model>getPesronsalAuction(String artName) async
+  Future<List<Session_User_Model>>getApprovedUserSessions(String artEmail) async
   {
-    final snapshot=await session_db.collection("user_Session").where("Name",isEqualTo: artName).get();
-    final auctionStatus=snapshot.docs.map((e) => Session_User_Model.fromSnapshot(e)).single;
+    final snapshot=await session_db.collection("user_Session").where("User_Email",isEqualTo: artEmail).get();
+    final auctionStatus=snapshot.docs.map((e) => Session_User_Model.fromSnapshot(e)).toList();
     return auctionStatus;
-  }
-  Future<List<Session_User_Model>> getAllAuctionDetail() async
-  {
-    final snapshot=await session_db.collection("user_Session").get();
-    final artifactData=snapshot.docs.map((e) => Session_User_Model.fromSnapshot(e)).toList();
-    return artifactData;
   }
 
 

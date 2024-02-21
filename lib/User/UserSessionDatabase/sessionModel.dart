@@ -8,12 +8,17 @@ class Session_User_Model
   final String userEmail;
   final String startingTime;
   final String sessionDate;
+  final String checkReqStatus;
+  final String Status;
 
-  Session_User_Model(
+  const Session_User_Model(
       {this.id, required this.Title,
     required this.artistEmail,
         required this.userEmail, required this.startingTime,
-        required this.sessionDate});
+        required this.sessionDate,
+        required this.checkReqStatus,
+        required this.Status,
+      });
 
   toJson(){
     return{
@@ -22,6 +27,8 @@ class Session_User_Model
       'Session_Date':sessionDate,
       'User_Email':userEmail,
       'Artist_Email':artistEmail,
+      'CheckReqStatus':checkReqStatus,
+      'Status':Status,
 
     };}
 
@@ -30,9 +37,9 @@ class Session_User_Model
     final data=documentSnapshot.data()!;
     return Session_User_Model(
       id: documentSnapshot.id,
-      Title: data["Title"], artistEmail:data["artistEmail"],
-    userEmail:data["userEmail"], startingTime:data["Starting_Time"],
-    sessionDate:data["Session_Date"],);
+      Title: data["Title"], artistEmail:data["Artist_Email"],
+    userEmail:data["User_Email"], startingTime:data["Starting_Time"],
+    sessionDate:data["Session_Date"], checkReqStatus: data["CheckReqStatus"], Status: data["Status"],);
 
   }
 

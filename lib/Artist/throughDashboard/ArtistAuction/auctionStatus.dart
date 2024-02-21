@@ -39,7 +39,7 @@ class AuctionStatus extends StatelessWidget{
     Artist_model artistModel = snapshot.data!;
     email=snapshot.data!.email;
     return FutureBuilder(
-      future: getAllData(),
+      future: getAllData(email),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {
@@ -131,13 +131,12 @@ class AuctionStatus extends StatelessWidget{
   Future<Artist_model?> getData() async {
     final email = authrepo.firebaseUser.value?.email;
     if (email != null) {
-      
       return await artistRepo.getArtistDetail(email);
     }
     return null; // Handle the case where email is null
   }
-  Future<List<Auction_model>> getAllData() async {
-    return await auctionRepo.getAllAuctionDetail();
+  Future<List<Auction_model>> getAllData(String email) async {
+    return await auctionRepo.getPesronsalAuctionStatus(email);
   }
   }
 
