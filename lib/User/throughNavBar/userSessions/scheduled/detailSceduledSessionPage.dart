@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
+import 'dart:async';
 
 class DetailScheduledSessionPage extends StatefulWidget{
   final String UserEmail;
@@ -15,10 +19,73 @@ class DetailScheduledSessionPage extends StatefulWidget{
 }
 
 class _DetailScheduledSessionPageState extends State<DetailScheduledSessionPage> {
+
+  bool isTimeValid = false;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    // Start a periodic timer that triggers every second
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      // Call the function to check time validity
+      checkTimeValidity();
+      // Call setState to update the UI
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    // Cancel the timer to prevent memory leaks when the widget is disposed
+    _timer.cancel();
+    super.dispose();
+  }
+
+
+  void checkTimeValidity() {
+    final now = DateTime.now();
+    final currentTime = TimeOfDay(hour: now.hour, minute: now.minute);
+
+    // Convert the widget date and time to a DateTime object
+    final widgetDateTime = DateTime(
+      widget.date.year,
+      widget.date.month,
+      widget.date.day,
+      widget.sessionTime.hour,
+      widget.sessionTime.minute,
+
+    );
+
+    // Check if the current date is after or the same as the widget's date
+    if (now.isAfter(widgetDateTime) || now.isAtSameMomentAs(widgetDateTime)) {
+      // If the dates are the same, check if the current time is after the scheduled time
+      if (now.isAtSameMomentAs(widgetDateTime) && currentTime.hour >= widget.sessionTime.hour && currentTime.minute >= widget.sessionTime.minute) {
+        isTimeValid = true;
+      }
+      // If the current date is after the scheduled date, the time is valid
+      else if (now.isAfter(widgetDateTime)) {
+        isTimeValid = true;
+      } else {
+        // Otherwise, the time is not yet valid
+        isTimeValid = false;
+      }
+    } else {
+      // If the current date is before the scheduled date, the time is not yet valid
+      isTimeValid = false;
+    }
+    print(isTimeValid);
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
+
     double screenHeight=MediaQuery.of(context).size.height;
     double screenWidth=MediaQuery.of(context).size.width;
+
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -69,19 +136,20 @@ class _DetailScheduledSessionPageState extends State<DetailScheduledSessionPage>
                     SizedBox(
                       height:screenHeight*0.02,
                     ),
+                    if(isTimeValid)
                     Container(
-                      width: screenWidth*0.3,
-                      height: screenHeight*0.05,
+                      width: screenWidth*0.5,
+                      height: screenHeight*0.07,
                       child: Center(
                         child: ElevatedButton(onPressed:()  async {
 
 
-                        }, child:Center(child: Center(child: FaIcon(FontAwesomeIcons.check,color: Colors.white,))),
+                        }, child:Center(child: Text("Join Session",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),)),
 
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
+                            backgroundColor: Color(0xff6F9BB4),
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0)
+                                  borderRadius: BorderRadius.circular(15.0),
                               )
                           ),
                         ),

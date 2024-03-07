@@ -1,18 +1,12 @@
 import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
-
-import '../../../../Admin/throughDashboard/adminAuction/approveOrRejectAuction.dart';
-import '../../../../Artist/artistPersonal/artist_authentication.dart';
-import '../../../../Artist/artistPersonal/artist_repository.dart';
 import '../../../../Artist/auction/auctionController.dart';
 import '../../../../Artist/auction/auctionModel.dart';
 import '../../../../Artist/auction/auctionRepository.dart';
@@ -28,7 +22,6 @@ class ApprovedBidPage extends StatefulWidget{
   final DateTime date;
   final TimeOfDay stTime;
 
-
   ApprovedBidPage(
       this.url, this.baseBid,this.enTime,this.stTime,this.date, this.email, this.name,this.bidStatus,{required this.docid});
   @override
@@ -40,7 +33,6 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
   bool isTimeValid=false;
   late bool isBiddingDone;
 
-
   final auctionRepo=Get.put(Auction_Repo());
 
   final FirebaseAuth _auth=FirebaseAuth.instance;
@@ -49,14 +41,12 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
   late TextEditingController bidController;
    String bidAmount= "";
 
-
   @override
   void initState() {
     super.initState();
     bidController = TextEditingController();
 
   }
-
 
   void checkTimeValidity() {
     final now = DateTime.now();
@@ -109,7 +99,6 @@ class _ApprovedBidPageState extends State<ApprovedBidPage> {
     print(isTimeValid);
   }
 
-
   @override
   Widget build(BuildContext context) {
     double screenHeight=MediaQuery.of(context).size.height;
@@ -135,7 +124,6 @@ if({widget.bidStatus}=='false')
         print('Error occurred: $error');
       });
     });
-
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -310,7 +298,7 @@ if({widget.bidStatus}=='false')
                       ),
 
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
+                            backgroundColor: Color(0xff6F9BB4),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0)
                             )
@@ -331,11 +319,9 @@ if({widget.bidStatus}=='false')
     );
   }
 
-
   Future<Auction_model> getData() async {
     return await auctionRepo.getPesronsalAuction(widget.name);
   }
-
 
   String _formatTime(TimeOfDay timeOfDay) {
     // Convert 24-hour format to 12-hour format
@@ -346,7 +332,6 @@ if({widget.bidStatus}=='false')
     // Format the time as HH:MM AM/PM
     return '${_formatHour(hour)}:${_formatMinute(minute)} $period';
   }
-
 
   String _formatHour(int hour) {
     // Ensure hour is in 12-hour format
@@ -359,18 +344,15 @@ if({widget.bidStatus}=='false')
     }
   }
 
-
   String _formatMinute(int minute) {
     // Add leading zero if minute is less than 10
     return minute < 10 ? '0$minute' : '$minute';
   }
 
-
   void fetchBidAmount(String bidAmount) async {
     bidAmount = await currentBid();
 
   }
-
 
   Future<String> currentBid() async {
     var doc = widget.docid;
@@ -420,7 +402,5 @@ if({widget.bidStatus}=='false')
       return ''; // Return an empty string or handle error as appropriate
     }
   }
-
-
 
 }

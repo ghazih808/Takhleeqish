@@ -211,7 +211,7 @@ class _UserRequestSessionState extends State<UserRequestSession> {
                                       ],
                                     ),
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.blue.withOpacity(0.5),
+                                        backgroundColor: Color(0xff6F9BB4),
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(15)
                                         ),),
@@ -259,7 +259,7 @@ class _UserRequestSessionState extends State<UserRequestSession> {
                                 ],
                               ),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.blue.withOpacity(0.5),
+                                  backgroundColor: Color(0xff6F9BB4),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)
                                   ),),
@@ -311,7 +311,7 @@ class _UserRequestSessionState extends State<UserRequestSession> {
                         },
                         child: Text('Request Session',style: TextStyle(color: Colors.white,fontSize: 20)),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue.withOpacity(0.5),
+                          backgroundColor: Color(0xff6F9BB4),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15)
                           ),),
