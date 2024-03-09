@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:takhleekish/Admin/adminDashboard/dashboard.dart';
 import 'package:takhleekish/Artist/artistPersonal/art_signup.dart';
 import 'package:takhleekish/Artist/Navbar/navbar.dart';
-import 'package:takhleekish/Artist/throughDashboard/artistDashboard.dart';
+import 'package:takhleekish/Artist/Dashboard/artistDashboard.dart';
 import 'package:takhleekish/Artist/throughDashboard/checkUser/verifyGmail.dart';
 import 'package:takhleekish/splashScreen/Splash.dart';
 import 'package:takhleekish/User/dashboard/User_Dashboard.dart';

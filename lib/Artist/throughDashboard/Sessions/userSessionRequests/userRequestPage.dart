@@ -6,20 +6,18 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:takhleekish/Artist/throughDashboard/userSessionRequests/reqSessionDetails.dart';
+import 'package:takhleekish/Artist/throughDashboard/Sessions/userSessionRequests/reqSessionDetails.dart';
 import 'package:takhleekish/User/UserSessionDatabase/sessionController.dart';
 import 'package:takhleekish/User/UserSessionDatabase/sessionModel.dart';
 import 'package:takhleekish/User/UserSessionDatabase/sessionRepository.dart';
 
-import '../../../Admin/adminDashboard/dashboard.dart';
-import '../../Navbar/navbar.dart';
-import '../../artistPersonal/artist_authentication.dart';
-import '../../artistPersonal/artist_model.dart';
-import '../../artistPersonal/artist_repository.dart';
-import '../../auction/auctionController.dart';
-import '../../auction/auctionModel.dart';
-import '../../auction/auctionRepository.dart';
-import '../../controllers/artist_controller.dart';
+import '../../../Navbar/navbar.dart';
+import '../../../artistPersonal/artist_authentication.dart';
+import '../../../artistPersonal/artist_model.dart';
+import '../../../artistPersonal/artist_repository.dart';
+import '../../../auction/auctionRepository.dart';
+import '../../../controllers/artist_controller.dart';
+
 
 class UserRequestPage extends StatelessWidget{
   final controller = Get.put(Artist_Controller());

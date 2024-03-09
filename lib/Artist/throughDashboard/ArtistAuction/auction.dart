@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:takhleekish/Artist/auction/auctionController.dart';
 import 'package:takhleekish/Artist/auction/auctionModel.dart';
 import 'package:takhleekish/Artist/auction/auctionRepository.dart';
-import 'package:takhleekish/Artist/throughDashboard/artistDashboard.dart';
+import 'package:takhleekish/Artist/Dashboard/artistDashboard.dart';
 
 class AuctionPage extends StatefulWidget {
   @override

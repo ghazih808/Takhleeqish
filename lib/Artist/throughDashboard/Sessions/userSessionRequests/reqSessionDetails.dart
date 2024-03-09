@@ -5,8 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
-import 'package:takhleekish/Artist/throughDashboard/artistDashboard.dart';
-import 'package:takhleekish/Artist/throughDashboard/userSessionRequests/userRequestPage.dart';
+import 'package:takhleekish/Artist/throughDashboard/Sessions/userSessionRequests/userRequestPage.dart';
+import 'package:takhleekish/Artist/Dashboard/artistDashboard.dart';
 
 class ReqSessionDetailPage extends StatefulWidget{
   final String UserEmail;

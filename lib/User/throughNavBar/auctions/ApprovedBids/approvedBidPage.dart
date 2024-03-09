@@ -165,11 +165,9 @@ if({widget.bidStatus}=='false')
                     ),
                     Text("Date",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                     Text("${widget.date.month}/${widget.date.day}/${widget.date.year}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
-
                     SizedBox(
                       height:screenHeight*0.01,
                     ),
-
                     Text("Ending Time",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                     Text("${_formatTime(widget.enTime)}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),),
 

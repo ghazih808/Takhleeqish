@@ -1,27 +1,20 @@
-
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:takhleekish/User/UserSessionDatabase/sessionController.dart';
-import 'package:takhleekish/User/UserSessionDatabase/sessionModel.dart';
+import 'package:takhleekish/Artist/sessionDatabase/artistSessionController.dart';
+import 'package:takhleekish/Artist/sessionDatabase/artistSessionModel.dart';
 
-import '../../../../Artist/auction/auctionController.dart';
-import '../../../../Artist/auction/auctionModel.dart';
-import '../../../../Artist/Dashboard/artistDashboard.dart';
 
-class UserRequestSession extends StatefulWidget{
+class PaintingSessionPage extends StatefulWidget {
   @override
-  State<UserRequestSession> createState() => _UserRequestSessionState();
+  _PaintingSessionPageState createState() => _PaintingSessionPageState();
 }
-
-class _UserRequestSessionState extends State<UserRequestSession> {
+class _PaintingSessionPageState extends State<PaintingSessionPage> {
   final formkey=GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery
@@ -32,7 +25,7 @@ class _UserRequestSessionState extends State<UserRequestSession> {
         .of(context)
         .size
         .width;
-    final controller=Get.put(sessionController());
+    final controller=Get.put(ArtistSessionController());
     return Scaffold(
 
         body: SingleChildScrollView(
@@ -53,12 +46,10 @@ class _UserRequestSessionState extends State<UserRequestSession> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-
                       Container(
                           width: 280,
                           height: 280,
                           child: Image.asset("assests/images/homeScreenPic.png")),
-
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
@@ -99,46 +90,7 @@ class _UserRequestSessionState extends State<UserRequestSession> {
 
                               ),
                             ),
-                            SizedBox(height: screenHeight * 0.02,),
-                            Container(
-                              width: 300,
-                              height: 50,
-                              child: TextFormField(
-                                controller: controller.userMail,
-                                keyboardType: TextInputType.name,
-                                validator: (value) {
-                                  if (value!.isEmpty ||
-                                      !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}').hasMatch(value!)) {
-                                    return 'Enter correct mail';
-                                  }
-                                  else {
-                                    controller.userMail.text=value;
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      borderSide: BorderSide(
-                                        width: 2,
-                                        color: Color(0xfff77062),
-                                      )
 
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      borderSide: BorderSide(
-                                        color: Colors.blue,
-                                      )
-                                  ),
-                                  prefixIcon:Padding(
-                                padding: const EdgeInsets.only(left: 12.0,top: 10.0),
-                                child: Container(child: FaIcon(FontAwesomeIcons.idBadge,color: Colors.black,)),
-                              ),
-                                  label:Text("Enter User Email") ,
-                                ),
-
-                              ),
-                            ),
                             SizedBox(
                               height: screenHeight * 0.02,
                             ),
@@ -280,26 +232,20 @@ class _UserRequestSessionState extends State<UserRequestSession> {
                       ElevatedButton(
                         onPressed: () {
                           if (formkey.currentState!.validate()){
-                            final session = Session_User_Model(
-
+                            final session = ArtistSessionModel(
                                 Title:controller.artTitle.text.trim(),
                                 artistEmail: controller.artistMail.text.trim(),
-                                userEmail: controller.userMail.text.trim(),
                                 startingTime: controller.session_startingTime.toString().trim(),
                                 sessionDate: controller.sessionDate.toString().trim(), checkReqStatus: 'false', Status: 'pending'
-                                );
-
-
-                            sessionController.instance.createSession(
+                            );
+                            ArtistSessionController.instance.createSession(
                                 session);
                             Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => UserRequestSession()),);
+                                builder: (context) => PaintingSessionPage()),);
                             controller.artTitle.clear();
                             controller.artistMail.clear();
-                            controller.userMail.clear();
                             controller.sessionDate = null;
                             controller.session_startingTime = null;
-
                           }
                           else{
                             Get.snackbar("OOpS", "Session request has not been send",
@@ -307,9 +253,8 @@ class _UserRequestSessionState extends State<UserRequestSession> {
                                 backgroundColor: Colors.red.withOpacity(0.1),
                                 colorText: Colors.red);
                           }
-
                         },
-                        child: Text('Request Session',style: TextStyle(color: Colors.white,fontSize: 20)),
+                        child: Text('Post Session',style: TextStyle(color: Colors.white,fontSize: 20)),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xff6F9BB4),
                           shape: RoundedRectangleBorder(
@@ -319,15 +264,11 @@ class _UserRequestSessionState extends State<UserRequestSession> {
                     ],
                   ),
                 ),
-
               ),
             ],
           ),
         )
     );
-  }
-  Future pickImageFromGallery()async{
-    final returnImage= await ImagePicker().pickImage(source: ImageSource.gallery);
   }
   Future<DateTime?> pickDate()=>showDatePicker(context: context, firstDate: DateTime.now(),initialDate: DateTime.now(), lastDate: DateTime(2100));
   Future<TimeOfDay?> pickTime()=>showTimePicker(context: context, initialTime: TimeOfDay.now());

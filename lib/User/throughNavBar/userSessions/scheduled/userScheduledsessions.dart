@@ -17,7 +17,8 @@ import '../../../../Artist/auction/auctionModel.dart';
 import '../../../../Artist/auction/auctionRepository.dart';
 import '../../../../Artist/controllers/artist_controller.dart';
 
-class UserScheduledSessions extends StatelessWidget{
+class UserScheduledSessions extends StatelessWidget
+{
   final controller = Get.put(Artist_Controller());
 
   final authrepo = Get.put(Artist_Auth());

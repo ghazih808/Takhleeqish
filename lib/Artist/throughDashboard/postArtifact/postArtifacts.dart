@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:takhleekish/Artist/artifacts/artifactController.dart';
 import 'package:takhleekish/Artist/Navbar/navbar.dart';
-import 'package:takhleekish/Artist/throughDashboard/artistDashboard.dart';
+import 'package:takhleekish/Artist/Dashboard/artistDashboard.dart';
 import '../../artifacts/artifactModel.dart';
 import '../../artistPersonal/artist_authentication.dart';
 import '../../artistPersonal/artist_model.dart';

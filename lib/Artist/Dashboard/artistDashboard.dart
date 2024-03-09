@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:takhleekish/Artist/throughDashboard/exhibition.dart';
 import 'package:takhleekish/Artist/throughDashboard/postArtifact/postArtifacts.dart';
-import 'package:takhleekish/Artist/throughDashboard/session.dart';
 import '../Navbar/navbar.dart';
-import 'ArtistAuction/auction.dart';
-import 'checkUser/verifyGmail.dart';
+import '../throughDashboard/ArtistAuction/auction.dart';
+import '../throughDashboard/Sessions/artistSessions/sessionSelectPage/sessionSelectPage.dart';
+import '../throughDashboard/checkUser/verifyGmail.dart';
 
 class ArtistDashboard extends StatelessWidget{
 
@@ -183,7 +183,7 @@ class ArtistDashboard extends StatelessWidget{
                                   Container(
                                     width: 200,
                                     child: ElevatedButton(onPressed: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>PaintingSessionPage()));
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SessionSelectPage()));
 
                                     }, child: Text("Sessions",style: TextStyle(color:Colors.white),),
                                         style: ElevatedButton.styleFrom(

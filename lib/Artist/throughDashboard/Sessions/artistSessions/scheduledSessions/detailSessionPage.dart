@@ -1,24 +1,21 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'dart:async';
 
-class DetailScheduledSessionPage extends StatefulWidget{
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class DetailSessionPage extends StatefulWidget
+{
   final String UserEmail;
   final String title;
   final DateTime date;
   final TimeOfDay sessionTime;
-  DetailScheduledSessionPage(
+  DetailSessionPage(
       this.UserEmail,this.title,this.sessionTime,this.date);
-
   @override
-  State<DetailScheduledSessionPage> createState() => _DetailScheduledSessionPageState();
+  State<DetailSessionPage> createState() => _DetailSessionPageState();
 }
 
-class _DetailScheduledSessionPageState extends State<DetailScheduledSessionPage>
+class _DetailSessionPageState extends State<DetailSessionPage>
 {
 
   bool isTimeValid = false;
@@ -138,24 +135,24 @@ class _DetailScheduledSessionPageState extends State<DetailScheduledSessionPage>
                       height:screenHeight*0.02,
                     ),
                     if(isTimeValid)
-                    Container(
-                      width: screenWidth*0.5,
-                      height: screenHeight*0.07,
-                      child: Center(
-                        child: ElevatedButton(onPressed:()  async {
+                      Container(
+                        width: screenWidth*0.5,
+                        height: screenHeight*0.07,
+                        child: Center(
+                          child: ElevatedButton(onPressed:()  async {
 
 
-                        }, child:Center(child: Text("Join Session",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),)),
+                          }, child:Center(child: Text("Start Session",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),)),
 
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xff6F9BB4),
-                              shape: RoundedRectangleBorder(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xff6F9BB4),
+                                shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15.0),
-                              )
+                                )
+                            ),
                           ),
                         ),
                       ),
-                    ),
 
                   ],
                 ),

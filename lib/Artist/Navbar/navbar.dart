@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:takhleekish/Artist/throughNavbar/AnalyticsPage/analytics.dart';
-import 'package:takhleekish/Artist/throughDashboard/artistDashboard.dart';
+import 'package:takhleekish/Artist/Dashboard/artistDashboard.dart';
 import 'package:takhleekish/Artist/artistDatabase.dart';
 import 'package:takhleekish/Artist/artistPersonal/artist_model.dart';
 import 'package:takhleekish/Artist/controllers/artist_controller.dart';
@@ -16,7 +16,7 @@ import 'package:takhleekish/main.dart';
 import '../artistPersonal/artist_authentication.dart';
 import '../artistPersonal/artist_repository.dart';
 import '../throughDashboard/ArtistAuction/auctionStatus.dart';
-import '../throughDashboard/userSessionRequests/userRequestPage.dart';
+import '../throughDashboard/Sessions/userSessionRequests/userRequestPage.dart';
 
 class Navbar extends StatelessWidget {
   final controller = Get.put(Artist_Controller());

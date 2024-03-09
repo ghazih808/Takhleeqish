@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:takhleekish/Artist/artistPersonal/art_signup.dart';
-import 'package:takhleekish/Artist/throughDashboard/artistDashboard.dart';
+import 'package:takhleekish/Artist/Dashboard/artistDashboard.dart';
 import 'package:takhleekish/Artist/forgot_Password/forgotPage.dart';
 import 'package:takhleekish/main.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
