@@ -43,6 +43,12 @@ class ArtistSessionRepo extends GetxController
     final auctionStatus=snapshot.docs.map((e) => ArtistSessionModel.fromSnapshot(e)).toList();
     return auctionStatus;
   }
+  Future<List<ArtistSessionModel>>getallSession() async
+  {
+    final snapshot=await session_db.collection("Artist_Session").get();
+    final auctionStatus=snapshot.docs.map((e) => ArtistSessionModel.fromSnapshot(e)).toList();
+    return auctionStatus;
+  }
 
 
 
