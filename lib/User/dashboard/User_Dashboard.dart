@@ -16,24 +16,39 @@ class User_dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: UserNavbar(),
-      backgroundColor:Color(0xff0F2027),
+      backgroundColor:Colors.transparent,
       appBar: AppBar(
         title: const Text("Dashboard", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 30)),
         centerTitle: true,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Color(0xffF0A2C9),
+                Color(0xffD2A5D0),
+                Color(0xff6F9BB4),
+
+              ],
+            ),
+          ),
+        ),
       ),
       body: Container(
-        // decoration: BoxDecoration(
-        //     gradient: LinearGradient(
-        //         begin: Alignment.topLeft,
-        //         end: Alignment.topRight,
-        //         colors: [
-        //           Color(0xff0F2027),
-        //           Color(0xff203A43),
-        //           Color(0xff2C5364),
-        //         ]
-        //     )
-        // ),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [
+              Color(0xffF0A2C9),
+              Color(0xffD2A5D0),
+              Color(0xff6F9BB4),
+            ],
+          ),
+        ),
         child: FutureBuilder<List<Artifact_model>>(
           future: getAllData(),
           builder: (context, snapshot) {
@@ -86,8 +101,8 @@ class User_dashboard extends StatelessWidget {
                                                           begin: Alignment.topLeft,
                                                           end: Alignment.bottomRight,
                                                           colors: [
-                                                            Colors.white.withOpacity(0.15),
-                                                            Colors.white.withOpacity(0.05)
+                                                            Colors.white.withOpacity(0.65),
+                                                            Colors.white.withOpacity(0.10)
                                                           ],)
                                                       ),
                                                     ),
@@ -102,10 +117,10 @@ class User_dashboard extends StatelessWidget {
                                                             ),
                                                           ),
                                                           SizedBox(height: 2),
-                                                          Text("${snapshot.data![i].name}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: Colors.white)),
+                                                          Text("${snapshot.data![i].name}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500,color: Colors.black)),
                                                           SizedBox(height: 2),
-                                                          Text("Rs: ${snapshot.data![i].price}", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600,color: Colors.white)),
-                                                          Text("", style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600)),
+                                                          Text("Rs: ${snapshot.data![i].price}", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600,color: Colors.black)),
+
                                                         ],
                                                       ),
                                                     )
@@ -115,7 +130,7 @@ class User_dashboard extends StatelessWidget {
                                             ),
                                           ),
                                           onTap: (){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailProductPage(snapshot.data![i].url, snapshot.data![i].price, snapshot.data![i].description, snapshot.data![i].name)));
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailProductPage(snapshot.data![i].url, snapshot.data![i].price, snapshot.data![i].description, snapshot.data![i].name,snapshot.data![i].category,snapshot.data![i].ArtistId)));
                                           },
                                         ),
                                       ),

@@ -31,7 +31,22 @@ class ApprovedAuctionPage extends StatelessWidget{
       appBar: AppBar(
         title: const Text("Auction Page", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 30)),
         centerTitle: true,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Color(0xffF0A2C9),
+                Color(0xffD2A5D0),
+                Color(0xff6F9BB4),
+
+              ],
+            ),
+          ),
+        ),
       ),
       body: FutureBuilder(
         future: getAllData(),

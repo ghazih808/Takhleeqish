@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:takhleekish/Artist/artifacts/artifactModel.dart';
 import 'package:takhleekish/Artist/artistPersonal/artist_model.dart';
 
-class Artifact_repo extends GetxController{
+class Artifact_repo extends GetxController
+{
   static Artifact_repo get instance=> Get.find();
   final artifact_db= FirebaseFirestore.instance;
 

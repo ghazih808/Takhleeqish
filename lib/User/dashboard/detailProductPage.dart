@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:takhleekish/User/Navbar/userNavbar.dart';
+import 'package:takhleekish/User/cart/cartDatabase/cartModel.dart';
+
+import '../cart/cartDatabase/cartController.dart';
 
 class DetailProductPage extends StatefulWidget {
   final String url;
   final String description;
   final String price;
   final String name;
+  final String artistID;
+  final String category;
 
 
-  DetailProductPage(this.url, this.price, this.description, this.name);
+
+  DetailProductPage(this.url, this.price, this.description, this.name,this.category,this.artistID);
 
   @override
   _DetailProductPageState createState() => _DetailProductPageState();
@@ -17,6 +24,7 @@ class DetailProductPage extends StatefulWidget {
 
 class _DetailProductPageState extends State<DetailProductPage> {
   bool isFavorited = false;
+  final cartController=Get.put(CartController());
   @override
   Widget build(BuildContext context) {
     double pageWidth = MediaQuery.of(context).size.width;
@@ -29,7 +37,22 @@ class _DetailProductPageState extends State<DetailProductPage> {
                 fontWeight: FontWeight.w600,
                 fontSize: 30)),
         centerTitle: true,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Color(0xffF0A2C9),
+                Color(0xffD2A5D0),
+                Color(0xff6F9BB4),
+
+              ],
+            ),
+          ),
+        ),
         actions: <Widget>[
           IconButton(
             onPressed: () {},
@@ -104,34 +127,50 @@ class _DetailProductPageState extends State<DetailProductPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
 
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Text("Purchase now",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 18),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0)
-                              )
+                        Container(
+                          height: 50,
+                          width: 170,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: Text("Purchase now",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 18),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0)
+                                )
+                            ),
                           ),
                         ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Text("Add to cart",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 18),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.yellow,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0)
-                              )
+                        Container(
+                          height: 50,
+                          width: 170,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              final cart=Cart_model(name: widget.name,
+                                  ArtistId: widget.artistID,
+                                  price: widget.price,
+                                  category: widget.category,
+                                  description: widget.description,
+                                  url: widget.url);
+                              cartController.createCart(cart);
+                            },
+                            child: Text("Add to cart",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 18),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.yellow,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0)
+                                )
+                            ),
                           ),
                         ),
                       ],

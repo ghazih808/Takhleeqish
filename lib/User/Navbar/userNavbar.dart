@@ -19,6 +19,7 @@ import 'package:takhleekish/User/credentialsFile/user_repository.dart';
 import '../../main.dart';
 import '../throughNavBar/auctions/ApprovedBids/approvedAuctionPage.dart';
 import '../throughNavBar/feedbackPage/feedback.dart';
+import '../throughNavBar/userSessions/communitySessions/communityPage.dart';
 class UserNavbar extends StatelessWidget {
   final FirebaseAuth _auth=FirebaseAuth.instance;
 
@@ -78,9 +79,20 @@ class UserNavbar extends StatelessWidget {
                     ),
                     ListTile(
                       leading: FaIcon(FontAwesomeIcons.calendar),
-                      title: Text("Sessions",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      title: Text("Personal Sessions",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>UserSelectPage()));
+
+                      },
+
+
+
+                    ),
+                    ListTile(
+                      leading: FaIcon(FontAwesomeIcons.calendar),
+                      title: Text("Community Sessions",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>CommunitySessionPage()));
 
                       },
 

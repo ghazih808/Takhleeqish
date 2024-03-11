@@ -29,8 +29,22 @@ class AuctionStatus extends StatelessWidget{
         appBar: AppBar(
           title: const Text("Auction Status", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 30)),
           centerTitle: true,
-          backgroundColor: Colors.black,
-        ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Color(0xffF0A2C9),
+                  Color(0xffD2A5D0),
+                  Color(0xff6F9BB4),
+
+                ],
+              ),
+            ),
+          ),        ),
         body: FutureBuilder(
         future: getData(),
     builder: (context, snapshot) {
@@ -44,20 +58,25 @@ class AuctionStatus extends StatelessWidget{
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {
             return Scaffold(
-                body:Stack(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: 880,
-                      child: Image.asset("assests/images/dbpic2.jpeg"
-                        ,fit: BoxFit.fitHeight,),
-                      //add background image here
+                body: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                        Color(0xffF0A2C9),
+                        Color(0xffD2A5D0),
+                        Color(0xff6F9BB4),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          Expanded(
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 18.0),
                             child: ListView.separated(
                               itemCount: snapshot.data!.length, // Number of auction (fetch from the database)
                               itemBuilder: (context, index) {
@@ -74,15 +93,15 @@ class AuctionStatus extends StatelessWidget{
                                       leading: ClipOval(child:Image.network(snapshot.data![index].url)),
                                       title: Text('Auction ${index + 1}'),
                                       subtitle: Text("Painting Name:  ${snapshot.data![index].artName}"),
-                                        trailing: Text(
-                                          snapshot.data![index].status == 'none'
-                                              ? 'Pending'
-                                              : snapshot.data![index].status == 'approved'
-                                              ? 'Approved'
-                                              : snapshot.data![index].status == 'rejected'
-                                              ? 'Rejected'
-                                              : 'Unknown', // Handle any other status here
-                                        ),
+                                      trailing: Text(
+                                        snapshot.data![index].status == 'none'
+                                            ? 'Pending'
+                                            : snapshot.data![index].status == 'approved'
+                                            ? 'Approved'
+                                            : snapshot.data![index].status == 'rejected'
+                                            ? 'Rejected'
+                                            : 'Unknown', // Handle any other status here
+                                      ),
                                       onTap: () {
                                       },
                                     ),
@@ -91,12 +110,12 @@ class AuctionStatus extends StatelessWidget{
                               }, separatorBuilder: (BuildContext context, int index) { return const Divider(); },
                             ),
                           ),
+                        ),
 
-                        ],
-                      ),
-                    ) ,
-                  ],
-                )
+                      ],
+                    ),
+                  ),
+                ) ,
             );
           } else if (snapshot.hasError) {
             return Text('User not found');
