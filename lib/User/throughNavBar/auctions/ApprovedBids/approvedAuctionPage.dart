@@ -14,7 +14,8 @@ import '../../../../Artist/auction/auctionRepository.dart';
 import '../../../../Artist/controllers/artist_controller.dart';
 import 'approvedBidPage.dart';
 
-class ApprovedAuctionPage extends StatelessWidget{
+class ApprovedAuctionPage extends StatelessWidget
+{
   final controller = Get.put(Artist_Controller());
 
   final authrepo = Get.put(Artist_Auth());

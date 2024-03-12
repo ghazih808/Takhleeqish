@@ -5,6 +5,7 @@ import 'package:takhleekish/User/Navbar/userNavbar.dart';
 import 'package:takhleekish/User/cart/cartDatabase/cartModel.dart';
 
 import '../cart/cartDatabase/cartController.dart';
+import '../cart/cartPages/cartPage.dart';
 
 class DetailProductPage extends StatefulWidget {
   final String url;
@@ -55,7 +56,12 @@ class _DetailProductPageState extends State<DetailProductPage> {
         ),
         actions: <Widget>[
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+              CartPage()));
+            },
             icon: FaIcon(FontAwesomeIcons.cartShopping, color: Colors.white),
           ),
         ],
