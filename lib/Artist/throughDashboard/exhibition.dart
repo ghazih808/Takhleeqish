@@ -11,6 +11,9 @@ class ExhibitionAnnouncementPage extends StatefulWidget {
 class _ExhibitionAnnouncementPageState
     extends State<ExhibitionAnnouncementPage> {
   final venueController = TextEditingController();
+  final capacityController = TextEditingController();
+  final dateController = TextEditingController();
+  final timeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +66,6 @@ class _ExhibitionAnnouncementPageState
                               ),
                               secondaryActions: [
                                 IconSlideAction(
-
                                   caption: 'Delete',
                                   color: Colors.red,
                                   icon: Icons.delete,
@@ -121,13 +123,42 @@ class _ExhibitionAnnouncementPageState
                 ),
               ),
               SizedBox(height: 10),
+              TextField(
+                controller: capacityController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  hintText: 'Capacity',
+                ),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                controller: dateController,
+                decoration: InputDecoration(
+                  hintText: 'Date (YYYY-MM-DD)',
+                ),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                controller: timeController,
+                decoration: InputDecoration(
+                  hintText: 'Time (HH:MM)',
+                ),
+              ),
+              SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
-                  CollectionReference collRef = FirebaseFirestore.instance.collection('exhibition');
+                  CollectionReference collRef =
+                  FirebaseFirestore.instance.collection('exhibition');
                   collRef.add({
                     'venue': venueController.text,
+                    'capacity': int.parse(capacityController.text),
+                    'date': dateController.text,
+                    'time': timeController.text,
                   });
                   venueController.clear();
+                  capacityController.clear();
+                  dateController.clear();
+                  timeController.clear();
                   Navigator.of(context).pop();
                 },
                 child: Text('Add Exhibition'),
