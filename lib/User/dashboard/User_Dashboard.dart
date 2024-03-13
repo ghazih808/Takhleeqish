@@ -9,6 +9,8 @@ import 'package:takhleekish/Artist/Navbar/navbar.dart';
 import 'package:takhleekish/User/dashboard/detailProductPage.dart';
 import 'package:takhleekish/User/Navbar/userNavbar.dart';
 
+import '../cart/cartPages/cartPage.dart';
+
 class User_dashboard extends StatelessWidget {
   final artifactRepo = Get.put(Artifact_repo());
 
@@ -36,6 +38,19 @@ class User_dashboard extends StatelessWidget {
             ),
           ),
         ),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+
+              String bill="false";
+              Navigator.push(context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          CartPage(bill)));
+            },
+            icon: FaIcon(FontAwesomeIcons.cartShopping, color: Colors.white),
+          ),
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(

@@ -24,7 +24,7 @@ class Cart_model{
       'Category':category,
       'Price':price,
       'Detail':description,
-      'Artist_ID':ArtistId,
+      'User_ID':ArtistId,
       'Url':url,
     };}
 
@@ -33,8 +33,6 @@ class Cart_model{
     final data=documentSnapshot.data()!;
     return Cart_model(
       id: documentSnapshot.id,
-      name: data["Name"], price: data["Price"], category: data["Category"], description: data["Detail"], ArtistId: data["Artist_ID"], url: data['Url'],);
+      name: data["Name"], price: data["Price"], category: data["Category"], description: data["Detail"], ArtistId: data["User_ID"], url: data['Url'],);
   }
-
-
 }

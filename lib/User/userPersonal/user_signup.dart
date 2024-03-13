@@ -291,8 +291,8 @@ class User_Signup extends StatelessWidget {
                                 controller.User_url =await refrenceImageToUpload.getDownloadURL();
                                 Get.snackbar("Congratulations", "Image has been added",
                                     snackPosition:SnackPosition.BOTTOM,
-                                    backgroundColor: Colors.green.withOpacity(0.1),
-                                    colorText: Colors.green);
+                                    backgroundColor: Colors.pink.withOpacity(0.5),
+                                    colorText: Colors.black);
         
         
                                 }catch(error)
@@ -441,9 +441,6 @@ class User_Signup extends StatelessWidget {
     if (cnic == null) {
       return false;
     }
-    // Assuming you have a "artists" collection in Firestore
-
-
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('Users')

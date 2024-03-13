@@ -11,8 +11,8 @@ class Auction_Repo extends GetxController{
   async {
     await auction_db.collection("Auction").add(auction_model.toJson()).whenComplete(() => Get.snackbar("Congratulations", "Auction request has been added.",
         snackPosition:SnackPosition.BOTTOM,
-        backgroundColor: Colors.green.withOpacity(0.1),
-        colorText: Colors.white),
+        backgroundColor: Colors.pink.withOpacity(0.5),
+        colorText: Colors.black)
     ).catchError((error,stackTrace){
       Get.snackbar("Error", "Something went wrong. Try again",
           snackPosition:SnackPosition.BOTTOM,

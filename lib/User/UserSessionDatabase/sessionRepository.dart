@@ -18,8 +18,8 @@ class Session_UserRepo extends GetxController
         .whenComplete(() =>
         Get.snackbar("Congratulations", "Session request has been added.",
             snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.green.withOpacity(0.1),
-            colorText: Colors.white),
+            backgroundColor: Colors.pink.withOpacity(0.5),
+            colorText: Colors.black)
     ).catchError((error, stackTrace) {
       Get.snackbar("Error", "Something went wrong. Try again",
           snackPosition: SnackPosition.BOTTOM,

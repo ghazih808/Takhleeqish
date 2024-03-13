@@ -13,8 +13,8 @@ class Artifact_repo extends GetxController
   async {
     await artifact_db.collection("Artifacts").add(artifact_model.toJson()).whenComplete(() => Get.snackbar("Congratulations", "Artifact has been added.",
         snackPosition:SnackPosition.BOTTOM,
-        backgroundColor: Colors.green.withOpacity(0.1),
-        colorText: Colors.green),
+        backgroundColor: Colors.pink.withOpacity(0.5),
+        colorText: Colors.black)
     ).catchError((error,stackTrace){
       Get.snackbar("Error", "Something went wrong. Try again",
           snackPosition:SnackPosition.BOTTOM,
