@@ -53,6 +53,8 @@ class User_dashboard extends StatelessWidget {
         ],
       ),
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.centerLeft,
@@ -76,8 +78,8 @@ class User_dashboard extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: (snapshot.data!.length / 2).ceil(), // Calculate the number of rows
                     itemBuilder: (context, rowIndex) {
+                      // if(snapshot.data![rowIndex].cartCheck=="false")
                       return Container(
-
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Row(
@@ -156,7 +158,6 @@ class User_dashboard extends StatelessWidget {
                         ),
                       );
 
-
                     },
                   ),
                 );
@@ -166,6 +167,7 @@ class User_dashboard extends StatelessWidget {
               } else {
                 return Text('Something went wrong');
               }
+
             } else {
               // Return Center widget to display CircularProgressIndicator in the center
               return Center(

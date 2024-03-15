@@ -35,196 +35,165 @@ class ArtistDashboard extends StatelessWidget{
               ),
             ),
           ),
-          body:
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  Color(0xffF0A2C9),
-                  Color(0xffD2A5D0),
-                  Color(0xff6F9BB4),
-                ],
+          body: Stack(
+            children:[
+              Container(
+                width: double.infinity,
+                height: 880,
+                child: Image.asset("assests/images/dbpic2.jpeg"
+                  ,fit: BoxFit.fitHeight,),
+                //add background image here
               ),
-            ),
-            child: SingleChildScrollView(
-              child: Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Center(
-                          child: Container(
-                            width: 230,
-                            height: 200,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0)
-                            ),
-                            child: Card(
-                              color: Colors.black,
-                              elevation: 7,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0)
-                              ),
-                              child: Column(
-                                children: [
-
-                                  Container(
-                                    width: 230,
-                                    height: 140,
-                                    child: Image.asset("assests/images/Home.jpg",fit: BoxFit.fitWidth),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(15.0)
-                                    ),
-
+              Padding(
+                padding: const EdgeInsets.only(top: 80.0),
+                child: SingleChildScrollView(
+                child: Center(
+                    child: Container(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15,bottom: 18,left: 10),
+                                child: Container(
+                                  width: 180,
+                                  height: 180,
+                                  child: ElevatedButton(onPressed:(){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>PostArtifact()));
+                                  }, child:Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(right:15.0,left: 15.0,top: 17),
+                                        child: Image.asset("assests/images/Home.jpg"),
+                                      ),
+                                      SizedBox(height: 10,),
+                                      Text("Post Artifact",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,fontSize: 18),),
+                                    ],
                                   ),
-                                  Container(
-                                    width: 200,
-                                    child: ElevatedButton(onPressed: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>PostArtifact()));
-                                    }, child: Text("Post",style: TextStyle(color:Colors.white),),
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white.withOpacity(0.5),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(15)
-                                          ),)),
-                                  )
-                                ],
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(15.0)
+                                        )
+                                    ),
+                                  ),
+                                ),
                               ),
 
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Center(
-                        child: Container(
-                          width: 230,
-                          height: 200,
-                          child: Card(
-                            color: Colors.black,
-                            elevation: 7,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0)
-                            ),
-                            child: Column(
-                              children: [
+                              SizedBox(
+                                width: 10,
+                              ),
 
-                                Container(
-                                  width: 230,
-                                  height: 140,
-                                  child: Image.asset("assests/images/gallery.jpg",fit: BoxFit.fitWidth),
-
-                                ),
-                                Container(
-                                  width: 200,
-                                  child: ElevatedButton(onPressed: (){
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15,bottom: 18),
+                                child: Container(
+                                  width: 180,
+                                  height: 180,
+                                  child: ElevatedButton(onPressed:(){
                                     Navigator.push(context, MaterialPageRoute(builder: (context)=>ExhibitionAnnouncementPage()));
-                                  }, child: Text("Exhibition",style: TextStyle(color:Colors.white),),
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white.withOpacity(0.5),
+                                  }, child:Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(right:15.0,left: 15.0,top: 17),
+                                        child: Image.asset("assests/images/gallery.jpg",fit: BoxFit.fitWidth),
+                                      ),
+                                      SizedBox(height: 10,),
+
+                                      Text("Exhibition",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,fontSize: 18),),
+                                    ],
+                                  ),
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.white,
                                         shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(15)
-                                        ),)),
-                                )
-                              ],
-                            ),
-
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Center(
-                        child: Container(
-                          width: 230,
-                          height: 200,
-                          child: Card(
-                            color: Colors.black,
-                            elevation: 7,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0)
-                            ),
-                            child: Column(
-                              children: [
-
-                                Container(
-                                  width: 230,
-                                  height: 140,
-                                  child: Image.asset("assests/images/auction.jpg",fit: BoxFit.fitWidth),
-
+                                            borderRadius: BorderRadius.circular(15.0)
+                                        )
+                                    ),
+                                  ),
                                 ),
-                                Container(
-                                  width: 200,
-                                  child: ElevatedButton(onPressed: (){
+                              ),
+
+                            ],
+                          ),
+
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15,bottom: 18,left: 10),
+                                child: Container(
+                                  width: 180,
+                                  height: 180,
+                                  child: ElevatedButton(onPressed:(){
                                     Navigator.push(context, MaterialPageRoute(builder: (context)=>AuctionPage()));
-                                  }, child: Text("Auction",style: TextStyle(color:Colors.white),),
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white.withOpacity(0.5),
+                                  }, child:Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(right:15.0,left: 15.0,top: 17),
+                                        child: Image.asset("assests/images/auction.jpg",fit: BoxFit.fitWidth),
+                                      ),
+                                      SizedBox(height: 10,),
+
+                                      Text("Auction",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,fontSize: 18),),
+                                    ],
+                                  ),
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.white,
                                         shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(15)
-                                        ),)),
-                                )
-                              ],
-                            ),
-
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Center(
-                        child: Container(
-                          width: 230,
-                          height: 200,
-                          child: Card(
-                            color: Colors.black,
-                            elevation: 7,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0)
-                            ),
-                            child: Column(
-                              children: [
-
-                                Container(
-                                  width: 230,
-                                  height: 140,
-                                  child: Image.asset("assests/images/sessions.jpg",fit: BoxFit.fitWidth),
-
+                                            borderRadius: BorderRadius.circular(15.0)
+                                        )
+                                    ),
+                                  ),
                                 ),
-                                Container(
-                                  width: 200,
-                                  child: ElevatedButton(onPressed: (){
+                              ),
+
+                              SizedBox(
+                                width: 10,
+                              ),
+
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15,bottom: 18),
+                                child: Container(
+                                  width: 180,
+                                  height: 180,
+                                  child: ElevatedButton(onPressed:(){
                                     Navigator.push(context, MaterialPageRoute(builder: (context)=>SessionSelectPage()));
+                                  }, child:Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(right:15.0,left: 15.0,top: 17),
+                                        child: Image.asset("assests/images/sessions.jpg",fit: BoxFit.fitWidth),
+                                      ),
+                                      SizedBox(height: 10,),
 
-                                  }, child: Text("Sessions",style: TextStyle(color:Colors.white),),
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white.withOpacity(0.5),
+                                      Text("Sessions",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,fontSize: 18),),
+                                    ],
+                                  ),
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.white,
                                         shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(15)
-                                        ),)),
-                                )
-                              ],
-                            ),
+                                            borderRadius: BorderRadius.circular(15.0)
+                                        )
+                                    ),
+                                  ),
+                                ),
+                              ),
 
+                            ],
                           ),
-                        ),
+
+
+                        ],
                       ),
+                    )
 
-                    ],
-                  )
-
-              ),
-            ),
+                ),
+                            ),
+              ),]
           ),);
   }
 

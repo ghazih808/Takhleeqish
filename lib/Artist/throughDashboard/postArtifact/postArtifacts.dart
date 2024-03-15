@@ -375,7 +375,7 @@ class _PostArtifactState extends State<PostArtifact> {
                                           .trim(),
                                       description: controller.Artifact_desc.text.trim(),
                                       ArtistId: controller.Artist_id.text.trim(),
-                                      url:imageurl);
+                                      url:imageurl, cartCheck: 'false', likes: '0', saleCheck: 'false');
                                   Artifact_Controller.instance.createArtifactt(
                                       artifact);
                                   Get.snackbar("Congratulations", "Product has been added",
