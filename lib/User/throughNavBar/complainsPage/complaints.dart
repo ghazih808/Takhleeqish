@@ -70,8 +70,7 @@ class _ComplaintsPageState extends State<ComplaintsPage> {
                         // Navigator.of(context).pop(); // Example of navigating back
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.blue, // Change button color to red for complaints
-                        onPrimary: Colors.white, // Change text color to white
+                        // Change text color to white
                         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                         textStyle: TextStyle(fontSize: 18),
                         shape: RoundedRectangleBorder(

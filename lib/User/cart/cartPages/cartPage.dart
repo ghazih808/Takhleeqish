@@ -192,6 +192,16 @@ class _CartPageState extends State<CartPage> {
                                                         backgroundColor: Colors.redAccent.withOpacity(0.1),
                                                         colorText: Colors.red);
                                                     print(error.toString());});
+                                                  // if(docid==widget.artifactId)
+                                                  // await FirebaseFirestore.instance.collection("Artifacts").doc(widget.artifactId)
+                                                  //     .update(
+                                                  //     {
+                                                  //       'cartCheck':"false",
+                                                  //
+                                                  //
+                                                  //     }
+                                                  // );
+
                                                 },
                                                 icon: Icon(Icons.delete),
                                               ),

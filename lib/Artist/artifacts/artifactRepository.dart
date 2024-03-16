@@ -31,6 +31,12 @@ class Artifact_repo extends GetxController
     final artifactData=snapshot.docs.map((e) => Artifact_model.fromSnapshot(e)).single;
     return artifactData;
   }
+  Future<List<Artifact_model>> getSpecificArtistArtifacttDetail(String ArtistId) async
+  {
+    final snapshot=await artifact_db.collection("Artifacts").where("Artist_ID",isEqualTo: ArtistId).get();
+    final artifactData=snapshot.docs.map((e) => Artifact_model.fromSnapshot(e)).toList();
+    return artifactData;
+  }
 
   Future<List<Artifact_model>> getAllArtifacttDetail() async
   {

@@ -63,6 +63,7 @@ class User_dashboard extends StatelessWidget {
               Color(0xffF0A2C9),
               Color(0xffD2A5D0),
               Color(0xff6F9BB4),
+
             ],
           ),
         ),
@@ -78,7 +79,6 @@ class User_dashboard extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: (snapshot.data!.length / 2).ceil(), // Calculate the number of rows
                     itemBuilder: (context, rowIndex) {
-                      // if(snapshot.data![rowIndex].cartCheck=="false")
                       return Container(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -147,7 +147,11 @@ class User_dashboard extends StatelessWidget {
                                             ),
                                           ),
                                           onTap: (){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailProductPage(snapshot.data![i].url, snapshot.data![i].price, snapshot.data![i].description, snapshot.data![i].name,snapshot.data![i].category,snapshot.data![i].ArtistId)));
+                                            var docid=snapshot.data![i].id?? "No id";
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailProductPage(snapshot.data![i].url, snapshot.data![i].price,
+                                                snapshot.data![i].description, snapshot.data![i].name,
+                                                snapshot.data![i].category,snapshot.data![i].ArtistId,
+                                                docid, snapshot.data![i].cartCheck)));
                                           },
                                         ),
                                       ),
@@ -177,6 +181,7 @@ class User_dashboard extends StatelessWidget {
           },
         ),
       ),
+
     );
   }
 

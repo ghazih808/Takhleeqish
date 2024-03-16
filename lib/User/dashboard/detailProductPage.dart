@@ -18,10 +18,12 @@ class DetailProductPage extends StatefulWidget {
   final String name;
   final String artistID;
   final String category;
+  final String docid;
+  final String likeCheck;
 
 
 
-  DetailProductPage(this.url, this.price, this.description, this.name,this.category,this.artistID);
+  DetailProductPage(this.url, this.price, this.description, this.name,this.category,this.artistID,this.docid,this.likeCheck);
 
   @override
   _DetailProductPageState createState() => _DetailProductPageState();
@@ -108,10 +110,37 @@ class _DetailProductPageState extends State<DetailProductPage> {
                                     color: isFavorited ? Colors.red : Colors.grey,
                                     size: 30,
                                   ),
-                                  onPressed: () {
-                                    setState(() {
-                                      isFavorited = !isFavorited;
-                                    });
+                                  onPressed: () async {
+                                      if(widget.likeCheck=="false"){
+                                        num countLikes=await getLikesCount(widget.name);
+                                        if(!isFavorited)
+                                        {
+                                          countLikes++;
+                                          String likesAsString = countLikes.toString();
+                                          await FirebaseFirestore.instance.collection("Artifacts").doc(widget.docid)
+                                              .update(
+                                              {
+                                                'likes':likesAsString,
+                                              }
+                                          );
+                                        }
+                                        if(isFavorited)
+                                        {
+                                          countLikes--;
+                                          String likesAsString = countLikes.toString();
+                                          await FirebaseFirestore.instance.collection("Artifacts").doc(widget.docid)
+                                              .update(
+                                              {
+                                                'likes':likesAsString,
+                                              }
+                                          );
+                                        }
+                                        setState(() {
+                                          isFavorited = !isFavorited;
+                                        });
+                                      }
+
+
                                   },
                                 ),
                                 SizedBox(
@@ -189,8 +218,17 @@ class _DetailProductPageState extends State<DetailProductPage> {
                                             url: widget.url);
                                         cartController.createCart(cart);
                                       }
+                                      print(widget.docid);
+
+                                      // await FirebaseFirestore.instance.collection("Artifacts").doc(widget.docid)
+                                      //     .update(
+                                      //     {
+                                      //       'cartCheck':"true",
+                                      //     }
+                                      // );
 
                                     },
+                                    
                                     child: Text("Add to cart",
                                       style: TextStyle(
                                           color: Colors.white,
@@ -252,6 +290,29 @@ class _DetailProductPageState extends State<DetailProductPage> {
     } catch (e) {
       print('Error checking if user is an artist: $e');
       return false;
+    }
+  }
+
+  Future<num> getLikesCount(String? name) async {
+    if (name == null) {
+      return 0; // Return 0 if name is null
+    }
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('Artifacts')
+          .where('Name', isEqualTo: name)
+          .get();
+
+      num totalLikes = 0;
+      for (var doc in querySnapshot.docs) {
+        // Assuming 'Likes' is the field storing likes count in the database
+        var likes = doc['likes'];
+        totalLikes += num.tryParse(likes) ?? 0; // Adding likes count to totalLikes
+      }
+      return totalLikes;
+    } catch (e) {
+      print('Error retrieving likes count: $e');
+      return 0; // Return 0 in case of error
     }
   }
 }
