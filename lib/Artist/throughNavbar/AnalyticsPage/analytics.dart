@@ -20,17 +20,7 @@ class ArtistAnalyticsPage extends StatefulWidget {
 
 class _ArtistAnalyticsPageState extends State<ArtistAnalyticsPage> {
   @override
-  double abstractCount=5;
 
-  double landscapeCount=0;
-
-  double portraitCount=2;
-
-  double StillLifeCount=8;
-
-  double ModernArtCount=0;
-
-  double ContemporaryCount=4;
   void initState() {
     super.initState();
   }
@@ -63,6 +53,12 @@ class _ArtistAnalyticsPageState extends State<ArtistAnalyticsPage> {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       if (snapshot.hasData) {
+                        double abstractCount=5;
+                        double landscapeCount=0;
+                        double portraitCount=2;
+                        double StillLifeCount=8;
+                        double ModernArtCount=0;
+                        double ContemporaryCount=4;
 
                         for(int i=0;i< snapshot.data!.length;i++)
                           {
@@ -107,9 +103,11 @@ class _ArtistAnalyticsPageState extends State<ArtistAnalyticsPage> {
                                   height: 200,
                                   child: CircleAvatar(
                                     child: ClipOval(
+
                                       child: Image.network(dp),
                                     ),
                                   ),
+
 
                                 ),
                               ),
