@@ -79,23 +79,51 @@ class UserUpdatePage extends StatelessWidget{
                       Container(
                         width: 200,
                         height: 50,
-                        child: ElevatedButton(onPressed:() async {
-                          await auth.sendPasswordResetEmail(email: email).then((value){
-                            Get.snackbar("Congratulations", "Email to Update password has been sent to your gmail account",
-                                snackPosition:SnackPosition.BOTTOM,
-                                backgroundColor: Colors.green.withOpacity(0.6),
-                                colorText: Colors.black);
-                          });
-
-                        }, child:Text("Update Password",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 18),),
-
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
+                        child:Container(
+                          width: double.infinity,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await auth.sendPasswordResetEmail(email: email).then((value) {
+                                Get.snackbar(
+                                  "Congratulations",
+                                  "Email to update password has been sent to your Gmail account",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.green.withOpacity(0.6),
+                                  colorText: Colors.black,
+                                );
+                              });
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.zero,
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0)
-                              )
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                            ),
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Update Password",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
+
                       )
                     ],
                   ),

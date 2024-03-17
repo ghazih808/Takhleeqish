@@ -115,12 +115,44 @@ class _ExhibitionAnnouncementPageState
                     },
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    _showAddExhibitionDialog(context);
-                  },
-                  child: Text('Add Exhibition'),
-                ),
+                Container(
+                  width: 150,
+                  height: 40,
+                  child:Container(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed:() {
+                        _showAddExhibitionDialog(context);
+                      } ,
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                      ),
+                      child: Ink(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          child:
+                          Text("Add Exhibition",style: TextStyle(color: Colors.white,fontSize: 18),),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                )
+
+
+
               ],
             ),
           ),
@@ -213,37 +245,66 @@ class _ExhibitionAnnouncementPageState
                     child: Text('Pick Date and Time'),
                   ),
                   SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () async {
-                      // Check if an exhibition with the same details exists
-                      final existingExhibition = await FirebaseFirestore
-                          .instance
-                          .collection('exhibition')
-                          .where('venue', isEqualTo: selectedVenue)
-                          .where('date', isEqualTo: dateController.text)
-                          .where('time', isEqualTo: timeController.text)
-                          .get();
+                  Container(
+                    width: 300,
+                    height: 40,
+                    child:Container(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed:() async {
+                          // Check if an exhibition with the same details exists
+                          final existingExhibition = await FirebaseFirestore
+                              .instance
+                              .collection('exhibition')
+                              .where('venue', isEqualTo: selectedVenue)
+                              .where('date', isEqualTo: dateController.text)
+                              .where('time', isEqualTo: timeController.text)
+                              .get();
 
-                      if (existingExhibition.docs.isEmpty) {
-                        CollectionReference collRef = FirebaseFirestore.instance
-                            .collection('exhibition');
-                        collRef.add({
-                          'venue': selectedVenue,
-                          'capacity': selectedCapacity,
-                          'date': dateController.text,
-                          'time': timeController.text,
-                        });
-                        Navigator.of(context).pop();
-                      } else {
-                        // Display a message indicating that the exhibition already exists
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                              'Exhibition with the same date, time, and venue already exists.'),
-                        ));
-                      }
-                    },
-                    child: Text('Add Exhibition'),
-                  ),
+                          if (existingExhibition.docs.isEmpty) {
+                            CollectionReference collRef = FirebaseFirestore.instance
+                                .collection('exhibition');
+                            collRef.add({
+                              'venue': selectedVenue,
+                              'capacity': selectedCapacity,
+                              'date': dateController.text,
+                              'time': timeController.text,
+                            });
+                            Navigator.of(context).pop();
+                          } else {
+                            // Display a message indicating that the exhibition already exists
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  'Exhibition with the same date, time, and venue already exists.'),
+                            ));
+                          }
+                        } ,
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        ),
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          child: Container(
+                            alignment: Alignment.center,
+                            child:
+                            Text("Add Exhibition",style: TextStyle(color: Colors.white,fontSize: 18),),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  )
 
                 ],
               );

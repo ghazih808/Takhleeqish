@@ -65,31 +65,49 @@ class DetailExhibitionPage extends StatelessWidget {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
                 ),
                 SizedBox(height: screenHeight * 0.04),
+
                 Container(
                   width: 200,
                   height: 50,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Add Maps here
-                    },
-                    child: Row(
-                      children: [
-                        FaIcon(FontAwesomeIcons.mapLocationDot, color: Colors.black),
-                        SizedBox(width: 25),
-                        Text(
-                          "Location",
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 20),
+                  child:Container(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed:()   {}  ,
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
-                      ],
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Ink(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          child:  Row(
+                            children: [
+                              SizedBox(width: 18),
+                              FaIcon(FontAwesomeIcons.mapLocationDot, color: Colors.black),
+                              SizedBox(width: 25),
+                              Text(
+                                "Location",
+                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 20),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                )
+
+                ),
               ],
             ),
           ),

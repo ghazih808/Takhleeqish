@@ -85,10 +85,11 @@ class User_dashboard extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+
                               for (int i = rowIndex * 2; i < (rowIndex * 2) + 2; i++)
                                 if (i < snapshot.data!.length)
-                                  Container(
-
+                                  if(snapshot.data![i].saleCheck=="false")
+                                    Container(
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 12.0,left: 12,right: 12),
                                       child: Container(

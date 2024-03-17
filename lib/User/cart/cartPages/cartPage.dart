@@ -282,7 +282,6 @@ class _CartPageState extends State<CartPage> {
             ElevatedButton(
               onPressed: () {
 
-
               },
               child: Text('Checkout',style: TextStyle(color: Colors.white,fontSize: 20)),
               style: ElevatedButton.styleFrom(

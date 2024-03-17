@@ -75,97 +75,125 @@ class _PostArtifactState extends State<PostArtifact> {
                         Container(
                           width: 200,
                           height: 40,
-                          child: ElevatedButton(onPressed: () async{
-                            await showModalBottomSheet(context: context, builder: (context)=>BottomSheet(
-                              builder: (context)=>Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  ListTile(leading:Icon(Icons.camera),title: Text("Camera"),onTap: () async{
-                                    ImagePicker imagePicker=ImagePicker();
-                                    XFile? file=await imagePicker.pickImage(source: ImageSource.camera);
-                                    print('${file?.path}');
-                                    if(file==null) return null;
-                                    String uniqueName=DateTime.now().millisecondsSinceEpoch.toString();
-                                    Reference refrenceRoot=FirebaseStorage.instance.ref();
-                                    Reference refrenceDirImage=refrenceRoot.child("products");
-                                    Reference refrenceImageToUpload=refrenceDirImage.child(uniqueName);
+                          child:Container(
+                            width: double.infinity,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed:()  async{
+                                await showModalBottomSheet(context: context, builder: (context)=>BottomSheet(
+                                  builder: (context)=>Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      ListTile(leading:Icon(Icons.camera),title: Text("Camera"),onTap: () async{
+                                        ImagePicker imagePicker=ImagePicker();
+                                        XFile? file=await imagePicker.pickImage(source: ImageSource.camera);
+                                        print('${file?.path}');
+                                        if(file==null) return null;
+                                        String uniqueName=DateTime.now().millisecondsSinceEpoch.toString();
+                                        Reference refrenceRoot=FirebaseStorage.instance.ref();
+                                        Reference refrenceDirImage=refrenceRoot.child("products");
+                                        Reference refrenceImageToUpload=refrenceDirImage.child(uniqueName);
 
-                                    try{
-                                      SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
-                                      await refrenceImageToUpload.putFile(File(file!.path), metadata);
-                                      imageurl=await refrenceImageToUpload.getDownloadURL();
-                                      Get.snackbar("Congratulations", "Image has been Added.",
-                                          snackPosition:SnackPosition.BOTTOM,
-                                          backgroundColor: Colors.green.withOpacity(0.1),
-                                          colorText: Colors.green);
-
-
-                                    }catch(error)
-                                    {
-                                      Get.snackbar("Sorry", "Please try again.",
-                                          snackPosition:SnackPosition.BOTTOM,
-                                          backgroundColor: Colors.red.withOpacity(0.1),
-                                          colorText: Colors.red);
-                                    }
+                                        try{
+                                          SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
+                                          await refrenceImageToUpload.putFile(File(file!.path), metadata);
+                                          imageurl=await refrenceImageToUpload.getDownloadURL();
+                                          Get.snackbar("Congratulations", "Image has been Added.",
+                                              snackPosition:SnackPosition.BOTTOM,
+                                              backgroundColor: Colors.green.withOpacity(0.1),
+                                              colorText: Colors.green);
 
 
-
-
-
-
-
-                                  },),
-                                  ListTile(leading:Icon(Icons.insert_photo),title: Text("Gallery"),onTap: () async {
-                                    {
-                                      ImagePicker imagePicker=ImagePicker();
-                                      XFile? file=await imagePicker.pickImage(source: ImageSource.gallery);
-                                      if(file==null) return null;
-                                      String uniqueName=DateTime.now().microsecondsSinceEpoch.toString();
-                                      Reference refrenceRoot=FirebaseStorage.instance.ref();
-                                      Reference refrenceDirImage=refrenceRoot.child('products');
-                                      Reference refrenceImageToUpload=refrenceDirImage.child(uniqueName);
-
-                                      try{
-                                        SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
-                                        await refrenceImageToUpload.putFile(File(file!.path), metadata);
-                                        imageurl=await refrenceImageToUpload.getDownloadURL();
-                                        Get.snackbar("Congratulations", "Image has been Added.",
-                                            snackPosition:SnackPosition.BOTTOM,
-                                            backgroundColor: Colors.green.withOpacity(0.1),
-                                            colorText: Colors.green);
+                                        }catch(error)
+                                        {
+                                          Get.snackbar("Sorry", "Please try again.",
+                                              snackPosition:SnackPosition.BOTTOM,
+                                              backgroundColor: Colors.red.withOpacity(0.1),
+                                              colorText: Colors.red);
+                                        }
 
 
 
-                                      }catch(error)
-                                      {
-                                        Get.snackbar("Sorry", "Please try again.",
-                                            snackPosition:SnackPosition.BOTTOM,
-                                            backgroundColor: Colors.red.withOpacity(0.1),
-                                            colorText: Colors.red);
-                                      }
 
-                                    }
 
-                                  },)
 
-                                ],
-                              ), onClosing: () {  },)
-                            );
-                          }, child: Row(
-                            children: [
-                              Icon(Icons.insert_photo,color: Colors.white,),
-                              SizedBox(
-                                width: 30,
+
+                                      },),
+                                      ListTile(leading:Icon(Icons.insert_photo),title: Text("Gallery"),onTap: () async {
+                                        {
+                                          ImagePicker imagePicker=ImagePicker();
+                                          XFile? file=await imagePicker.pickImage(source: ImageSource.gallery);
+                                          if(file==null) return null;
+                                          String uniqueName=DateTime.now().microsecondsSinceEpoch.toString();
+                                          Reference refrenceRoot=FirebaseStorage.instance.ref();
+                                          Reference refrenceDirImage=refrenceRoot.child('products');
+                                          Reference refrenceImageToUpload=refrenceDirImage.child(uniqueName);
+
+                                          try{
+                                            SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
+                                            await refrenceImageToUpload.putFile(File(file!.path), metadata);
+                                            imageurl=await refrenceImageToUpload.getDownloadURL();
+                                            Get.snackbar("Congratulations", "Image has been Added.",
+                                                snackPosition:SnackPosition.BOTTOM,
+                                                backgroundColor: Colors.green.withOpacity(0.1),
+                                                colorText: Colors.green);
+
+
+
+                                          }catch(error)
+                                          {
+                                            Get.snackbar("Sorry", "Please try again.",
+                                                snackPosition:SnackPosition.BOTTOM,
+                                                backgroundColor: Colors.red.withOpacity(0.1),
+                                                colorText: Colors.red);
+                                          }
+
+                                        }
+
+                                      },)
+
+                                    ],
+                                  ), onClosing: () {  },)
+                                );
+                              } ,
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
                               ),
-                              Text("Image",style: TextStyle(color: Colors.white,fontSize: 18),),
-                            ],
+                              child: Ink(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child:
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Icon(Icons.insert_photo,color: Colors.white,),
+                                      SizedBox(
+                                        width: 30,
+                                      ),
+                                      Text("Image",style: TextStyle(color: Colors.white,fontSize: 18),),
+                                    ],
+                                  )                                ),
+                              ),
+                            ),
                           ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue.withOpacity(0.5),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15)
-                              ),),),
+
                         ),
+
+
+
                         SizedBox(
                           height: screenHeight * 0.02,
                         ),
@@ -360,44 +388,70 @@ class _PostArtifactState extends State<PostArtifact> {
                           height: screenHeight * 0.02,
                         ),
 
+
+
+
+
                         Padding(
                             padding: const EdgeInsets.only(top: 45.0),
-                            child: Container(
+                            child:
+                            Container(
                               width: 300,
                               height: 40,
-                              child: ElevatedButton(onPressed: () {
-                                if (formkey.currentState!.validate()){
-                                  print('${controller.Artifact_name}');
-                                  final artifact = Artifact_model(
-                                      name: controller.Artifact_name.text.trim(),
-                                      price: controller.Artifact_price.text.trim(),
-                                      category: controller.Artifact_category.text
-                                          .trim(),
-                                      description: controller.Artifact_desc.text.trim(),
-                                      ArtistId: controller.Artist_id.text.trim(),
-                                      url:imageurl, cartCheck: 'false', likes: '0', saleCheck: 'false');
-                                  Artifact_Controller.instance.createArtifactt(
-                                      artifact);
-                                  Get.snackbar("Congratulations", "Product has been added",
-                                      snackPosition:SnackPosition.BOTTOM,
-                                      backgroundColor: Colors.green.withOpacity(0.1),
-                                      colorText: Colors.green);
-                                  Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) => ArtistDashboard()),);
-                                  controller.Artist_id.clear();
-                                  controller.Artifact_desc.clear();
-                                  controller.Artifact_category.clear();
-                                  controller.Artifact_price.clear();
-                                  controller.Artifact_name.clear();
-                                }
-                              }, child: Text("Register",style: TextStyle(color: Colors.white,fontSize: 18),),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.blue.withOpacity(0.5),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)
+                              child:Container(
+                                width: double.infinity,
+                                height: 50,
+                                child: ElevatedButton(
+                                  onPressed:()  {
+                                    if (formkey.currentState!.validate()){
+                                      print('${controller.Artifact_name}');
+                                      final artifact = Artifact_model(
+                                          name: controller.Artifact_name.text.trim(),
+                                          price: controller.Artifact_price.text.trim(),
+                                          category: controller.Artifact_category.text
+                                              .trim(),
+                                          description: controller.Artifact_desc.text.trim(),
+                                          ArtistId: controller.Artist_id.text.trim(),
+                                          url:imageurl, cartCheck: 'false', likes: '0', saleCheck: 'false');
+                                      Artifact_Controller.instance.createArtifactt(
+                                          artifact);
+                                      Get.snackbar("Congratulations", "Product has been added",
+                                          snackPosition:SnackPosition.BOTTOM,
+                                          backgroundColor: Colors.green.withOpacity(0.1),
+                                          colorText: Colors.green);
+                                      Navigator.push(context, MaterialPageRoute(
+                                          builder: (context) => ArtistDashboard()),);
+                                      controller.Artist_id.clear();
+                                      controller.Artifact_desc.clear();
+                                      controller.Artifact_category.clear();
+                                      controller.Artifact_price.clear();
+                                      controller.Artifact_name.clear();
+                                    }
+                                  } ,
+                                  style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                  ),
+                                  child: Ink(
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                      ),
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      child:
+                                      Text("Register",style: TextStyle(color: Colors.white,fontSize: 18),),
+                                    ),
                                   ),
                                 ),
                               ),
+
                             ))
                       ],
                     ),

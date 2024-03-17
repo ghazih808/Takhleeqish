@@ -57,28 +57,42 @@ class _ComplaintsPageState extends State<ComplaintsPage> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Access the complaint data
-                        String complaint = _complaintController.text;
-        
-                        // Perform any actions with the complaint data (e.g., send to server)
-                        // For now, just print it
-                        print('Complaint: $complaint');
-        
-                        // You can also navigate to another page or show a success message
-                        // Navigator.of(context).pop(); // Example of navigating back
-                      },
-                      style: ElevatedButton.styleFrom(
-                        // Change text color to white
-                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                        textStyle: TextStyle(fontSize: 18),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                    Container(
+                      width: 200,
+                      height: 50,
+                      child:Container(
+                        width: double.infinity,
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed:()   {
+                            String complaint = _complaintController.text;
+                          }  ,
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                          ),
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            child: Container(
+                              alignment: Alignment.center,
+                              child:  Text('Submit Complaint',style:TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold)),
+                            ),
+                          ),
                         ),
                       ),
-                      child: Text('Submit Complaint'),
-                    ),
+
+                    )
+
+
                   ],
                 ),
               ),

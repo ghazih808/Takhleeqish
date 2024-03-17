@@ -74,13 +74,13 @@ class _BarGraphState extends State<BarGraph> with SingleTickerProviderStateMixin
       animation: _animationController,
       builder: (context, child) {
         return Card(
-          elevation: 4,
+          elevation: 6,
           color: Color(0xffcbb4d4),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: BarChart(
               BarChartData(
-                maxY: 10,
+                maxY: 20,
                 minY: 0,
                 gridData: FlGridData(show: false),
                 borderData: FlBorderData(show: false),
@@ -120,7 +120,7 @@ class _BarGraphState extends State<BarGraph> with SingleTickerProviderStateMixin
                         borderRadius: BorderRadius.circular(4),
                         backDrawRodData: BackgroundBarChartRodData(
                           show: true,
-                          toY: 10,
+                          toY: 20,
                           color: Colors.grey[300],
                         ),
                       )

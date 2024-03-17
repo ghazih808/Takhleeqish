@@ -138,24 +138,49 @@ class _DetailScheduledSessionPageState extends State<DetailScheduledSessionPage>
                       height:screenHeight*0.02,
                     ),
                     if(isTimeValid)
-                    Container(
-                      width: screenWidth*0.5,
-                      height: screenHeight*0.07,
-                      child: Center(
-                        child: ElevatedButton(onPressed:()  async {
+                      Container(
+                        width: screenWidth*0.5,
+                        height: screenHeight*0.07,
+                        child:Container(
+                          width: double.infinity,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () async {
 
-
-                        }, child:Center(child: Text("Join Session",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),)),
-
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xff6F9BB4),
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.zero,
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                              )
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                            ),
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Join Session",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
+
                       ),
-                    ),
+
+
 
                   ],
                 ),

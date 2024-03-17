@@ -238,46 +238,50 @@ if({widget.bidStatus}=='false')
                     Container(
                       width: 180,
                       height: 45,
-                      child: ElevatedButton(onPressed:()  async {
-                        if(isTimeValid){
-                          if(formkey.currentState!.validate()){
-                            print(widget.docid);
-                            print(bidController);
-                            await FirebaseFirestore.instance.collection("Auction").doc(widget.docid)
-                                .update(
-                                {
-                                  'Bid':bidController.text,
-                                  'BidStatus':"true"
+                      child:Container(
+                        width: double.infinity,
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed:()   async {
+                            if(isTimeValid){
+                              if(formkey.currentState!.validate()){
+                                print(widget.docid);
+                                print(bidController);
+                                await FirebaseFirestore.instance.collection("Auction").doc(widget.docid)
+                                    .update(
+                                    {
+                                      'Bid':bidController.text,
+                                      'BidStatus':"true"
 
+                                    }
+                                ).whenComplete(() {
+                                  Get.snackbar("Congratulations", "Bid has been Placed",
+                                      snackPosition:SnackPosition.BOTTOM,
+                                      backgroundColor: Colors.green.withOpacity(0.1),
+                                      colorText: Colors.white);
+                                  bidController.clear();
                                 }
-                            ).whenComplete(() {
-                              Get.snackbar("Congratulations", "Bid has been Placed",
-                                  snackPosition:SnackPosition.BOTTOM,
-                                  backgroundColor: Colors.green.withOpacity(0.1),
-                                  colorText: Colors.white);
-                              bidController.clear();
+                                ).catchError((error,stackTrace){
+                                  Get.snackbar("Error", "Something went wrong. Try again",
+                                      snackPosition:SnackPosition.BOTTOM,
+                                      backgroundColor: Colors.redAccent.withOpacity(0.1),
+                                      colorText: Colors.red);
+                                  print(error.toString());});
+
+
+                              }
                             }
-                            ).catchError((error,stackTrace){
-                              Get.snackbar("Error", "Something went wrong. Try again",
-                                  snackPosition:SnackPosition.BOTTOM,
-                                  backgroundColor: Colors.redAccent.withOpacity(0.1),
-                                  colorText: Colors.red);
-                              print(error.toString());});
-
-
-                          }
-                        }
-                        else
-                          {
-                            print(isBiddingDone);
-                            if(isBiddingDone)
-                              {
-                                Get.snackbar("Sorry", "Currently this is not the bidding period",
-                                    snackPosition:SnackPosition.BOTTOM,
-                                    backgroundColor: Colors.red.withOpacity(0.3),
-                                    colorText: Colors.white);
-                              }
                             else
+                            {
+                              print(isBiddingDone);
+                              if(isBiddingDone)
+                              {
+                                Get.snackbar("Sorry", "Currently this is not the bidding period",
+                                    snackPosition:SnackPosition.BOTTOM,
+                                    backgroundColor: Colors.red.withOpacity(0.3),
+                                    colorText: Colors.white);
+                              }
+                              else
                               {
                                 Get.snackbar("Sorry", "Currently this is not the bidding period",
                                     snackPosition:SnackPosition.BOTTOM,
@@ -285,24 +289,42 @@ if({widget.bidStatus}=='false')
                                     colorText: Colors.white);
                               }
 
-                          }
+                            }
 
-                      }, child:Row(
-                        children: [
-                          FaIcon(FontAwesomeIcons.check,color: Colors.white,),
-                          SizedBox(width: 35,),
-                          Text("Bid",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 20),),
-                        ],
-                      ),
-
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xff6F9BB4),
+                          }  ,
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0)
-                            )
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                          ),
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            child: Container(
+                              alignment: Alignment.center,
+                              child:  Row(
+                                children: [
+                                  SizedBox(width: 18,),
+                                  FaIcon(FontAwesomeIcons.check,color: Colors.white,),
+                                  SizedBox(width: 35,),
+                                  Text("Bid",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 20),),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ),
+
                     ),
+
+
                     SizedBox(
                       height:screenHeight*0.02,
                     ),

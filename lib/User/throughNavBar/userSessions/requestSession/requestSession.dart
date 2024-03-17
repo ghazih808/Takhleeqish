@@ -264,6 +264,8 @@ class _UserRequestSessionState extends State<UserRequestSession> {
                                       borderRadius: BorderRadius.circular(15)
                                   ),),
                               ),
+
+
                             ],),
                             SizedBox(height: screenHeight*0.005),
 
@@ -277,44 +279,73 @@ class _UserRequestSessionState extends State<UserRequestSession> {
                       ),
 
                       SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (formkey.currentState!.validate()){
-                            final session = Session_User_Model(
 
-                                Title:controller.artTitle.text.trim(),
-                                artistEmail: controller.artistMail.text.trim(),
-                                userEmail: controller.userMail.text.trim(),
-                                startingTime: controller.session_startingTime.toString().trim(),
-                                sessionDate: controller.sessionDate.toString().trim(), checkReqStatus: 'false', Status: 'pending'
+                      Container(
+                        child:Container(
+                          width: double.infinity,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: ()  {
+                              if (formkey.currentState!.validate()){
+                                final session = Session_User_Model(
+
+                                    Title:controller.artTitle.text.trim(),
+                                    artistEmail: controller.artistMail.text.trim(),
+                                    userEmail: controller.userMail.text.trim(),
+                                    startingTime: controller.session_startingTime.toString().trim(),
+                                    sessionDate: controller.sessionDate.toString().trim(), checkReqStatus: 'false', Status: 'pending'
                                 );
 
 
-                            sessionController.instance.createSession(
-                                session);
-                            Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => UserRequestSession()),);
-                            controller.artTitle.clear();
-                            controller.artistMail.clear();
-                            controller.userMail.clear();
-                            controller.sessionDate = null;
-                            controller.session_startingTime = null;
+                                sessionController.instance.createSession(
+                                    session);
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => UserRequestSession()),);
+                                controller.artTitle.clear();
+                                controller.artistMail.clear();
+                                controller.userMail.clear();
+                                controller.sessionDate = null;
+                                controller.session_startingTime = null;
 
-                          }
-                          else{
-                            Get.snackbar("OOpS", "Session request has not been send",
-                                snackPosition:SnackPosition.BOTTOM,
-                                backgroundColor: Colors.red.withOpacity(0.1),
-                                colorText: Colors.red);
-                          }
+                              }
+                              else{
+                                Get.snackbar("OOpS", "Session request has not been send",
+                                    snackPosition:SnackPosition.BOTTOM,
+                                    backgroundColor: Colors.red.withOpacity(0.1),
+                                    colorText: Colors.red);
+                              }
 
-                        },
-                        child: Text('Request Session',style: TextStyle(color: Colors.white,fontSize: 20)),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xff6F9BB4),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15)
-                          ),),
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                            ),
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Request Session",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
                       ),
                     ],
                   ),
