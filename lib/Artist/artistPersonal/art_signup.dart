@@ -263,158 +263,207 @@ class Art_Signup extends StatelessWidget{
                     SizedBox(
                       height:screenHeight*0.02,
                     ),
+
                     Container(
                       width: 200,
                       height: 40,
-                      child: ElevatedButton(onPressed: () async{
-                        await showModalBottomSheet(context: context, builder: (context)=>BottomSheet(
-                          builder: (context)=>Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              ListTile(leading:Icon(Icons.camera),title: Text("Camera"),onTap: () async{
-                                ImagePicker imagePicker=ImagePicker();
-                                XFile? file=await imagePicker.pickImage(source: ImageSource.camera);
-                                if(file==null) return null;
-                                String uniqueName=DateTime.now().microsecondsSinceEpoch.toString();
-                                Reference refrenceRoot=FirebaseStorage.instance.ref();
-                                Reference refrenceDirImage=refrenceRoot.child("ArtitsImages");
-                                Reference refrenceImageToUpload=refrenceDirImage.child(uniqueName);
 
-                                try{SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
-                                await refrenceImageToUpload.putFile(File(file!.path), metadata);
-                                controller.Artist_url =await refrenceImageToUpload.getDownloadURL();
-                                Get.snackbar("Congratulations", "Image has been added",
-                                    snackPosition:SnackPosition.BOTTOM,
-                                    backgroundColor: Colors.green.withOpacity(0.1),
-                                    colorText: Colors.green);
+                      child:Container(
+                        width: double.infinity,
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed:()async{
+                            await showModalBottomSheet(context: context, builder: (context)=>BottomSheet(
+                              builder: (context)=>Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ListTile(leading:Icon(Icons.camera),title: Text("Camera"),onTap: () async{
+                                    ImagePicker imagePicker=ImagePicker();
+                                    XFile? file=await imagePicker.pickImage(source: ImageSource.camera);
+                                    if(file==null) return null;
+                                    String uniqueName=DateTime.now().microsecondsSinceEpoch.toString();
+                                    Reference refrenceRoot=FirebaseStorage.instance.ref();
+                                    Reference refrenceDirImage=refrenceRoot.child("ArtitsImages");
+                                    Reference refrenceImageToUpload=refrenceDirImage.child(uniqueName);
 
-
-                                }catch(error)
-                                {
-
-                                }
-
-
-
-
-
-
-                              },),
-                              ListTile(leading:Icon(Icons.insert_photo),title: Text("Gallery"),onTap: () async {
-                                {
-                                  ImagePicker imagePicker=ImagePicker();
-                                  XFile? file=await imagePicker.pickImage(source: ImageSource.gallery);
-                                  if(file==null) return null;
-                                  String uniqueName=DateTime.now().microsecondsSinceEpoch.toString();
-                                  Reference refrenceRoot=FirebaseStorage.instance.ref();
-                                  Reference refrenceDirImage=refrenceRoot.child("ArtistImage");
-                                  Reference refrenceImageToUpload=refrenceDirImage.child(uniqueName);
-
-                                  try{
-                                    SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
+                                    try{SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
                                     await refrenceImageToUpload.putFile(File(file!.path), metadata);
                                     controller.Artist_url =await refrenceImageToUpload.getDownloadURL();
-                                    print('${controller.Artist_url}');
-                                    Navigator.pop(context);
-                                    Get.snackbar("Sorry", "Please try again.",
+                                    Get.snackbar("Congratulations", "Image has been added",
                                         snackPosition:SnackPosition.BOTTOM,
-                                        backgroundColor: Colors.red.withOpacity(0.1),
-                                        colorText: Colors.red);
+                                        backgroundColor: Colors.green.withOpacity(0.1),
+                                        colorText: Colors.green);
 
 
-                                  }catch(error)
-                                  {
+                                    }catch(error)
+                                    {
 
-                                  }
+                                    }
 
-                                }
 
-                              },)
 
-                            ],
-                          ), onClosing: () {  },));
-                      }, child: Row(
-                        children: [
-                          Icon(Icons.insert_photo,color: Colors.white,),
-                          SizedBox(
-                            width: 30,
+
+
+
+                                  },),
+                                  ListTile(leading:Icon(Icons.insert_photo),title: Text("Gallery"),onTap: () async {
+                                    {
+                                      ImagePicker imagePicker=ImagePicker();
+                                      XFile? file=await imagePicker.pickImage(source: ImageSource.gallery);
+                                      if(file==null) return null;
+                                      String uniqueName=DateTime.now().microsecondsSinceEpoch.toString();
+                                      Reference refrenceRoot=FirebaseStorage.instance.ref();
+                                      Reference refrenceDirImage=refrenceRoot.child("ArtistImage");
+                                      Reference refrenceImageToUpload=refrenceDirImage.child(uniqueName);
+
+                                      try{
+                                        SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
+                                        await refrenceImageToUpload.putFile(File(file!.path), metadata);
+                                        controller.Artist_url =await refrenceImageToUpload.getDownloadURL();
+                                        print('${controller.Artist_url}');
+                                        Navigator.pop(context);
+                                        Get.snackbar("Sorry", "Please try again.",
+                                            snackPosition:SnackPosition.BOTTOM,
+                                            backgroundColor: Colors.red.withOpacity(0.1),
+                                            colorText: Colors.red);
+
+
+                                      }catch(error)
+                                      {
+
+                                      }
+
+                                    }
+
+                                  },)
+
+                                ],
+                              ), onClosing: () {  },));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
                           ),
-                          Text("Image",style: TextStyle(color: Colors.white,fontSize: 18),),
-                        ],
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            child: Container(
+                              alignment: Alignment.center,
+                              child:
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  Icon(Icons.insert_photo,color: Colors.white,),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  Text("Image",style: TextStyle(color: Colors.white,fontSize: 18),),
+                                ],
+                              )                            ),
+                          ),
+                        ),
                       ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue.withOpacity(0.5),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15)
-                          ),),),
+
                     ),
                     Padding(
                         padding: const EdgeInsets.only(top: 45.0),
+
+
                         child: Container(
-                          width: 300,
-                          height: 40,
-                          child: ElevatedButton(onPressed: () async {
-                            bool cnicCheck = await isCnicUnique(controller.Arcnic.text);
-                            if(cnicCheck)
-                            {
-                              Get.snackbar("Sorry", "Cnic already exists.",
-                                  snackPosition:SnackPosition.BOTTOM,
-                                  backgroundColor: Colors.red.withOpacity(0.1),
-                                  colorText: Colors.red);
-                              controller.Arcnic.clear();
+                        width: 300,
+                        height: 40,
 
-                            }else{
-                              if(formkey.currentState!.validate())  {
-                                if(await Artist_Controller.instance.registerArtist(controller.Aremail.text.trim(), controller.Arpass.text.trim())){
-                                  Artist_Controller.instance.registerArtist(controller.Aremail.text.trim(), controller.Arpass.text.trim());
-                                  if(await myAuth.verifyOTP(otp:Otp.text) == true)
-                                  {
-                                    final artist = Artist_model(
-                                        name: controller.Arname.text.trim(),
-                                        email: controller.Aremail.text.trim(),
-                                        cnic: controller.Arcnic.text.trim(),
-                                        pass: controller.Arpass.text.trim(),
-                                        url: controller.Artist_url);
-                                    Artist_Controller.instance.createArtist(artist);
-                                    Navigator.push(context, MaterialPageRoute(builder: (
-                                        context) => Artist_login()),);
-                                    controller.Arcnic.clear();
-                                    controller.Arpass.clear();
-                                    controller.Aremail.clear();
-                                    controller.Arname.clear();
-                                  }
-                                  else{
-                                    Get.snackbar("Sorry", "Enter the Valid Otp.",
-                                        snackPosition:SnackPosition.BOTTOM,
-                                        backgroundColor: Colors.red.withOpacity(0.1),
-                                        colorText: Colors.red);
-                                  }
+                    child:Container(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                        onPressed:()async {
+              bool cnicCheck = await isCnicUnique(controller.Arcnic.text);
+              if(cnicCheck)
+              {
+              Get.snackbar("Sorry", "Cnic already exists.",
+              snackPosition:SnackPosition.BOTTOM,
+              backgroundColor: Colors.red.withOpacity(0.1),
+              colorText: Colors.red);
+              controller.Arcnic.clear();
 
-                                }
-                                else{
-                                  Get.snackbar("Sorry", "Email is already registered.",
-                                      snackPosition:SnackPosition.BOTTOM,
-                                      backgroundColor: Colors.red.withOpacity(0.1),
-                                      colorText: Colors.red);
-                                }
+              }else{
+              if(formkey.currentState!.validate())  {
+              if(await Artist_Controller.instance.registerArtist(controller.Aremail.text.trim(), controller.Arpass.text.trim())){
+              Artist_Controller.instance.registerArtist(controller.Aremail.text.trim(), controller.Arpass.text.trim());
+              if(await myAuth.verifyOTP(otp:Otp.text) == true)
+              {
+              final artist = Artist_model(
+              name: controller.Arname.text.trim(),
+              email: controller.Aremail.text.trim(),
+              cnic: controller.Arcnic.text.trim(),
+              pass: controller.Arpass.text.trim(),
+              url: controller.Artist_url);
+              Artist_Controller.instance.createArtist(artist);
+              Navigator.push(context, MaterialPageRoute(builder: (
+              context) => Artist_login()),);
+              controller.Arcnic.clear();
+              controller.Arpass.clear();
+              controller.Aremail.clear();
+              controller.Arname.clear();
+              }
+              else{
+              Get.snackbar("Sorry", "Enter the Valid Otp.",
+              snackPosition:SnackPosition.BOTTOM,
+              backgroundColor: Colors.red.withOpacity(0.1),
+              colorText: Colors.red);
+              }
 
-
-
-
-                              }
-                            }
-
+              }
+              else{
+              Get.snackbar("Sorry", "Email is already registered.",
+              snackPosition:SnackPosition.BOTTOM,
+              backgroundColor: Colors.red.withOpacity(0.1),
+              colorText: Colors.red);
+              }
 
 
-                          }, child: Text("Register"),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue.withOpacity(0.5),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15)
-                              ),
-                            ),
-                          ),
-                        ))
+
+
+              }
+              }
+
+              },
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+                child: Ink(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  child: Container(
+                    alignment: Alignment.center,
+                    child:
+                    Text("Register",style: TextStyle(color: Colors.white,fontSize: 18)),
+                  ),
+                ),
+              ),
+            ),
+
+          ) )
                   ],
                 ),
               ),

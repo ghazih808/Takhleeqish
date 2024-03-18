@@ -138,36 +138,63 @@ class _Artist_loginState extends State<Artist_login> {
                           ),
                           Padding(
                               padding: const EdgeInsets.only(bottom: 4.0),
-                              child: Container(
+
+
+
+                              child:
+                              Container(
                                 width: 200,
-                                child: ElevatedButton(onPressed: (){
-                                  if(formkey.currentState!.validate()) {
-                                    loginController.setOnLoginSuccess(() {
-            
-                                      Get.offAll(() => ArtistDashboard());
-            
-                                    });
-                                    loginController.login();
-                                    if (rememberMe) {
-                                      // Store the email and password
-                                      // You can use a secure storage solution like flutter_secure_storage or shared_preferences
-                                      // For simplicity, I'll use shared_preferences for demonstration purposes
-                                      SharedPreferences.getInstance().then((prefs) {
-                                        prefs.setString('email', loginController.Aremail.text);
-                                        prefs.setString('password', loginController.Arpass.text);
-                                      });
-                                    }
-                                    loginController.Aremail.clear();
-                                    loginController.Arpass.clear();
-                                  }
-                                }, child: Text("Login",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w500,fontSize: 20),),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15)
+                                height: 40,
+
+                                child:Container(
+                                  width: double.infinity,
+                                  height: 50,
+                                  child: ElevatedButton(
+                                    onPressed:(){
+                                      if(formkey.currentState!.validate()) {
+                                        loginController.setOnLoginSuccess(() {
+
+                                          Get.offAll(() => ArtistDashboard());
+
+                                        });
+                                        loginController.login();
+                                        if (rememberMe) {
+                                          // Store the email and password
+                                          // You can use a secure storage solution like flutter_secure_storage or shared_preferences
+                                          // For simplicity, I'll use shared_preferences for demonstration purposes
+                                          SharedPreferences.getInstance().then((prefs) {
+                                            prefs.setString('email', loginController.Aremail.text);
+                                            prefs.setString('password', loginController.Arpass.text);
+                                          });
+                                        }
+                                        loginController.Aremail.clear();
+                                        loginController.Arpass.clear();
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.zero,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15.0),
+                                      ),
+                                    ),
+                                    child: Ink(
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15.0),
+                                      ),
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        child:
+                                        Text("Login",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 20),),
+                                      ),
                                     ),
                                   ),
                                 ),
+
                               )),
                           errorText,
                           Row(

@@ -141,33 +141,62 @@ class _PaintingSessionPageState extends State<PaintingSessionPage> {
                                 SizedBox(width: screenWidhth*0.3,),
                                 Column(
                                   children: [
-                                    ElevatedButton(onPressed: ()async{
-                                      final startDate=await pickDate();
-                                      if(startDate==null) {
-                                        Get.snackbar("Oops", "Session Date is required",
-                                            snackPosition:SnackPosition.BOTTOM,
-                                            backgroundColor: Colors.red.withOpacity(0.1),
-                                            colorText: Colors.red);
-                                      }
-                                      setState(() {
-                                        controller.sessionDate=startDate;
-                                      });
-                                    }, child:
-                                    Row(
-                                      children: [
-                                        Icon(Icons.calendar_month,color: Colors.white,),
-                                        SizedBox(
-                                          width:5,
+                                    Container(
+                                      width: 120,
+                                      height: 40,
+                                      child:Container(
+                                        width: double.infinity,
+                                        height: 50,
+                                        child: ElevatedButton(
+                                          onPressed:()async{
+                                            final startDate=await pickDate();
+                                            if(startDate==null) {
+                                              Get.snackbar("Oops", "Session Date is required",
+                                                  snackPosition:SnackPosition.BOTTOM,
+                                                  backgroundColor: Colors.red.withOpacity(0.1),
+                                                  colorText: Colors.red);
+                                            }
+                                            setState(() {
+                                              controller.sessionDate=startDate;
+                                            });
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            padding: EdgeInsets.zero,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(15.0),
+                                            ),
+                                          ),
+                                          child: Ink(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                              ),
+                                              borderRadius: BorderRadius.circular(15.0),
+                                            ),
+                                            child: Container(
+                                                alignment: Alignment.center,
+                                                child:
+                                                Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width:10,
+                                                    ),
+                                                    Icon(Icons.calendar_month,color: Colors.white,),
+                                                    SizedBox(
+                                                      width:5,
+                                                    ),
+                                                    Text("Date",style: TextStyle(color: Colors.white,fontSize: 20),),
+                                                  ],
+                                                )                                     ),
+                                          ),
                                         ),
-                                        Text("Date",style: TextStyle(color: Colors.white,fontSize: 20),),
-                                      ],
+                                      ),
+
                                     ),
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xff6F9BB4),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(15)
-                                        ),),
-                                    ),
+
+
 
                                   ],
                                 ),
@@ -189,33 +218,62 @@ class _PaintingSessionPageState extends State<PaintingSessionPage> {
 
                               SizedBox(width: screenWidhth*0.285,),
 
-                              ElevatedButton(onPressed: ()async{
-                                final startTime=await pickTime();
-                                if(startTime==null) {
-                                  Get.snackbar("Oops", "Starting time is required",
-                                      snackPosition:SnackPosition.BOTTOM,
-                                      backgroundColor: Colors.red.withOpacity(0.1),
-                                      colorText: Colors.red);
-                                }
-                                setState(() {
-                                  controller.session_startingTime=startTime;
-                                });
-                              }, child:
-                              Row(
-                                children: [
-                                  Icon(Icons.access_time,color: Colors.white,),
-                                  SizedBox(
-                                    width:5,
+                              Container(
+                                width: 120,
+                                height: 40,
+                                child:Container(
+                                  width: double.infinity,
+                                  height: 50,
+                                  child: ElevatedButton(
+                                    onPressed:()async{
+                                      final startTime=await pickTime();
+                                      if(startTime==null) {
+                                        Get.snackbar("Oops", "Starting time is required",
+                                            snackPosition:SnackPosition.BOTTOM,
+                                            backgroundColor: Colors.red.withOpacity(0.1),
+                                            colorText: Colors.red);
+                                      }
+                                      setState(() {
+                                        controller.session_startingTime=startTime;
+                                      });
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.zero,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15.0),
+                                      ),
+                                    ),
+                                    child: Ink(
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15.0),
+                                      ),
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        child:
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                              width:10,
+                                            ),
+                                            Icon(Icons.access_time,color: Colors.white,),
+                                            SizedBox(
+                                              width:5,
+                                            ),
+                                            Text("Time",style: TextStyle(color: Colors.white,fontSize: 20),),
+                                          ],
+                                        )                                      ),
+                                    ),
                                   ),
-                                  Text("Time",style: TextStyle(color: Colors.white,fontSize: 20),),
-                                ],
+                                ),
+
                               ),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xff6F9BB4),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)
-                                  ),),
-                              ),
+
+
                             ],),
                             SizedBox(height: screenHeight*0.005),
 
@@ -229,38 +287,64 @@ class _PaintingSessionPageState extends State<PaintingSessionPage> {
                       ),
 
                       SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (formkey.currentState!.validate()){
-                            final session = ArtistSessionModel(
-                                Title:controller.artTitle.text.trim(),
-                                artistEmail: controller.artistMail.text.trim(),
-                                startingTime: controller.session_startingTime.toString().trim(),
-                                sessionDate: controller.sessionDate.toString().trim(), checkReqStatus: 'false', Status: 'pending'
-                            );
-                            ArtistSessionController.instance.createSession(
-                                session);
-                            Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => PaintingSessionPage()),);
-                            controller.artTitle.clear();
-                            controller.artistMail.clear();
-                            controller.sessionDate = null;
-                            controller.session_startingTime = null;
-                          }
-                          else{
-                            Get.snackbar("OOpS", "Session request has not been send",
-                                snackPosition:SnackPosition.BOTTOM,
-                                backgroundColor: Colors.red.withOpacity(0.1),
-                                colorText: Colors.red);
-                          }
-                        },
-                        child: Text('Post Session',style: TextStyle(color: Colors.white,fontSize: 20)),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xff6F9BB4),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15)
-                          ),),
+                      Container(
+                        width: 300,
+                        height: 40,
+                        child:Container(
+                          width: double.infinity,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed:(){
+                              if (formkey.currentState!.validate()){
+                                final session = ArtistSessionModel(
+                                    Title:controller.artTitle.text.trim(),
+                                    artistEmail: controller.artistMail.text.trim(),
+                                    startingTime: controller.session_startingTime.toString().trim(),
+                                    sessionDate: controller.sessionDate.toString().trim(), checkReqStatus: 'false', Status: 'pending'
+                                );
+                                ArtistSessionController.instance.createSession(
+                                    session);
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => PaintingSessionPage()),);
+                                controller.artTitle.clear();
+                                controller.artistMail.clear();
+                                controller.sessionDate = null;
+                                controller.session_startingTime = null;
+                              }
+                              else{
+                                Get.snackbar("OOpS", "Session request has not been send",
+                                    snackPosition:SnackPosition.BOTTOM,
+                                    backgroundColor: Colors.red.withOpacity(0.1),
+                                    colorText: Colors.red);
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                            ),
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              child: Container(
+                                alignment: Alignment.center,
+                                child:
+                                Text('Post Session',style: TextStyle(color: Colors.white,fontSize: 20)),
+                              ),
+                            ),
+                          ),
+                        ),
+
                       ),
+
+
                     ],
                   ),
                 ),

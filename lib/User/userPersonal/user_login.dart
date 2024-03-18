@@ -129,27 +129,52 @@ class _User_loginState extends State<User_login> {
                      ),
                      Padding(
                          padding: const EdgeInsets.only(bottom: 4.0),
+
+
                          child: Container(
                            width: 200,
-                           child: ElevatedButton(onPressed: (){
-                             if(formkey.currentState!.validate()) {
-                               loginController.setOnLoginSuccess(() {
-                                 Get.offAll(()=>User_dashboard());
-                               });
-                               loginController.login();
-       
-                               loginController.Usemail.clear();
-                               loginController.Uspass.clear();
-                             }
-                           }, child: Text("Login",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w500,fontSize: 20),),
-                             style: ElevatedButton.styleFrom(
-                               backgroundColor: Colors.white,
-                               shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(15)
+                           height: 40,
+
+                           child:Container(
+                             width: double.infinity,
+                             height: 50,
+                             child: ElevatedButton(
+                               onPressed:(){
+                                 if(formkey.currentState!.validate()) {
+                                   loginController.setOnLoginSuccess(() {
+                                     Get.offAll(()=>User_dashboard());
+                                   });
+                                   loginController.login();
+
+                                   loginController.Usemail.clear();
+                                   loginController.Uspass.clear();
+                                 }
+                               },
+                               style: ElevatedButton.styleFrom(
+                                 padding: EdgeInsets.zero,
+                                 shape: RoundedRectangleBorder(
+                                   borderRadius: BorderRadius.circular(15.0),
+                                 ),
+                               ),
+                               child: Ink(
+                                 decoration: BoxDecoration(
+                                   gradient: LinearGradient(
+                                     colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                     begin: Alignment.topLeft,
+                                     end: Alignment.bottomRight,
+                                   ),
+                                   borderRadius: BorderRadius.circular(15.0),
+                                 ),
+                                 child: Container(
+                                   alignment: Alignment.center,
+                                   child:
+                                   Text("Login",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 20),),
+                                 ),
                                ),
                              ),
                            ),
-                         )),
+
+                         ),),
                      errorText,
                      Row(
                        children: [

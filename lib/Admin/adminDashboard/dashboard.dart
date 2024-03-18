@@ -32,7 +32,7 @@ class AdminDashboard extends StatelessWidget{
               child: Column(
                 children: [
                   SizedBox(
-                    height: 20,
+                    height: 120,
                   ),
                   Center(
                     child: Container(
@@ -46,12 +46,12 @@ class AdminDashboard extends StatelessWidget{
                         ),
                         child: Column(
                           children: [
-              
+
                             Container(
                               width: 230,
                               height: 140,
                               child: Image.asset("assests/images/gallery.jpg",fit: BoxFit.fitWidth),
-              
+
                             ),
                             Container(
                               width: 200,
@@ -66,7 +66,7 @@ class AdminDashboard extends StatelessWidget{
                             )
                           ],
                         ),
-              
+
                       ),
                     ),
                   ),
@@ -85,12 +85,12 @@ class AdminDashboard extends StatelessWidget{
                         ),
                         child: Column(
                           children: [
-              
+
                             Container(
                               width: 230,
                               height: 140,
                               child: Image.asset("assests/images/auction.jpg",fit: BoxFit.fitWidth),
-              
+
                             ),
                             Container(
                               width: 200,
@@ -105,50 +105,14 @@ class AdminDashboard extends StatelessWidget{
                             )
                           ],
                         ),
-              
+
                       ),
                     ),
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  Center(
-                    child: Container(
-                      width: 230,
-                      height: 200,
-                      child: Card(
-                        color: Colors.black,
-                        elevation: 7,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0)
-                        ),
-                        child: Column(
-                          children: [
-              
-                            Container(
-                              width: 230,
-                              height: 140,
-                              child: Image.asset("assests/images/adminAnalytics.jpg",fit: BoxFit.fitWidth),
-              
-                            ),
-                            Container(
-                              width: 200,
-                              child: ElevatedButton(onPressed: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>AllArtistsAnalytics()));
-                              }, child: Text("Analytics",style: TextStyle(color:Colors.white,fontSize: 16),),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white.withOpacity(0.5),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15)
-                                    ),)),
-                            )
-                          ],
-                        ),
-              
-                      ),
-                    ),
-                  ),
-              
+
                 ],
               ),
             )

@@ -56,90 +56,115 @@ class _AuctionPageState extends State<AuctionPage> {
                               Container(
                                 width: 200,
                                 height: 40,
-                                child: ElevatedButton(onPressed: () async{
-                                  await showModalBottomSheet(context: context, builder: (context)=>BottomSheet(
-                                    builder: (context)=>Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        ListTile(leading:Icon(Icons.camera),title: Text("Camera"),onTap: () async{
-                                          ImagePicker imagePicker=ImagePicker();
-                                          XFile? file=await imagePicker.pickImage(source: ImageSource.camera);
-                                          print('${file?.path}');
-                                          if(file==null) return null;
-                                          String uniqueName=DateTime.now().millisecondsSinceEpoch.toString();
-                                          Reference refrenceRoot=FirebaseStorage.instance.ref();
-                                          Reference refrenceDirImage=refrenceRoot.child("Auction");
-                                          Reference refrenceImageToUpload=refrenceDirImage.child(uniqueName);
+                                child:Container(
+                                  width: double.infinity,
+                                  height: 50,
+                                  child: ElevatedButton(
+                                    onPressed:()async{
+                                      await showModalBottomSheet(context: context, builder: (context)=>BottomSheet(
+                                        builder: (context)=>Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            ListTile(leading:Icon(Icons.camera),title: Text("Camera"),onTap: () async{
+                                              ImagePicker imagePicker=ImagePicker();
+                                              XFile? file=await imagePicker.pickImage(source: ImageSource.camera);
+                                              print('${file?.path}');
+                                              if(file==null) return null;
+                                              String uniqueName=DateTime.now().millisecondsSinceEpoch.toString();
+                                              Reference refrenceRoot=FirebaseStorage.instance.ref();
+                                              Reference refrenceDirImage=refrenceRoot.child("Auction");
+                                              Reference refrenceImageToUpload=refrenceDirImage.child(uniqueName);
 
-                                          try{
-                                            SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
-                                            await refrenceImageToUpload.putFile(File(file!.path), metadata);
-                                            imageurl=await refrenceImageToUpload.getDownloadURL();
-                                            Get.snackbar("Congratulations", "Image has been Added for Auction.",
-                                                snackPosition:SnackPosition.BOTTOM,
-                                                backgroundColor: Colors.green.withOpacity(0.1),
-                                                colorText: Colors.green);
-
-
-                                          }catch(error)
-                                          {
-                                            Get.snackbar("Sorry", "Please try again.",
-                                                snackPosition:SnackPosition.BOTTOM,
-                                                backgroundColor: Colors.red.withOpacity(0.1),
-                                                colorText: Colors.red);
-                                          }
-
-                                        },),
-                                        ListTile(leading:Icon(Icons.insert_photo),title: Text("Gallery"),onTap: () async {
-                                          {
-                                            ImagePicker imagePicker=ImagePicker();
-                                            XFile? file=await imagePicker.pickImage(source: ImageSource.gallery);
-                                            if(file==null) return null;
-                                            String uniqueName=DateTime.now().microsecondsSinceEpoch.toString();
-                                            Reference refrenceRoot=FirebaseStorage.instance.ref();
-                                            Reference refrenceDirImage=refrenceRoot.child('Auction');
-                                            Reference refrenceImageToUpload=refrenceDirImage.child(uniqueName);
-
-                                            try{
-                                              SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
-                                              await refrenceImageToUpload.putFile(File(file!.path), metadata);
-                                              imageurl=await refrenceImageToUpload.getDownloadURL();
-                                              Get.snackbar("Congratulations", "Image has been Added for Auction.",
-                                                  snackPosition:SnackPosition.BOTTOM,
-                                                  backgroundColor: Colors.green.withOpacity(0.1),
-                                                  colorText: Colors.green);
+                                              try{
+                                                SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
+                                                await refrenceImageToUpload.putFile(File(file!.path), metadata);
+                                                imageurl=await refrenceImageToUpload.getDownloadURL();
+                                                Get.snackbar("Congratulations", "Image has been Added for Auction.",
+                                                    snackPosition:SnackPosition.BOTTOM,
+                                                    backgroundColor: Colors.green.withOpacity(0.1),
+                                                    colorText: Colors.green);
 
 
+                                              }catch(error)
+                                              {
+                                                Get.snackbar("Sorry", "Please try again.",
+                                                    snackPosition:SnackPosition.BOTTOM,
+                                                    backgroundColor: Colors.red.withOpacity(0.1),
+                                                    colorText: Colors.red);
+                                              }
 
-                                            }catch(error)
-                                            {
-                                              Get.snackbar("Sorry", "Please try again.",
-                                                  snackPosition:SnackPosition.BOTTOM,
-                                                  backgroundColor: Colors.red.withOpacity(0.1),
-                                                  colorText: Colors.red);
-                                            }
+                                            },),
+                                            ListTile(leading:Icon(Icons.insert_photo),title: Text("Gallery"),onTap: () async {
+                                              {
+                                                ImagePicker imagePicker=ImagePicker();
+                                                XFile? file=await imagePicker.pickImage(source: ImageSource.gallery);
+                                                if(file==null) return null;
+                                                String uniqueName=DateTime.now().microsecondsSinceEpoch.toString();
+                                                Reference refrenceRoot=FirebaseStorage.instance.ref();
+                                                Reference refrenceDirImage=refrenceRoot.child('Auction');
+                                                Reference refrenceImageToUpload=refrenceDirImage.child(uniqueName);
 
-                                          }
+                                                try{
+                                                  SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
+                                                  await refrenceImageToUpload.putFile(File(file!.path), metadata);
+                                                  imageurl=await refrenceImageToUpload.getDownloadURL();
+                                                  Get.snackbar("Congratulations", "Image has been Added for Auction.",
+                                                      snackPosition:SnackPosition.BOTTOM,
+                                                      backgroundColor: Colors.green.withOpacity(0.1),
+                                                      colorText: Colors.green);
 
-                                        },)
 
-                                      ],
-                                    ), onClosing: () {  },)
-                                  );
-                                }, child: Row(
-                                  children: [
-                                    Icon(Icons.insert_photo,color: Colors.white,),
-                                    SizedBox(
-                                      width: 15,
+
+                                                }catch(error)
+                                                {
+                                                  Get.snackbar("Sorry", "Please try again.",
+                                                      snackPosition:SnackPosition.BOTTOM,
+                                                      backgroundColor: Colors.red.withOpacity(0.1),
+                                                      colorText: Colors.red);
+                                                }
+
+                                              }
+
+                                            },)
+
+                                          ],
+                                        ), onClosing: () {  },)
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.zero,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15.0),
+                                      ),
                                     ),
-                                    Text("Upload Image",style: TextStyle(color: Colors.white,fontSize: 18),),
-                                  ],
+                                    child: Ink(
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15.0),
+                                      ),
+                                      child: Container(
+                                          alignment: Alignment.center,
+                                          child:
+                                          Row(
+                                            children: [
+                                              SizedBox(
+                                                width: 15,
+                                              ),
+                                              Icon(Icons.insert_photo,color: Colors.white,),
+                                              SizedBox(
+                                                width: 15,
+                                              ),
+                                              Text("Upload Image",style: TextStyle(color: Colors.white,fontSize: 18),),
+                                            ],
+                                          )                                      ),
+                                    ),
+                                  ),
                                 ),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.blue.withOpacity(0.5),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15)
-                                    ),),),
+
                               ),
                               SizedBox(height: 10),
                             ],
@@ -272,33 +297,61 @@ class _AuctionPageState extends State<AuctionPage> {
                               SizedBox(height: 10,),
                               Column(
                                 children: [
-                                  ElevatedButton(onPressed: ()async{
-                                    final startDate=await pickDate();
-                                    if(startDate==null) {
+                                  Container(
+                                    width: 300,
+                                    height: 40,
+                                    child:Container(
+                                      width: double.infinity,
+                                      height: 50,
+                                      child: ElevatedButton(
+                                        onPressed:()async{
+                                      final startDate=await pickDate();
+                                      if(startDate==null) {
                                       Get.snackbar("Oops", "Auction Date is required",
-                                          snackPosition:SnackPosition.BOTTOM,
-                                          backgroundColor: Colors.red.withOpacity(0.1),
-                                          colorText: Colors.red);
-                                  }
-                                  setState(() {
+                                      snackPosition:SnackPosition.BOTTOM,
+                                      backgroundColor: Colors.red.withOpacity(0.1),
+                                      colorText: Colors.red);
+                                      }
+                                      setState(() {
                                       controller.auctDate=startDate;
-                                    });
-                                  }, child:
-                                  Row(
-                           children: [
-                             Icon(Icons.calendar_month,color: Colors.white,),
-                             SizedBox(
-                               width:5,
-                             ),
-                             Text("                Date",style: TextStyle(color: Colors.white,fontSize: 20),),
-                           ],
-                         ),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.blue.withOpacity(0.5),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15)
-                                      ),),
+                                      });
+                                      },
+                                        style: ElevatedButton.styleFrom(
+                                          padding: EdgeInsets.zero,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(15.0),
+                                          ),
+                                        ),
+                                        child: Ink(
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
+                                            ),
+                                            borderRadius: BorderRadius.circular(15.0),
+                                          ),
+                                          child: Container(
+                                              alignment: Alignment.center,
+                                              child:
+                                              Row(
+                                                children: [
+                                                  SizedBox(
+                                                    width:20,
+                                                  ),
+                                                  Icon(Icons.calendar_month,color: Colors.white,),
+                                                  SizedBox(
+                                                    width:5,
+                                                  ),
+                                                  Text("                Date",style: TextStyle(color: Colors.white,fontSize: 20),),
+                                                ],
+                                              )                                     ),
+                                        ),
+                                      ),
+                                    ),
+
                                   ),
+
                                   SizedBox(width: 30,),
                                 ],
                               ),
@@ -320,64 +373,123 @@ class _AuctionPageState extends State<AuctionPage> {
                               SizedBox(height: 10),
                               Row(
                                 children: [
-                                  ElevatedButton(onPressed: ()async{
-                                    final startTime=await pickTime();
-                                    if(startTime==null) {
-                                      Get.snackbar("Oops", "Starting time is required",
-                                          snackPosition:SnackPosition.BOTTOM,
-                                          backgroundColor: Colors.red.withOpacity(0.1),
-                                          colorText: Colors.red);
-                                    }
-                                    setState(() {
-                                      controller.Art_startingTime=startTime;
-                                    });
-                                  }, child:
-                                  Row(
-                                    children: [
-                                      Icon(Icons.access_time,color: Colors.white,),
-                                      SizedBox(
-                                        width:5,
+                                  Container(
+                                    width: 120,
+                                    height: 40,
+                                    child:Container(
+                                      width: double.infinity,
+                                      height: 50,
+                                      child: ElevatedButton(
+                                        onPressed:()async{
+                                          final startTime=await pickTime();
+                                          if(startTime==null) {
+                                            Get.snackbar("Oops", "Starting time is required",
+                                                snackPosition:SnackPosition.BOTTOM,
+                                                backgroundColor: Colors.red.withOpacity(0.1),
+                                                colorText: Colors.red);
+                                          }
+                                          setState(() {
+                                            controller.Art_startingTime=startTime;
+                                          });
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          padding: EdgeInsets.zero,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(15.0),
+                                          ),
+                                        ),
+                                        child: Ink(
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
+                                            ),
+                                            borderRadius: BorderRadius.circular(15.0),
+                                          ),
+                                          child: Container(
+                                              alignment: Alignment.center,
+                                              child:
+                                              Row(
+                                                children: [
+                                                  SizedBox(
+                                                    width:8,
+                                                  ),
+                                                  Icon(Icons.access_time,color: Colors.white,),
+                                                  SizedBox(
+                                                    width:5,
+                                                  ),
+                                                  Text("Time",style: TextStyle(color: Colors.white,fontSize: 20),),
+                                                ],
+                                              )                                    ),
+                                        ),
                                       ),
-                                      Text("Time",style: TextStyle(color: Colors.white,fontSize: 20),),
-                                    ],
+                                    ),
+
                                   ),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.blue.withOpacity(0.5),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15)
-                                      ),),
-                                  ),
+
+
                                   SizedBox(width:12,),
                                   Row(
                                     children: [
                                       SizedBox(width: 30,),
-                                      ElevatedButton(onPressed: ()async{
-                                        final endTime=await pickTime();
-                                        if(endTime==null) {
-                                          Get.snackbar("Oops", "Ending time is required",
-                                              snackPosition:SnackPosition.BOTTOM,
-                                              backgroundColor: Colors.red.withOpacity(0.1),
-                                              colorText: Colors.red);
-                                        }
-                                        setState(() {
-                                          controller.Art_endingTime=endTime;
-                                        });
-                                      }, child:
-                                      Row(
-                                        children: [
-                                          Icon(Icons.access_time,color: Colors.white,),
-                                          SizedBox(
-                                            width:5,
+
+                                      Container(
+                                        width: 120,
+                                        height: 40,
+                                        child:Container(
+                                          width: double.infinity,
+                                          height: 50,
+                                          child: ElevatedButton(
+                                            onPressed:()async{
+                                              final endTime=await pickTime();
+                                              if(endTime==null) {
+                                                Get.snackbar("Oops", "Ending time is required",
+                                                    snackPosition:SnackPosition.BOTTOM,
+                                                    backgroundColor: Colors.red.withOpacity(0.1),
+                                                    colorText: Colors.red);
+                                              }
+                                              setState(() {
+                                                controller.Art_endingTime=endTime;
+                                              });
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              padding: EdgeInsets.zero,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(15.0),
+                                              ),
+                                            ),
+                                            child: Ink(
+                                              decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                                  begin: Alignment.topLeft,
+                                                  end: Alignment.bottomRight,
+                                                ),
+                                                borderRadius: BorderRadius.circular(15.0),
+                                              ),
+                                              child: Container(
+                                                  alignment: Alignment.center,
+                                                  child:
+                                                  Row(
+                                                    children: [
+                                                      SizedBox(
+                                                        width:8,
+                                                      ),
+                                                      Icon(Icons.access_time,color: Colors.white,),
+                                                      SizedBox(
+                                                        width:5,
+                                                      ),
+                                                      Text("Time",style: TextStyle(color: Colors.white,fontSize: 20),),
+                                                    ],
+                                                  )                                    ),
+                                            ),
                                           ),
-                                          Text("Time",style: TextStyle(color: Colors.white,fontSize: 20),),
-                                        ],
+                                        ),
+
                                       ),
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.blue.withOpacity(0.5),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(15)
-                                          ),),
-                                      ),
+
+
                                     ],
                                   ),
                                 ],
@@ -394,80 +506,107 @@ class _AuctionPageState extends State<AuctionPage> {
                         ),
 
                       SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (formkey.currentState!.validate()){
-                            print('${controller.Art_name}');
+                      Container(
+                        width: 300,
+                        height: 40,
+                        child:Container(
+                          width: double.infinity,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed:(){
+                              if (formkey.currentState!.validate()){
+                                print('${controller.Art_name}');
 
 
 
 
-                            // Convert starting and ending time to TimeOfDay objects
-                            TimeOfDay startingTime = controller.Art_startingTime!;
-                            TimeOfDay endingTime = controller.Art_endingTime!;
-                            if(startingTime!=null && endingTime!=null)
-                              {
-                                // Convert starting and ending time to DateTime objects for comparison
-                                DateTime startingDateTime = DateTime(1, 1, 1, startingTime.hour, startingTime.minute);
-                                DateTime endingDateTime = DateTime(1, 1, 1, endingTime.hour, endingTime.minute);
-                                // Compare starting and ending times
-                                if (startingDateTime.isBefore(endingDateTime)) {
-                                  // Starting time is before ending time
-                                  print('Starting time is before ending time');
-                                  final auction = Auction_model(
-                                      artName: controller.Art_name.text.trim(),
-                                      ArtistId: controller.Artist_id.text.trim(),
-                                      bid: controller.Art_bid.text.trim(),
-                                      startingTime: controller.Art_startingTime
-                                          .toString().trim(),
-                                      endingTime: controller.Art_endingTime
-                                          .toString().trim(),
-                                      auctionDate: controller.auctDate
-                                          .toString().trim(),
-                                      url: imageurl,
-                                      status: "none", checkAuc: "false", checkBidStatus: 'false');
-                                  Auction_Controller.instance.createAuction(
-                                      auction);
-                                  Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) => ArtistDashboard()),);
-                                  controller.Artist_id.clear();
-                                  controller.Art_bid.clear();
-                                  controller.Art_name.clear();
-                                  controller.auctDate = null;
-                                  controller.Art_startingTime = null;
-                                  controller.Art_endingTime = null;
-                                  imageurl = '';
+                                // Convert starting and ending time to TimeOfDay objects
+                                TimeOfDay startingTime = controller.Art_startingTime!;
+                                TimeOfDay endingTime = controller.Art_endingTime!;
+                                if(startingTime!=null && endingTime!=null)
+                                {
+                                  // Convert starting and ending time to DateTime objects for comparison
+                                  DateTime startingDateTime = DateTime(1, 1, 1, startingTime.hour, startingTime.minute);
+                                  DateTime endingDateTime = DateTime(1, 1, 1, endingTime.hour, endingTime.minute);
+                                  // Compare starting and ending times
+                                  if (startingDateTime.isBefore(endingDateTime)) {
+                                    // Starting time is before ending time
+                                    print('Starting time is before ending time');
+                                    final auction = Auction_model(
+                                        artName: controller.Art_name.text.trim(),
+                                        ArtistId: controller.Artist_id.text.trim(),
+                                        bid: controller.Art_bid.text.trim(),
+                                        startingTime: controller.Art_startingTime
+                                            .toString().trim(),
+                                        endingTime: controller.Art_endingTime
+                                            .toString().trim(),
+                                        auctionDate: controller.auctDate
+                                            .toString().trim(),
+                                        url: imageurl,
+                                        status: "none", checkAuc: "false", checkBidStatus: 'false');
+                                    Auction_Controller.instance.createAuction(
+                                        auction);
+                                    Navigator.push(context, MaterialPageRoute(
+                                        builder: (context) => ArtistDashboard()),);
+                                    controller.Artist_id.clear();
+                                    controller.Art_bid.clear();
+                                    controller.Art_name.clear();
+                                    controller.auctDate = null;
+                                    controller.Art_startingTime = null;
+                                    controller.Art_endingTime = null;
+                                    imageurl = '';
+                                  }
+                                  else{
+                                    Get.snackbar("OOpS", "Starting time must comes before ending time",
+                                        snackPosition:SnackPosition.BOTTOM,
+                                        backgroundColor: Colors.red.withOpacity(0.1),
+                                        colorText: Colors.red);
+                                  }
+                                }else {
+                                  // Handle the case where startingTime or endingTime is null
+                                  print('Starting time or ending time is null');
+                                  // You can show a message or take appropriate action here
                                 }
-                                else{
-                                  Get.snackbar("OOpS", "Starting time must comes before ending time",
-                                      snackPosition:SnackPosition.BOTTOM,
-                                      backgroundColor: Colors.red.withOpacity(0.1),
-                                      colorText: Colors.red);
-                                }
-                              }else {
-                              // Handle the case where startingTime or endingTime is null
-                              print('Starting time or ending time is null');
-                              // You can show a message or take appropriate action here
-                            }
 
 
 
-                          }
-                          else{
-                            Get.snackbar("OOpS", "Auction request has not been send",
-                                snackPosition:SnackPosition.BOTTOM,
-                                backgroundColor: Colors.red.withOpacity(0.1),
-                                colorText: Colors.red);
-                          }
+                              }
+                              else{
+                                Get.snackbar("OOpS", "Auction request has not been send",
+                                    snackPosition:SnackPosition.BOTTOM,
+                                    backgroundColor: Colors.red.withOpacity(0.1),
+                                    colorText: Colors.red);
+                              }
 
-                        },
-                        child: Text('Submit Auction',style: TextStyle(color: Colors.white,fontSize: 20)),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue.withOpacity(0.5),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)
-                            ),),
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                            ),
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [Color(0xffA770EF), Color(0xffCF8BF3), Color(0xffFDB99B)],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              child: Container(
+                                  alignment: Alignment.center,
+                                  child:
+                                  Text('Submit Auction',style: TextStyle(color: Colors.white,fontSize: 20)),
+                              ),
+                            ),
+                          ),
+                        ),
+
                       ),
+
+
+
                     ],
                   ),
                 ),
