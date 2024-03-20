@@ -5,6 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
 import 'package:takhleekish/Artist/throughDashboard/Sessions/userSessionRequests/userRequestPage.dart';
 import 'package:takhleekish/Artist/Dashboard/artistDashboard.dart';
 
@@ -93,6 +95,7 @@ class _ReqSessionDetailPageState extends State<ReqSessionDetailPage> {
                                 snackPosition:SnackPosition.BOTTOM,
                                 backgroundColor: Colors.green.withOpacity(0.1),
                                 colorText: Colors.white);
+                            approveSendmail(widget.UserEmail, widget.title);
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>UserRequestPage()));
 
                           }
@@ -134,6 +137,7 @@ class _ReqSessionDetailPageState extends State<ReqSessionDetailPage> {
                                 snackPosition:SnackPosition.BOTTOM,
                                 backgroundColor: Colors.green.withOpacity(0.1),
                                 colorText: Colors.white);
+                            rejectedSendmail(widget.UserEmail, widget.title);
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>UserRequestPage()));
 
                           }
@@ -189,4 +193,53 @@ class _ReqSessionDetailPageState extends State<ReqSessionDetailPage> {
     // Add leading zero if minute is less than 10
     return minute < 10 ? '0$minute' : '$minute';
   }
+  approveSendmail(String mail,String demo) async {
+    String username = 'ghazih808@gmail.com';
+    String password = 'kfia mddb tbcs yyci';
+
+    final smtpServer = gmail(username, password);
+    final message = Message()
+      ..from = Address('takhleeqish@gmail.com', 'Takhleeqish')
+      ..recipients.add(mail)
+    // ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
+    // ..bccRecipients.add(Address('bccAddress@example.com'))
+      ..subject = 'Takhleeqish! Session Request Status'
+      ..text = 'This is the plain text.\nThis is line 2 of the text part.'
+      ..html = "<h1>Approved.</h1>\n<p>Hey! your request for $demo session has been approved.</p>";
+
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ' + sendReport.toString());
+    } on MailerException catch (e) {
+      print('Message not sent.');
+      for (var p in e.problems) {
+        print('Problem: ${p.code}: ${p.msg}');
+      }
+    }
+  }
+  rejectedSendmail(String mail,String demo) async {
+    String username = 'ghazih808@gmail.com';
+    String password = 'kfia mddb tbcs yyci';
+
+    final smtpServer = gmail(username, password);
+    final message = Message()
+      ..from = Address('takhleeqish@gmail.com', 'Takhleeqish')
+      ..recipients.add(mail)
+    // ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
+    // ..bccRecipients.add(Address('bccAddress@example.com'))
+      ..subject = 'Takhleeqish! Session Request Status'
+      ..text = 'This is the plain text.\nThis is line 2 of the text part.'
+      ..html = "<h1>Rejected.</h1>\n<p>Hey! your request for $demo session has been rejected.</p>";
+
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ' + sendReport.toString());
+    } on MailerException catch (e) {
+      print('Message not sent.');
+      for (var p in e.problems) {
+        print('Problem: ${p.code}: ${p.msg}');
+      }
+    }
+  }
+
 }

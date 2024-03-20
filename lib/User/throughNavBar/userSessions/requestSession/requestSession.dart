@@ -7,12 +7,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
 import 'package:takhleekish/User/UserSessionDatabase/sessionController.dart';
 import 'package:takhleekish/User/UserSessionDatabase/sessionModel.dart';
+import 'package:takhleekish/User/credentialsFile/user_model.dart';
 
 import '../../../../Artist/auction/auctionController.dart';
 import '../../../../Artist/auction/auctionModel.dart';
 import '../../../../Artist/Dashboard/artistDashboard.dart';
+import '../../../credentialsFile/user_repository.dart';
+import '../selectPage.dart';
 
 class UserRequestSession extends StatefulWidget{
   @override
@@ -21,6 +26,8 @@ class UserRequestSession extends StatefulWidget{
 
 class _UserRequestSessionState extends State<UserRequestSession> {
   final formkey=GlobalKey<FormState>();
+  final userRepo=Get.put(User_repo());
+
 
   @override
   Widget build(BuildContext context) {
@@ -299,8 +306,9 @@ class _UserRequestSessionState extends State<UserRequestSession> {
 
                                 sessionController.instance.createSession(
                                     session);
+                                sendmail(controller.artistMail.text);
                                 Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) => UserRequestSession()),);
+                                    builder: (context) => UserSelectPage()),);
                                 controller.artTitle.clear();
                                 controller.artistMail.clear();
                                 controller.userMail.clear();
@@ -347,6 +355,7 @@ class _UserRequestSessionState extends State<UserRequestSession> {
                         ),
 
                       ),
+
                     ],
                   ),
                 ),
@@ -362,4 +371,30 @@ class _UserRequestSessionState extends State<UserRequestSession> {
   }
   Future<DateTime?> pickDate()=>showDatePicker(context: context, firstDate: DateTime.now(),initialDate: DateTime.now(), lastDate: DateTime(2100));
   Future<TimeOfDay?> pickTime()=>showTimePicker(context: context, initialTime: TimeOfDay.now());
+
+  sendmail(String mail) async {
+    String username = 'ghazih808@gmail.com';
+    String password = 'kfia mddb tbcs yyci';
+
+    final smtpServer = gmail(username, password);
+    final message = Message()
+      ..from = Address(username, 'Takhleeqish')
+      ..recipients.add(mail)
+    // ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
+    // ..bccRecipients.add(Address('bccAddress@example.com'))
+      ..subject = 'Takhleeqish! Request for Session'
+      ..text = 'This is the plain text.\nThis is line 2 of the text part.'
+      ..html = "<h1>A request for personal session has been added.</h1>\n<p>Hey! An amazing oppurtunity to spread your skills by delievering them to others through sessions.</p>";
+
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ' + sendReport.toString());
+    } on MailerException catch (e) {
+      print('Message not sent.');
+      for (var p in e.problems) {
+        print('Problem: ${p.code}: ${p.msg}');
+      }
+    }
+  }
 }
+

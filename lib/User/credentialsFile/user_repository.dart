@@ -35,4 +35,10 @@ Future<User_model> getUserDetail(String email) async
   final UserData=snapshot.docs.map((e) => User_model.fromSnapshot(e)).single;
   return UserData;
 }
+Future<List<User_model>> getAllUserDetail() async
+{
+  final snapshot=await user_db.collection("Users").get();
+  final UserData=snapshot.docs.map((e) => User_model.fromSnapshot(e)).toList();
+  return UserData;
+}
 }

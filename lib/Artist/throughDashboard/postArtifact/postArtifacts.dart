@@ -1,6 +1,6 @@
 
 import 'dart:io';
-
+import 'package:mailer/mailer.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -15,6 +15,7 @@ import '../../artistPersonal/artist_repository.dart';
 import '../../controllers/artist_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:mailer/smtp_server.dart';
 
 
 class PostArtifact extends StatefulWidget{
@@ -419,6 +420,7 @@ class _PostArtifactState extends State<PostArtifact> {
                                           snackPosition:SnackPosition.BOTTOM,
                                           backgroundColor: Colors.green.withOpacity(0.1),
                                           colorText: Colors.green);
+
                                       Navigator.push(context, MaterialPageRoute(
                                           builder: (context) => ArtistDashboard()),);
                                       controller.Artist_id.clear();
@@ -426,6 +428,7 @@ class _PostArtifactState extends State<PostArtifact> {
                                       controller.Artifact_category.clear();
                                       controller.Artifact_price.clear();
                                       controller.Artifact_name.clear();
+
                                     }
                                   } ,
                                   style: ElevatedButton.styleFrom(
@@ -452,7 +455,8 @@ class _PostArtifactState extends State<PostArtifact> {
                                 ),
                               ),
 
-                            ))
+                            )),
+
                       ],
                     ),
                   ),
@@ -466,4 +470,7 @@ class _PostArtifactState extends State<PostArtifact> {
   Future pickImageFromGallery()async{
     final returnImage= await ImagePicker().pickImage(source: ImageSource.gallery);
   }
+  // String mail,String name
+
+
 }

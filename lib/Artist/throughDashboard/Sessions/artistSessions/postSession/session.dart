@@ -5,8 +5,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
 import 'package:takhleekish/Artist/sessionDatabase/artistSessionController.dart';
 import 'package:takhleekish/Artist/sessionDatabase/artistSessionModel.dart';
+
+import '../../../../../User/credentialsFile/user_model.dart';
+import '../../../../../User/credentialsFile/user_repository.dart';
 
 
 class PaintingSessionPage extends StatefulWidget {
@@ -15,6 +20,8 @@ class PaintingSessionPage extends StatefulWidget {
 }
 class _PaintingSessionPageState extends State<PaintingSessionPage> {
   final formkey=GlobalKey<FormState>();
+  final userRepo=Get.put(User_repo());
+  List<dynamic> dynamicEmailArray = [];
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery
@@ -253,20 +260,20 @@ class _PaintingSessionPageState extends State<PaintingSessionPage> {
                                         borderRadius: BorderRadius.circular(15.0),
                                       ),
                                       child: Container(
-                                        alignment: Alignment.center,
-                                        child:
-                                        Row(
-                                          children: [
-                                            SizedBox(
-                                              width:10,
-                                            ),
-                                            Icon(Icons.access_time,color: Colors.white,),
-                                            SizedBox(
-                                              width:5,
-                                            ),
-                                            Text("Time",style: TextStyle(color: Colors.white,fontSize: 20),),
-                                          ],
-                                        )                                      ),
+                                          alignment: Alignment.center,
+                                          child:
+                                          Row(
+                                            children: [
+                                              SizedBox(
+                                                width:10,
+                                              ),
+                                              Icon(Icons.access_time,color: Colors.white,),
+                                              SizedBox(
+                                                width:5,
+                                              ),
+                                              Text("Time",style: TextStyle(color: Colors.white,fontSize: 20),),
+                                            ],
+                                          )                                      ),
                                     ),
                                   ),
                                 ),
@@ -304,6 +311,7 @@ class _PaintingSessionPageState extends State<PaintingSessionPage> {
                                 );
                                 ArtistSessionController.instance.createSession(
                                     session);
+
                                 Navigator.push(context, MaterialPageRoute(
                                     builder: (context) => PaintingSessionPage()),);
                                 controller.artTitle.clear();
@@ -352,8 +360,37 @@ class _PaintingSessionPageState extends State<PaintingSessionPage> {
             ],
           ),
         )
+
     );
   }
   Future<DateTime?> pickDate()=>showDatePicker(context: context, firstDate: DateTime.now(),initialDate: DateTime.now(), lastDate: DateTime(2100));
   Future<TimeOfDay?> pickTime()=>showTimePicker(context: context, initialTime: TimeOfDay.now());
+
+  Future<List<User_model>> getAlluserData() async {
+    return await userRepo.getAllUserDetail();
+  }
+  sendmail(String mail,String title) async {
+    String username = 'ghazih808@gmail.com';
+    String password = 'kfia mddb tbcs yyci';
+
+    final smtpServer = gmail(username, password);
+    final message = Message()
+      ..from = Address('takhleeqish@gmail.com', 'Takhleeqish')
+      ..recipients.add(mail)
+    // ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
+    // ..bccRecipients.add(Address('bccAddress@example.com'))
+      ..subject = 'Takhleeqish! Artist Session '
+      ..text = 'This is the plain text.\nThis is line 2 of the text part.'
+      ..html = "<h1>Scheduled Session.</h1>\n<p>Hey! An amazing session on $title to learn and enhance skills has been scheduled. Go check it out!.</p>";
+
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ' + sendReport.toString());
+    } on MailerException catch (e) {
+      print('Message not sent.');
+      for (var p in e.problems) {
+        print('Problem: ${p.code}: ${p.msg}');
+      }
+    }
+  }
 }
