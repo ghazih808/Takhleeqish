@@ -9,6 +9,7 @@ import 'package:takhleekish/Artist/artistDatabase.dart';
 import 'package:takhleekish/Artist/artistPersonal/artist_model.dart';
 import 'package:takhleekish/Artist/controllers/artist_controller.dart';
 import 'package:takhleekish/User/credentialsFile/User_authentication.dart';
+import 'package:takhleekish/User/throughNavBar/artistsProfiles/profiles/artistsProfile.dart';
 import 'package:takhleekish/User/throughNavBar/complainsPage/complaints.dart';
 import 'package:takhleekish/User/throughNavBar/updatePassword/userUpdatePage.dart';
 import 'package:takhleekish/User/throughNavBar/userExhibition/userExhibitionPage.dart';
@@ -68,7 +69,14 @@ class UserNavbar extends StatelessWidget {
                             fit: BoxFit.cover,
                           )
                       ),),
+                    ListTile(
+                      leading: Icon(Icons.perm_identity_outlined),
+                      title: Text("Artists Profiles",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ArtistsProfiles()));
 
+                      },
+                    ),
                     ListTile(
                       leading: Icon(Icons.update),
                       title: Text("Update Password",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),

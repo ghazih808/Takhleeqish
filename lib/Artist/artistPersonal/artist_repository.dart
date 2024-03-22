@@ -30,5 +30,11 @@ class Artist_repo extends GetxController{
     final artistData=snapshot.docs.map((e) => Artist_model.fromSnapshot(e)).single;
     return artistData;
   }
+  Future<List<Artist_model>> getAllArtistDetail() async
+  {
+    final snapshot=await artist_db.collection("Artists").get();
+    final artistData=snapshot.docs.map((e) => Artist_model.fromSnapshot(e)).toList();
+    return artistData;
+  }
 
 }
