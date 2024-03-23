@@ -102,6 +102,11 @@ class _DetailProductPageState extends State<DetailProductPage> {
                           children: [
                             Container(child: Image.network(widget.url)),
                             SizedBox(height: 3,),
+                            Divider( // Add a line under the image
+                              color: Colors.grey, // You can customize the color of the line
+                              thickness: 2, // You can adjust the thickness of the line
+                              height: 20, // You can adjust the height between the image and the line
+                            ),
                             Row(
                               children: [
                                 IconButton(
@@ -151,6 +156,11 @@ class _DetailProductPageState extends State<DetailProductPage> {
                                 )
                               ],
                             ),
+                            Divider( // Add a line under the image
+                              color: Colors.grey, // You can customize the color of the line
+                              thickness: 2, // You can adjust the thickness of the line
+                              height: 25, // You can adjust the height between the image and the line
+                            ),
                             SizedBox(height: 3,),
                             Row(
                               children: [
@@ -159,6 +169,11 @@ class _DetailProductPageState extends State<DetailProductPage> {
                                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                                 ),
                               ],
+                            ),
+                            Divider( // Add a line under the image
+                              color: Colors.grey, // You can customize the color of the line
+                              thickness: 2, // You can adjust the thickness of the line
+                              height: 25, // You can adjust the height between the image and the line
                             ),
                             SizedBox(height: 5,),
                             Align(

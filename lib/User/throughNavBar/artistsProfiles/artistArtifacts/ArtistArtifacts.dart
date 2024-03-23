@@ -35,7 +35,7 @@ class _ArtistsArtifactsState extends State<ArtistsArtifacts> {
       drawer: UserNavbar(),
       backgroundColor:Colors.transparent,
       appBar: AppBar(
-        title: const Text("Dashboard", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 30)),
+        title: const Text("Artist Artifacts", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 30)),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,

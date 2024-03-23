@@ -27,7 +27,19 @@ class _Forgot_PageState extends State<Forgot_Page> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        color: Colors.white,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [
+              Color(0xffF0A2C9),
+              Color(0xffD2A5D0),
+              Color(0xff6F9BB4),
+            ],
+          ),
+
+
+        ),
         child: Center(
           child: SingleChildScrollView(
             child: Form(

@@ -68,7 +68,16 @@ class Navbar extends StatelessWidget {
                         fit: BoxFit.cover,
                       )
                     ),),
+                    ListTile(
+                      leading: Icon(Icons.home),
+                      title: Text("Dashboard",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ArtistDashboard()));
+                      },
 
+
+
+                    ),
                     ListTile(
                       leading: Icon(Icons.update),
                       title: Text("Update Password",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
@@ -100,16 +109,16 @@ class Navbar extends StatelessWidget {
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>UserRequestPage()));
                       },
                     ),
-                    ListTile(
-                      leading: Icon(Icons.help),
-                      title: Text("Complains",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ArtistComplainsPage()));
-                      },
-                    ),
+                    // ListTile(
+                    //   leading: Icon(Icons.help),
+                    //   title: Text("Complains",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                    //   onTap: (){
+                    //     Navigator.push(context, MaterialPageRoute(builder: (context)=>ArtistComplainsPage()));
+                    //   },
+                    // ),
                     ListTile(
                       leading: Icon(Icons.exit_to_app),
-                      title: Text("Exit",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      title: Text("Logout",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
                       _auth.signOut();
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage()));

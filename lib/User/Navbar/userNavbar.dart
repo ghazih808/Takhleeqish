@@ -9,6 +9,7 @@ import 'package:takhleekish/Artist/artistDatabase.dart';
 import 'package:takhleekish/Artist/artistPersonal/artist_model.dart';
 import 'package:takhleekish/Artist/controllers/artist_controller.dart';
 import 'package:takhleekish/User/credentialsFile/User_authentication.dart';
+import 'package:takhleekish/User/dashboard/User_Dashboard.dart';
 import 'package:takhleekish/User/throughNavBar/artistsProfiles/profiles/artistsProfile.dart';
 import 'package:takhleekish/User/throughNavBar/complainsPage/complaints.dart';
 import 'package:takhleekish/User/throughNavBar/updatePassword/userUpdatePage.dart';
@@ -70,6 +71,14 @@ class UserNavbar extends StatelessWidget {
                           )
                       ),),
                     ListTile(
+                      leading: Icon(Icons.home),
+                      title: Text("Dashboard",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>User_dashboard()));
+
+                      },
+                    ),
+                    ListTile(
                       leading: Icon(Icons.perm_identity_outlined),
                       title: Text("Artists Profiles",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
@@ -123,13 +132,7 @@ class UserNavbar extends StatelessWidget {
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>UserExhibitionPage()));
                       },
                     ),
-                    ListTile(
-                      leading: Icon(Icons.feedback_outlined),
-                      title: Text("Feedback",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
-                      onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>FeedbackPage()));
-                      },
-                    ),
+                   
                     ListTile(
                       leading: Icon(Icons.error),
                       title: Text("Complains",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
@@ -139,7 +142,7 @@ class UserNavbar extends StatelessWidget {
                     ),
                     ListTile(
                       leading: Icon(Icons.exit_to_app),
-                      title: Text("Exit",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      title: Text("Logout",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
                               _auth.signOut();
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage()));
