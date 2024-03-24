@@ -67,7 +67,7 @@ class ArtistDashboard extends StatelessWidget{
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.only(right:15.0,left: 15.0,top: 17),
-                                        child: Image.asset("assests/images/Home.jpg"),
+                                        child: Image.asset("assests/images/uploadartist.png"),
                                       ),
                                       SizedBox(height: 10,),
                                       Text("Post Artifact",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w800,fontSize: 18),),
@@ -98,7 +98,7 @@ class ArtistDashboard extends StatelessWidget{
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.only(right:15.0,left: 15.0,top: 17),
-                                        child: Image.asset("assests/images/gallery.jpg",fit: BoxFit.fitWidth),
+                                        child: Image.asset("assests/images/art-show.png",fit: BoxFit.fitWidth),
                                       ),
                                       SizedBox(height: 10,),
 
@@ -134,7 +134,7 @@ class ArtistDashboard extends StatelessWidget{
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.only(right:15.0,left: 15.0,top: 17),
-                                        child: Image.asset("assests/images/auction.jpg",fit: BoxFit.fitWidth),
+                                        child: Image.asset("assests/images/charity.png",fit: BoxFit.fitWidth),
                                       ),
                                       SizedBox(height: 10,),
 
@@ -166,7 +166,7 @@ class ArtistDashboard extends StatelessWidget{
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.only(right:15.0,left: 15.0,top: 17),
-                                        child: Image.asset("assests/images/sessions.jpg",fit: BoxFit.fitWidth),
+                                        child: Image.asset("assests/images/training.png",fit: BoxFit.fitWidth),
                                       ),
                                       SizedBox(height: 10,),
 

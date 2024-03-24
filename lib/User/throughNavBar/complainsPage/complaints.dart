@@ -20,7 +20,9 @@ class _ComplaintsPageState extends State<ComplaintsPage> {
   final complainrepo=Get.put(ComplainRepo());
   final authrepo = Get.put(Artist_Auth());
 
-  final userRepo = Get.put(User_repo());  String email="";
+  final userRepo = Get.put(User_repo());
+  String email="";
+  String url="";
   @override
   Widget build(BuildContext context) {
     final controller=Get.put(ComplainController());
@@ -32,6 +34,7 @@ class _ComplaintsPageState extends State<ComplaintsPage> {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
               email=snapshot.data!.email;
+              url=snapshot.data!.url;
               return SingleChildScrollView(
                 child: Stack(
                   children: [
@@ -101,7 +104,7 @@ class _ComplaintsPageState extends State<ComplaintsPage> {
 
                                         final complain=ComplainModel(
                                             complain: controller.Complain.text.trim(),
-                                            userEmail: email) ;
+                                            userEmail: email, url: url) ;
                                         ComplainController.instance.createComplain(complain);
                                         Get.snackbar("Congratulations", "Complain registered successfully",
                                             snackPosition:SnackPosition.BOTTOM,

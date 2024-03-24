@@ -10,11 +10,7 @@ class ComplainRepo extends GetxController
 
   createArtifact(ComplainModel complain_model)
   async {
-    await artifact_db.collection("Complains").add(complain_model.toJson()).whenComplete(() => Get.snackbar("Congratulations", "Artifact has been added.",
-        snackPosition:SnackPosition.BOTTOM,
-        backgroundColor: Colors.pink.withOpacity(0.5),
-        colorText: Colors.black)
-    ).catchError((error,stackTrace){
+    await artifact_db.collection("Complains").add(complain_model.toJson()).catchError((error,stackTrace){
       Get.snackbar("Error", "Something went wrong. Try again",
           snackPosition:SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent.withOpacity(0.1),
