@@ -34,7 +34,7 @@ class DetailExhibitionPage extends StatelessWidget {
                   child: Container(
                     width: 300,
                     height: 300,
-                    child: Image.asset("assests/images/userExhibitionDemo.jpg"),
+                    child: Image.asset("assests/images/homeScreenPic.png"),
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.04),

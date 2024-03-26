@@ -103,8 +103,8 @@ class _DetailProductPageState extends State<DetailProductPage> {
                             Container(child: Image.network(widget.url)),
                             SizedBox(height: 3,),
                             Divider( // Add a line under the image
-                              color: Colors.grey, // You can customize the color of the line
-                              thickness: 2, // You can adjust the thickness of the line
+                              color: Colors.black, // You can customize the color of the line
+                              thickness: 1, // You can adjust the thickness of the line
                               height: 20, // You can adjust the height between the image and the line
                             ),
                             Row(
@@ -157,8 +157,8 @@ class _DetailProductPageState extends State<DetailProductPage> {
                               ],
                             ),
                             Divider( // Add a line under the image
-                              color: Colors.grey, // You can customize the color of the line
-                              thickness: 2, // You can adjust the thickness of the line
+                              color: Colors.black, // You can customize the color of the line
+                              thickness: 1, // You can adjust the thickness of the line
                               height: 25, // You can adjust the height between the image and the line
                             ),
                             SizedBox(height: 3,),
@@ -171,8 +171,8 @@ class _DetailProductPageState extends State<DetailProductPage> {
                               ],
                             ),
                             Divider( // Add a line under the image
-                              color: Colors.grey, // You can customize the color of the line
-                              thickness: 2, // You can adjust the thickness of the line
+                              color: Colors.black, // You can customize the color of the line
+                              thickness: 1, // You can adjust the thickness of the line
                               height: 25, // You can adjust the height between the image and the line
                             ),
                             SizedBox(height: 5,),

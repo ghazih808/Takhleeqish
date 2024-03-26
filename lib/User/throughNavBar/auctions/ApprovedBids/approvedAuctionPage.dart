@@ -156,7 +156,7 @@ class ApprovedAuctionPage extends StatelessWidget
                                                           builder: (context) =>
                                                               ApprovedBidPage(snapshot.data![index].url,snapshot.data![index].bid,
                                                                   endingTime,startingTime,date,
-                                                                  snapshot.data![index].ArtistId,snapshot.data![index].artName, snapshot.data![index].checkBidStatus ,docid: docid,)));
+                                                                  snapshot.data![index].ArtistId,snapshot.data![index].artName, snapshot.data![index].checkBidStatus,docid: docid,)));
                                                 }
                                               }
                                           ),

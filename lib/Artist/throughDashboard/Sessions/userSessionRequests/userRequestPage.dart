@@ -29,6 +29,7 @@ class UserRequestPage extends StatelessWidget{
   final sessionRepo=Get.put(Session_UserRepo());
   final FirebaseAuth _auth=FirebaseAuth.instance;
   var email;
+  var count=0;
   @override
   Widget build(BuildContext context) {
 
@@ -88,7 +89,7 @@ class UserRequestPage extends StatelessWidget{
                                       itemCount: snapshot.data!.length, // Number of auction (fetch from the database)
                                       itemBuilder: (context, index) {
                                         if(snapshot.data![index].checkReqStatus=="false")
-                                        {
+                                        {count++;
                                           print(index);
                                           return Slidable(
                                             actionPane: SlidableDrawerActionPane(),
@@ -99,7 +100,7 @@ class UserRequestPage extends StatelessWidget{
                                                   borderRadius: BorderRadius.circular(15.0)
                                               ),
                                               child: ListTile(
-                                                  title: Text('Session ${index + 1}'),
+                                                  title: Text('Session ${count}'),
                                                   subtitle: Text("Session Title:  ${snapshot.data![index].Title}"),
                                                   trailing: Text("Check Details"
                                                   ),

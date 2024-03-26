@@ -6,9 +6,9 @@ import 'package:takhleekish/Admin/navbar/adminNavbar.dart';
 import '../../Artist/Navbar/navbar.dart';
 import '../../main.dart';
 import '../compainsCheck/complainDashboard.dart';
-import '../throughDashboard/adminAnalytics/allArtistsAnalytics.dart';
-import '../throughDashboard/adminAuction/auctionPage.dart';
+import '../throughDashboard/adminAuction/approveAuction/auctionPage.dart';
 import '../throughDashboard/adminExhibition/adminExhibitionPage.dart';
+import '../throughDashboard/selectAuc.dart';
 
 class AdminDashboard extends StatelessWidget{
   final FirebaseAuth _auth=FirebaseAuth.instance;
@@ -103,7 +103,7 @@ class AdminDashboard extends StatelessWidget{
                     width: 200,
                     height: 200,
                     child: ElevatedButton(onPressed:(){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminAuctionPage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SelectAucWork()));
                     }, child:Column(
                       children: [
                         Padding(

@@ -7,6 +7,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
+import 'package:takhleekish/Artist/Dashboard/artistDashboard.dart';
 import 'package:takhleekish/Artist/sessionDatabase/artistSessionController.dart';
 import 'package:takhleekish/Artist/sessionDatabase/artistSessionModel.dart';
 
@@ -313,7 +314,7 @@ class _PaintingSessionPageState extends State<PaintingSessionPage> {
                                     session);
 
                                 Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) => PaintingSessionPage()),);
+                                    builder: (context) => ArtistDashboard()),);
                                 controller.artTitle.clear();
                                 controller.artistMail.clear();
                                 controller.sessionDate = null;

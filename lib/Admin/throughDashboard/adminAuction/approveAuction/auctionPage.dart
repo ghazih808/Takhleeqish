@@ -9,16 +9,16 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
 import 'package:takhleekish/Admin/adminDashboard/dashboard.dart';
-import 'package:takhleekish/Admin/throughDashboard/adminAuction/approveOrRejectAuction.dart';
+import 'package:takhleekish/Admin/throughDashboard/adminAuction/approveAuction/approveOrRejectAuction.dart';
 import 'package:takhleekish/User/credentialsFile/user_model.dart';
 import 'package:takhleekish/User/credentialsFile/user_repository.dart';
 
-import '../../../Artist/artistPersonal/artist_authentication.dart';
-import '../../../Artist/artistPersonal/artist_repository.dart';
-import '../../../Artist/auction/auctionController.dart';
-import '../../../Artist/auction/auctionModel.dart';
-import '../../../Artist/auction/auctionRepository.dart';
-import '../../../Artist/controllers/artist_controller.dart';
+import '../../../../Artist/artistPersonal/artist_authentication.dart';
+import '../../../../Artist/artistPersonal/artist_repository.dart';
+import '../../../../Artist/auction/auctionController.dart';
+import '../../../../Artist/auction/auctionModel.dart';
+import '../../../../Artist/auction/auctionRepository.dart';
+import '../../../../Artist/controllers/artist_controller.dart';
 
 class AdminAuctionPage extends StatelessWidget{
   final controller = Get.put(Artist_Controller());

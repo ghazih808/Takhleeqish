@@ -7,6 +7,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
+import 'package:takhleekish/Admin/throughDashboard/adminAuction/liveAuctionDatabase/liveAuctionModel.dart';
+import 'package:takhleekish/Admin/throughDashboard/adminAuction/liveAuctionDatabase/liveAuctionRepository.dart';
 import '../../../../Artist/auction/auctionController.dart';
 import '../../../../Artist/auction/auctionModel.dart';
 import '../../../../Artist/auction/auctionRepository.dart';
@@ -124,6 +126,8 @@ if({widget.bidStatus}=='false')
         print('Error occurred: $error');
       });
     });
+
+
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -247,11 +251,19 @@ if({widget.bidStatus}=='false')
                               if(formkey.currentState!.validate()){
                                 print(widget.docid);
                                 print(bidController);
+                                String time=_formatTime(widget.enTime);;
+                                final liveAuc=Live_Auction_model(
+                                    bidAmount: bidController.text,
+                                    userID: widget.email,
+                                    url: widget.url, endingtime:time );
+                                Get.put(live_Auction_Repo()).createAuction(liveAuc);
                                 await FirebaseFirestore.instance.collection("Auction").doc(widget.docid)
                                     .update(
                                     {
                                       'Bid':bidController.text,
-                                      'BidStatus':"true"
+                                      'BidStatus':"true",
+                                      'isLive':"true",
+                                      'liveBaseBid':widget.baseBid,
 
                                     }
                                 ).whenComplete(() {
@@ -273,6 +285,13 @@ if({widget.bidStatus}=='false')
                             }
                             else
                             {
+                              await FirebaseFirestore.instance.collection("Auction").doc(widget.docid)
+                                  .update(
+                                  {
+                                    'isLive':"false",
+
+                                  }
+                              );
                               print(isBiddingDone);
                               if(isBiddingDone)
                               {
@@ -378,7 +397,6 @@ if({widget.bidStatus}=='false')
     var doc = widget.docid;
     print(doc);
     late DocumentSnapshot documentSnapshot;
-
     try {
       // Await the result of the Firestore operation directly
       DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection("Auction").doc(doc).get();
@@ -422,5 +440,6 @@ if({widget.bidStatus}=='false')
       return ''; // Return an empty string or handle error as appropriate
     }
   }
+
 
 }

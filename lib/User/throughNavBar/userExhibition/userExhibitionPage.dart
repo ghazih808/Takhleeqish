@@ -68,9 +68,9 @@ class UserExhibitionPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: ListTile(
-                          leading: ClipOval(child: Image.asset("assests/images/userExhibitionDemo.jpg")),
                           title: Text('Exhibition ${index + 1}'),
                           subtitle: Text('Venue, Date, Time'),
+                          trailing: Text('Check details'),
                           onTap: () {
                             Navigator.push(
                               context,
