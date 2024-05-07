@@ -21,6 +21,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'Artist/throughDashboard/ArtistAuction/auction.dart';
 import 'Artist/throughNavbar/AnalyticsPage/analytics.dart';
 import 'Artist/throughDashboard/postArtifact/postArtifacts.dart';
+import 'User/payments/paymentPage/paymentPage.dart';
 import 'User/throughNavBar/auctions/ApprovedBids/approvedBidPage.dart';
 // import 'User/throughNavBar/auctions/availableBids/userAuctionPage.dart';
 import 'User/throughNavBar/feedbackPage/feedback.dart';
@@ -59,10 +60,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-
-
-
-
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();

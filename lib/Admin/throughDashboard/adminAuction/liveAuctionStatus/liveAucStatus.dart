@@ -214,11 +214,11 @@ class _LiveAuctionState extends State<LiveAuction> {
                                     children: [
                                       Row(
                                         children: [
-                                          Text("Artifact : ${name}",
+                                          Text("${name}",
                                             style: TextStyle(fontSize: 22,
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w500),),
-                                          SizedBox(width: 70,),
+                                          SizedBox(width: 50,),
                                           Text("Base Bid : ${basebid}",
                                             style: TextStyle(fontSize: 22,
                                                 color: Colors.black,

@@ -7,7 +7,6 @@ import 'package:takhleekish/Artist/artifacts/artifactRepository.dart';
 import 'package:takhleekish/Artist/artistPersonal/artist_authentication.dart';
 import 'package:takhleekish/Artist/artistPersonal/artist_model.dart';
 import 'package:takhleekish/Artist/artistPersonal/artist_repository.dart';
-
 import 'artifactModel.dart';
 
 class Artifact_Controller extends GetxController{
@@ -26,5 +25,4 @@ class Artifact_Controller extends GetxController{
   async {
     await artifactRepo.createArtifact(artifact_model);
   }
-
 }

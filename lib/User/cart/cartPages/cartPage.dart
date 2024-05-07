@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:takhleekish/User/cart/cartDatabase/cartModel.dart';
 import 'package:takhleekish/User/cart/cartDatabase/cartRepository.dart';
+import 'package:takhleekish/User/payments/paymentPage/paymentPage.dart';
 
 import '../../../Artist/artistPersonal/artist_authentication.dart';
 import '../../../Artist/auction/auctionModel.dart';
@@ -281,6 +282,8 @@ class _CartPageState extends State<CartPage> {
 
             ElevatedButton(
               onPressed: () {
+                String amount = bill.toString();
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentPage(amount,email)));
 
               },
               child: Text('Checkout',style: TextStyle(color: Colors.white,fontSize: 20)),
