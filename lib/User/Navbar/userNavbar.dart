@@ -19,7 +19,9 @@ import 'package:takhleekish/User/credentialsFile/user_model.dart';
 import 'package:takhleekish/User/credentialsFile/user_repository.dart';
 
 import '../../main.dart';
+import '../payments/paymentStatus/paymentStatus.dart';
 import '../throughNavBar/auctions/ApprovedBids/approvedAuctionPage.dart';
+import '../throughNavBar/auctions/wonAuctions/wonProducts.dart';
 import '../throughNavBar/feedbackPage/feedback.dart';
 import '../throughNavBar/userSessions/communitySessions/communityPage.dart';
 class UserNavbar extends StatelessWidget {
@@ -121,15 +123,23 @@ class UserNavbar extends StatelessWidget {
                       title: Text("Auctions",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
 
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ApprovedAuctionPage()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ApprovedAuctionPage(email)));
 
                       },
                     ),
+
                     ListTile(
-                      leading: Icon(Icons.art_track),
-                      title: Text("Exhibitions",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      leading: Icon(Icons.point_of_sale),
+                      title: Text("Won Auctions",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>UserExhibitionPage()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>WonAuctionProducts(email)));
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.payment),
+                      title: Text("Payment Status",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentStatus()));
                       },
                     ),
                    

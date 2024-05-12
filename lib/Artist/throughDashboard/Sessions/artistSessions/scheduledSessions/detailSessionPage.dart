@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:takhleekish/Artist/throughDashboard/Sessions/call/callSession.dart';
 
 class DetailSessionPage extends StatefulWidget
 {
@@ -144,7 +145,7 @@ class _DetailSessionPageState extends State<DetailSessionPage>
                           child: ElevatedButton(
                             onPressed:()async {
 
-
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>callSession(callID: "1")));
                             },
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.zero,

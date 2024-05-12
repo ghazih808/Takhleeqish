@@ -16,6 +16,7 @@ import 'package:takhleekish/main.dart';
 import '../artistPersonal/artist_authentication.dart';
 import '../artistPersonal/artist_repository.dart';
 import '../throughDashboard/ArtistAuction/auctionStatus.dart';
+import '../throughDashboard/Sessions/personalSessions/personalSessions.dart';
 import '../throughDashboard/Sessions/userSessionRequests/userRequestPage.dart';
 
 class Navbar extends StatelessWidget {
@@ -109,13 +110,13 @@ class Navbar extends StatelessWidget {
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>UserRequestPage()));
                       },
                     ),
-                    // ListTile(
-                    //   leading: Icon(Icons.help),
-                    //   title: Text("Complains",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
-                    //   onTap: (){
-                    //     Navigator.push(context, MaterialPageRoute(builder: (context)=>ArtistComplainsPage()));
-                    //   },
-                    // ),
+                    ListTile(
+                      leading: Icon(Icons.class_outlined),
+                      title: Text("Personal Sessions",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>PersonalUserSessions()));
+                      },
+                    ),
                     ListTile(
                       leading: Icon(Icons.exit_to_app),
                       title: Text("Logout",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),

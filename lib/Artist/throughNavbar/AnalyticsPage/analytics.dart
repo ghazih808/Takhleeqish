@@ -53,12 +53,12 @@ class _ArtistAnalyticsPageState extends State<ArtistAnalyticsPage> {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       if (snapshot.hasData) {
-                        double abstractCount=5;
-                        double landscapeCount=1;
-                        double portraitCount=2;
-                        double StillLifeCount=8;
+                        double abstractCount=0;
+                        double landscapeCount=0;
+                        double portraitCount=0;
+                        double StillLifeCount=0;
                         double ModernArtCount=0;
-                        double ContemporaryCount=4;
+                        double ContemporaryCount=0;
                         var saleAmount=0;
                         var productCount=0;
                         var likeCount=0;

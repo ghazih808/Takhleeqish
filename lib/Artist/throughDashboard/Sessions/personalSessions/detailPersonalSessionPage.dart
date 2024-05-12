@@ -1,26 +1,23 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'dart:async';
 
-import '../../../../Artist/throughDashboard/Sessions/call/callSession.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class DetailScheduledSessionPage extends StatefulWidget{
+import '../call/callSession.dart';
+
+class DetailedPersonalSession extends StatefulWidget
+{
   final String UserEmail;
   final String title;
   final DateTime date;
   final TimeOfDay sessionTime;
-  DetailScheduledSessionPage(
+  DetailedPersonalSession(
       this.UserEmail,this.title,this.sessionTime,this.date);
-
   @override
-  State<DetailScheduledSessionPage> createState() => _DetailScheduledSessionPageState();
+  State<DetailedPersonalSession> createState() => _DetailedPersonalSessionState();
 }
 
-class _DetailScheduledSessionPageState extends State<DetailScheduledSessionPage>
+class _DetailedPersonalSessionState extends State<DetailedPersonalSession>
 {
 
   bool isTimeValid = false;
@@ -120,7 +117,7 @@ class _DetailScheduledSessionPageState extends State<DetailScheduledSessionPage>
                     SizedBox(
                       height:screenHeight*0.02,
                     ),
-                    Text("Artist Email",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                    Text("User Email",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                     Text(" ${widget.UserEmail}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
 
                     SizedBox(
@@ -147,9 +144,9 @@ class _DetailScheduledSessionPageState extends State<DetailScheduledSessionPage>
                           width: double.infinity,
                           height: 50,
                           child: ElevatedButton(
-                            onPressed: () async {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>callSession(callID: "1")));
+                            onPressed:()async {
 
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>callSession(callID: "1")));
                             },
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.zero,
@@ -168,20 +165,15 @@ class _DetailScheduledSessionPageState extends State<DetailScheduledSessionPage>
                               ),
                               child: Container(
                                 alignment: Alignment.center,
-                                child: Text(
-                                  "Join Session",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 18,
-                                  ),
-                                ),
+                                child:
+                                Center(child: Text("Start Session",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),)),
                               ),
                             ),
                           ),
                         ),
 
                       ),
+
 
 
 

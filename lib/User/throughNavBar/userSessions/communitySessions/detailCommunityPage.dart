@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../Artist/throughDashboard/Sessions/call/callSession.dart';
+
 class DetailCommunityPage extends StatefulWidget
 {
   final String UserEmail;
@@ -143,6 +145,7 @@ class _DetailCommunityPageState extends State<DetailCommunityPage>
                           height: 50,
                           child: ElevatedButton(
                             onPressed:()  async {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>callSession(callID: "1")));
 
 
                             }  ,

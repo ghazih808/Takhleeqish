@@ -7,6 +7,7 @@ class Cart_model{
   final String price;
   final String category;
   final String description;
+  final String productDocId;
   final String url;
   const Cart_model(
       {
@@ -15,6 +16,7 @@ class Cart_model{
         required this.ArtistId,
         required this.price,
         required this.category,
+        required this.productDocId,
         required this.description,
         required this.url
       });
@@ -22,6 +24,7 @@ class Cart_model{
     return{
       'Name':name,
       'Category':category,
+      'ProductDocId':productDocId,
       'Price':price,
       'Detail':description,
       'User_ID':ArtistId,
@@ -33,6 +36,6 @@ class Cart_model{
     final data=documentSnapshot.data()!;
     return Cart_model(
       id: documentSnapshot.id,
-      name: data["Name"], price: data["Price"], category: data["Category"], description: data["Detail"], ArtistId: data["User_ID"], url: data['Url'],);
+      name: data["Name"], price: data["Price"], category: data["Category"], description: data["Detail"], ArtistId: data["User_ID"], url: data['Url'], productDocId:data['ProductDocId'],);
   }
 }

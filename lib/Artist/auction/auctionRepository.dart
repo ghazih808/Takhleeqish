@@ -40,4 +40,10 @@ class Auction_Repo extends GetxController{
     final artifactData=snapshot.docs.map((e) => Auction_model.fromSnapshot(e)).toList();
     return artifactData;
   }
+  Future<List<Auction_model>>getWonAuctionProducts(String artName) async
+  {
+    final snapshot=await auction_db.collection("Auction").where("Buyer",isEqualTo: artName).get();
+    final auctionStatus=snapshot.docs.map((e) => Auction_model.fromSnapshot(e)).toList();
+    return auctionStatus;
+  }
 }

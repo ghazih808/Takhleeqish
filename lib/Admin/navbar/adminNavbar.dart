@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:takhleekish/Admin/compainsCheck/complainDashboard.dart';
+import 'package:takhleekish/Admin/throughNavbar/paymentApproveOrReject/paymentCheck.dart';
 
 import '../../main.dart';
+import '../throughNavbar/pendingPayments/pendingPayments.dart';
 
 class AdminNavbar extends StatelessWidget{
   final FirebaseAuth _auth=FirebaseAuth.instance;
@@ -33,10 +35,18 @@ class AdminNavbar extends StatelessWidget{
               ),),
 
             ListTile(
-              leading: FaIcon(FontAwesomeIcons.triangleExclamation),
-              title: Text("Complaints",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+              leading: Icon(Icons.payment),
+              title: Text("Receipt Verification",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
               onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>ComplainDashboardPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentCheck()));
+              },
+
+            ),
+            ListTile(
+              leading: Icon(Icons.pending),
+              title: Text("Pending payments",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+              onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>PendingPayments()));
               },
 
 

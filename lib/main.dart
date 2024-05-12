@@ -19,6 +19,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:takhleekish/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Artist/throughDashboard/ArtistAuction/auction.dart';
+import 'Artist/throughDashboard/postArtifact/verifyProduct.dart';
 import 'Artist/throughNavbar/AnalyticsPage/analytics.dart';
 import 'Artist/throughDashboard/postArtifact/postArtifacts.dart';
 import 'User/payments/paymentPage/paymentPage.dart';
@@ -42,7 +43,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
 
   const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

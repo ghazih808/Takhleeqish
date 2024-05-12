@@ -7,6 +7,7 @@ import '../Navbar/navbar.dart';
 import '../throughDashboard/ArtistAuction/auction.dart';
 import '../throughDashboard/Sessions/artistSessions/sessionSelectPage/sessionSelectPage.dart';
 import '../throughDashboard/checkUser/verifyGmail.dart';
+import '../throughDashboard/postArtifact/verifyProduct.dart';
 
 class ArtistDashboard extends StatelessWidget{
 
@@ -62,7 +63,7 @@ class ArtistDashboard extends StatelessWidget{
                                   width: 180,
                                   height: 180,
                                   child: ElevatedButton(onPressed:(){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>PostArtifact()));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>VerifyProduct()));
                                   }, child:Column(
                                     children: [
                                       Padding(

@@ -14,16 +14,30 @@ import '../../../../Artist/auction/auctionRepository.dart';
 import '../../../../Artist/controllers/artist_controller.dart';
 import 'approvedBidPage.dart';
 
-class ApprovedAuctionPage extends StatelessWidget
+class ApprovedAuctionPage extends StatefulWidget
 {
+  final String buyer;
+  ApprovedAuctionPage
+      (
+      this.buyer
+      );
+  @override
+  State<ApprovedAuctionPage> createState() => _ApprovedAuctionPageState();
+}
+
+class _ApprovedAuctionPageState extends State<ApprovedAuctionPage> {
   final controller = Get.put(Artist_Controller());
 
   final authrepo = Get.put(Artist_Auth());
 
   final artistRepo = Get.put(Artist_repo());
+
   final auctionRepo=Get.put(Auction_Repo());
+
   final FirebaseAuth _auth=FirebaseAuth.instance;
+
   var email;
+
   @override
   Widget build(BuildContext context) {
 
@@ -156,7 +170,7 @@ class ApprovedAuctionPage extends StatelessWidget
                                                           builder: (context) =>
                                                               ApprovedBidPage(snapshot.data![index].url,snapshot.data![index].bid,
                                                                   endingTime,startingTime,date,
-                                                                  snapshot.data![index].ArtistId,snapshot.data![index].artName, snapshot.data![index].checkBidStatus,docid: docid,)));
+                                                                  snapshot.data![index].ArtistId,snapshot.data![index].artName, snapshot.data![index].checkBidStatus,docid: docid, buyer: widget.buyer,)));
                                                 }
                                               }
                                           ),
@@ -195,6 +209,7 @@ class ApprovedAuctionPage extends StatelessWidget
   Future<List<Auction_model>> getAllData() async {
     return await auctionRepo.getAllAuctionDetail();
   }
+
   String _formatTime(TimeOfDay timeOfDay) {
     // Convert 24-hour format to 12-hour format
     int hour = timeOfDay.hourOfPeriod;

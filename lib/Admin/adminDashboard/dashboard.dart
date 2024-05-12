@@ -16,7 +16,7 @@ class AdminDashboard extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // drawer: AdminNavbar(),
+      drawer: AdminNavbar(),
       appBar:AppBar(
         title: const Text("Admin Dashboard",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 30),),
         centerTitle: true,

@@ -211,10 +211,10 @@ class _PaymentPageState extends State<PaymentPage> {
                         child: ElevatedButton(
                           onPressed:() {
                             print(url);
-                            final payment=Payment_model(ArtistId: widget.email,
+                            final payment=Payment_model(
                                 bill: widget.amount,
                                 reciept: imageurl,
-                                status: "pending");
+                                status: "pending", paymentCheck: 'false', UserId: widget.email);
                             Get.put(Payment_Controller()).createReceipt(payment);
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>User_dashboard()));
 

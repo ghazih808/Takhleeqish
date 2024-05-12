@@ -543,7 +543,7 @@ class _AuctionPageState extends State<AuctionPage> {
                                         auctionDate: controller.auctDate
                                             .toString().trim(),
                                         url: imageurl,
-                                        status: "none", checkAuc: "false", checkBidStatus: 'false', isLive: 'false', liveBaseBid: 'false');
+                                        status: "none", checkAuc: "false", checkBidStatus: 'false', isLive: 'false', liveBaseBid: 'false', buyer: '', paid: 'false');
                                     Auction_Controller.instance.createAuction(
                                         auction);
                                     Navigator.push(context, MaterialPageRoute(

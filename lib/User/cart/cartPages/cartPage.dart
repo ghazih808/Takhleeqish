@@ -7,7 +7,6 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:takhleekish/User/cart/cartDatabase/cartModel.dart';
 import 'package:takhleekish/User/cart/cartDatabase/cartRepository.dart';
 import 'package:takhleekish/User/payments/paymentPage/paymentPage.dart';
-
 import '../../../Artist/artistPersonal/artist_authentication.dart';
 import '../../../Artist/auction/auctionModel.dart';
 import '../../../Artist/controllers/artist_controller.dart';
@@ -180,6 +179,12 @@ class _CartPageState extends State<CartPage> {
                                                   setState(() {
                                                     bill -= artifactPrice;
                                                   });
+                                                  await FirebaseFirestore.instance.collection("Artifacts").doc(snapshot.data![index].productDocId)
+                                                      .update(
+                                                      {
+                                                        'saleCheck':"false",
+                                                      }
+                                                  );
                                                   await FirebaseFirestore.instance.collection("Cart").doc(docid)
                                                       .delete().whenComplete(() {
                                                     Get.snackbar("Successfully", "Artifact hass been removed",

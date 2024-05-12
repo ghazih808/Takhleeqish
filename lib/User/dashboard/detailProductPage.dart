@@ -10,6 +10,7 @@ import '../cart/cartDatabase/cartController.dart';
 import '../cart/cartPages/cartPage.dart';
 import '../credentialsFile/user_model.dart';
 import '../credentialsFile/user_repository.dart';
+import '../payments/paymentPage/paymentPage.dart';
 
 class DetailProductPage extends StatefulWidget {
   final String url;
@@ -196,7 +197,17 @@ class _DetailProductPageState extends State<DetailProductPage> {
                                   height: 50,
                                   width: 170,
                                   child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      await FirebaseFirestore.instance.collection("Artifacts").doc(widget.docid)
+                                          .update(
+                                          {
+                                            'saleCheck':"true",
+                                            'cartCheck':"true",
+                                          }
+                                      );
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentPage(widget.price,email)));
+
+                                    },
                                     child: Text("Purchase now",
                                       style: TextStyle(
                                           color: Colors.white,
@@ -230,17 +241,21 @@ class _DetailProductPageState extends State<DetailProductPage> {
                                             price: widget.price,
                                             category: widget.category,
                                             description: widget.description,
-                                            url: widget.url);
+                                            url: widget.url, productDocId: widget.docid);
                                         cartController.createCart(cart);
                                       }
                                       print(widget.docid);
 
-                                      // await FirebaseFirestore.instance.collection("Artifacts").doc(widget.docid)
-                                      //     .update(
-                                      //     {
-                                      //       'cartCheck':"true",
-                                      //     }
-                                      // );
+
+                                      await FirebaseFirestore.instance.collection("Artifacts").doc(widget.docid)
+                                          .update(
+                                          {
+                                            'saleCheck':"true",
+                                            'cartCheck':"true",
+
+                                          }
+                                      );
+
 
                                     },
                                     

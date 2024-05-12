@@ -23,9 +23,10 @@ class ApprovedBidPage extends StatefulWidget{
   final String bidStatus;
   final DateTime date;
   final TimeOfDay stTime;
+  final String buyer;
 
   ApprovedBidPage(
-      this.url, this.baseBid,this.enTime,this.stTime,this.date, this.email, this.name,this.bidStatus,{required this.docid});
+      this.url, this.baseBid,this.enTime,this.stTime,this.date, this.email, this.name,this.bidStatus,{required this.docid, required this.buyer});
   @override
   State<ApprovedBidPage> createState() => _ApprovedBidPageState();
 }
@@ -264,7 +265,7 @@ if({widget.bidStatus}=='false')
                                       'BidStatus':"true",
                                       'isLive':"true",
                                       'liveBaseBid':widget.baseBid,
-
+                                      'Buyer':widget.buyer,
                                     }
                                 ).whenComplete(() {
                                   Get.snackbar("Congratulations", "Bid has been Placed",

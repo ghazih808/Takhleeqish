@@ -19,7 +19,8 @@ import '../../../auction/auctionRepository.dart';
 import '../../../controllers/artist_controller.dart';
 
 
-class UserRequestPage extends StatelessWidget{
+class UserRequestPage extends StatelessWidget
+{
   final controller = Get.put(Artist_Controller());
 
   final authrepo = Get.put(Artist_Auth());

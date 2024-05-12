@@ -28,13 +28,13 @@ class Payment_repo extends GetxController
 
   Future<Payment_model> getReceiptDetail(String ArtistId) async
   {
-    final snapshot=await payment_db.collection("Receipt").where("Artist_ID",isEqualTo: ArtistId).get();
+    final snapshot=await payment_db.collection("Receipt").where("UserId",isEqualTo: ArtistId).get();
     final artifactData=snapshot.docs.map((e) => Payment_model.fromSnapshot(e)).single;
     return artifactData;
   }
   Future<List<Payment_model>> getSpecificReceiptDetail(String ArtistId) async
   {
-    final snapshot=await payment_db.collection("Receipt").where("Artist_ID",isEqualTo: ArtistId).get();
+    final snapshot=await payment_db.collection("Receipt").where("UserId",isEqualTo: ArtistId).get();
     final artifactData=snapshot.docs.map((e) => Payment_model.fromSnapshot(e)).toList();
     return artifactData;
   }
