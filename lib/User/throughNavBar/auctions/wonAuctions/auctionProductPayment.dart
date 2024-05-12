@@ -43,6 +43,7 @@ class _AuctionProductPaymentState extends State<AuctionProductPayment> {
               SizedBox(
                 height: 40,
               ),
+
               Container(child: Image.network(widget.url)),
               SizedBox(height: 3,),
               Divider( // Add a line under the image
