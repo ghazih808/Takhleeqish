@@ -89,6 +89,13 @@ class UserNavbar extends StatelessWidget {
                       },
                     ),
                     ListTile(
+                      leading: Icon(Icons.perm_identity_outlined),
+                      title: Text("Exhibition",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>UserExhibitionPage()));
+                      },
+                    ),
+                    ListTile(
                       leading: Icon(Icons.update),
                       title: Text("Update Password",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
@@ -142,7 +149,7 @@ class UserNavbar extends StatelessWidget {
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentStatus()));
                       },
                     ),
-                   
+
                     ListTile(
                       leading: Icon(Icons.error),
                       title: Text("Complains",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
@@ -154,8 +161,8 @@ class UserNavbar extends StatelessWidget {
                       leading: Icon(Icons.exit_to_app),
                       title: Text("Logout",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500)),
                       onTap: (){
-                              _auth.signOut();
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage()));
+                        _auth.signOut();
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHomePage()));
 
                       },
                     )

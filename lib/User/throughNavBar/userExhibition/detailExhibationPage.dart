@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart'; // Import url_launcher
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DetailExhibitionPage extends StatelessWidget {
@@ -73,7 +74,9 @@ class DetailExhibitionPage extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed:()   {}  ,
+                      onPressed:() {
+                        _launchMaps(venue); // Launch Google Maps with the venue as the destination
+                      },
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.zero,
                         shape: RoundedRectangleBorder(
@@ -114,5 +117,14 @@ class DetailExhibitionPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _launchMaps(String destination) async {
+    final googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=$destination';
+    if (await canLaunch(googleMapsUrl)) {
+      await launch(googleMapsUrl);
+    } else {
+      throw 'Could not launch $googleMapsUrl';
+    }
   }
 }
