@@ -11,6 +11,7 @@ class UserExhibitionPage extends StatelessWidget {
       drawer: UserNavbar(),
       appBar: AppBar(
 
+
         title: const Text("Exhibitions", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 30)),
         centerTitle: true,
         backgroundColor: Colors.transparent,
