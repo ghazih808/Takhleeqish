@@ -6,6 +6,7 @@ import 'detailExhibationPage.dart';
 
 class UserExhibitionPage extends StatelessWidget {
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: UserNavbar(),
