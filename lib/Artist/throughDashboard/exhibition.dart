@@ -198,9 +198,9 @@ class _ExhibitionAnnouncementPageState
 
   void _showAddExhibitionDialog(BuildContext context) {
     final List<String> venues = [
-      'Channab Club',
+      'The Chenab Club',
       'Lyallpur Galleria',
-      'Serena'
+      'Faisalabad Serena Hotel'
     ];
     final List<int> capacities = [100, 200, 300];
 
